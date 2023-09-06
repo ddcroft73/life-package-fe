@@ -1,17 +1,38 @@
 .App {
   text-align: center;
 }
+ * {
+  box-sizing: border-box;
+ }
+
+
+
+/* Default and global CSS*/
+:root {
+  --body-background: rgb(248, 234, 208);
+  --body-background-dark: rgb(43, 41, 41);
+
+  --button-background: rgb(228, 210, 175);/*rgb(202, 186, 157);*/
+  --button-hover:  rgb(202, 186, 157);
+  --button-click:  rgb(228, 210, 175);
+  --button-border: black;
+
+  --button-background-dark: rgb(61, 58, 58);
+  --button-hover-dark: rgb(77, 74, 74);
+  --button-click-dark: rgb(134, 113, 113);
+}
+
 
 /* default light theme */
 body {
-  background-color: white;
-  color: black;
+  background-color: var(--body-background);
+
+
   display: flex;
   justify-content: center;
 }
 
 /* dark theme */
 body.dark {
-  background-color: black;
-  color: white;
+  background-color: var(--body-background-dark);
 }

@@ -1,15 +1,13 @@
-
-
 .floating-label-container {
   position: relative;
-  margin-top: 2rem;
+  margin-top: 1rem;
   
-  width: 400px;
-  /*will change width*/
+  /*width: 400px;
+  will change width*/
 }
 
 .floating-label-input {
-  border: 1px solid #ccc;
+  border: 1px solid #4c3cc7;
   border-radius: 4px;
   padding: 10px 12px;
   transition: all 0.3s ease;
@@ -18,12 +16,13 @@
   z-index: 1;
   /* Ensure input is above the pseudo element */
   font-size: 18px;
-  width: 350px;
-  /* will change width*/
+  /*width: 350px;
+   will change width*/
 }
 
 .floating-label-input:focus {
   border-color: #007bff;
+  color: white;
 }
 
 .floating-label-input::placeholder {
@@ -35,7 +34,7 @@
   left: 12px;
   bottom: 14px;
   font-size: 16px;
-  color: #aaa;
+  color: #6e6666;
   transition: all 0.3s ease;
   background-color: white;
   /* Match the background of your page or container */
@@ -46,7 +45,7 @@
 }
 
 body.dark .floating-label {
-  background-color: black;
+  background-color: #444444;
   /* thats all it is */
 }
 
@@ -76,6 +75,7 @@ body.dark .floating-label {
   /* Ensure this is below the input and label */
   visibility: hidden;
   /* Hide by default */
+
 }
 
 /* Show the pseudo-element (cutout effect) when input is focused or has content */

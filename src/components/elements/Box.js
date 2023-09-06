@@ -6,6 +6,7 @@ const Box = ({ children, style }) => {
         height: '100%',
         border: '1px solid black',
         borderRadius: '8px',
+        padding: 10,
     };
 
     return (

@@ -2,29 +2,31 @@
 /* Light theme (default) styles */
 .button {
    
-    background-color: blue;
+    background-color: var(--button-background);
     color: white;
     padding: 10px 20px;
     border-radius: 8px;
-    border: none;
+    border: 0px solid var(--button-border);
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.1s ease;
     transform: scale(1);
 }
 
 .button:hover {
-    background-color: darkblue;
+    background-color: var(--button-hover);
+    border: 1px soild var(--button-border);
 }
 
 .button:active {
     transform: scale(0.95);
-    background-color: rgb(126, 126, 219);
+    background-color: var(--button-click);
+    border: 1px soild var(--button-border);
 }
 
 
 /* Dark theme styles */
 body.dark .button {
-    background-color: #555;   /* Darker gray background */
+    background-color: var(--button-background-dark);   /* Darker gray background */
     color: #eee;              /* Lighter text */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.1s ease;
@@ -33,10 +35,12 @@ body.dark .button {
 }
 
 body.dark .button:hover {
-    background-color: rgb(127, 127, 148);
+    background-color: var(--button-hover-dark);
+    border: 1px soild var(--button-border);
 }
 
 body.dark .button:active {
     transform: scale(0.95);
-    background-color: rgb(212, 202, 202);
+    background-color: var(--button-click-dark);
+    border: 1px soild var(--button-border);
 }
