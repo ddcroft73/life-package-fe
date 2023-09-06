@@ -1,0 +1,85 @@
+
+
+.floating-label-container {
+  position: relative;
+  margin-top: 2rem;
+  
+  width: 400px;
+  /*will change width*/
+}
+
+.floating-label-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px 12px;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  /* Make the input background transparent */
+  z-index: 1;
+  /* Ensure input is above the pseudo element */
+  font-size: 18px;
+  width: 350px;
+  /* will change width*/
+}
+
+.floating-label-input:focus {
+  border-color: #007bff;
+}
+
+.floating-label-input::placeholder {
+  color: transparent;
+}
+
+.floating-label {
+  position: absolute;
+  left: 12px;
+  bottom: 14px;
+  font-size: 16px;
+  color: #aaa;
+  transition: all 0.3s ease;
+  background-color: white;
+  /* Match the background of your page or container */
+  padding: 0 4px;
+  /* Some padding to prevent text touching the border */
+  z-index: 2;
+  /* Ensure label is above the pseudo element */
+}
+
+body.dark .floating-label {
+  background-color: black;
+  /* thats all it is */
+}
+
+.floating-label-input:focus+.floating-label,
+.floating-label-input:not(:placeholder-shown)+.floating-label {
+  bottom: 38px;
+  font-size: 12px;
+  color: #007bff;
+}
+
+/* Pseudo-element for the cutout effect */
+/* Pseudo-element for the cutout effect, but hidden by default */
+.floating-label-container:before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  /* Adjust to match label's initial position */
+  bottom: 26px;
+  /* Adjust to match label's "floating" position */
+  height: 20px;
+  /* Adjust based on the size of the label */
+  width: 120px;
+  /* Make this wider than the label's max width */
+  background-color: white;
+  /* Match the background of your page or container */
+  z-index: 0;
+  /* Ensure this is below the input and label */
+  visibility: hidden;
+  /* Hide by default */
+}
+
+/* Show the pseudo-element (cutout effect) when input is focused or has content */
+.floating-label-input:focus+.floating-label+.floating-label-container:before,
+.floating-label-input:not(:placeholder-shown)+.floating-label+.floating-label-container:before {
+  visibility: visible;
+}

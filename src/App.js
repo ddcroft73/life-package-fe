@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Login from "./components/Login.js";
+import ThemeManager from "./theme/ThemeManager";
+import ThemeToggle from "./theme/ThemeToggle";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+// For now I am concentrating on building my components. This will be the area where I test them, and later
+// it will conform to the FE of my app. Startting with the Logon Registration components
+// I do not want to use ANY aftermarlket component libraries, This is all me.
+
+const App = () => {
+    return (
+        <ThemeManager>
+            <ThemeToggle />
+            <Login />
+        </ThemeManager>
+    );
+};
 
 export default App;

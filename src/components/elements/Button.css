@@ -1,0 +1,42 @@
+
+/* Light theme (default) styles */
+.button {
+   
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    transform: scale(1);
+}
+
+.button:hover {
+    background-color: darkblue;
+}
+
+.button:active {
+    transform: scale(0.95);
+    background-color: rgb(126, 126, 219);
+}
+
+
+/* Dark theme styles */
+body.dark .button {
+    background-color: #555;   /* Darker gray background */
+    color: #eee;              /* Lighter text */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    transform: scale(1);
+    /* ... any other styles that should change in dark mode */
+}
+
+body.dark .button:hover {
+    background-color: rgb(127, 127, 148);
+}
+
+body.dark .button:active {
+    transform: scale(0.95);
+    background-color: rgb(212, 202, 202);
+}
