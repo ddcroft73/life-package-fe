@@ -7,7 +7,7 @@
 }
 
 .floating-label-input {
-  border: 1px solid #4c3cc7;
+  border: 1px solid #817caa;  /*#4c3cc7;*/
   border-radius: 4px;
   padding: 10px 12px;
   transition: all 0.3s ease;

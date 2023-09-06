@@ -14,6 +14,7 @@ const App = () => {
             <Box style={{
                 height: 50,
                 width: '100%',
+                border:"none",
             }}><ThemeToggle /></Box>
             
             <Login />
