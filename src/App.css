@@ -1,18 +1,35 @@
-.App {
-  text-align: center;
-}
+
  * {
   box-sizing: border-box;
  }
 
-
-link{
-  color: orange;
+ a:link {
+  color: rgb(0, 3, 163);
+  text-decoration: none;
 }
+
+/* visited link */
+a:visited {
+  color: rgb(0, 3, 163);
+}
+
+/* mouse over link */
+a:hover {
+  color: rgb(255, 194, 80);
+}
+
+/* selected link */
+a:active {
+  color: blue;
+  text-decoration: none;
+}
+
 /* Default and global CSS*/
 :root {
   --body-background: rgb(248, 234, 208);
-  --body-background-dark: rgb(43, 41, 41);
+  --body-background-dark: rgb(19, 18, 17);
+  --body-background-dark-1: rgb(49, 46, 44);
+  --body-background-dark-0: rgb(18, 17, 16);
 
   --button-background: rgb(228, 210, 175);/*rgb(202, 186, 157);*/
   --button-hover:  rgb(202, 186, 157);
@@ -39,5 +56,5 @@ body {
 
 /* dark theme */
 body.dark {
-  background-color: var(--body-background-dark);
+  background-color: var(--body-background-dark-1);
 }

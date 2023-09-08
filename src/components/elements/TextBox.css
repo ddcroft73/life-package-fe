@@ -18,11 +18,12 @@
   font-size: 18px;
   /*width: 350px;
    will change width*/
+  color: rgb(138, 136, 136);
 }
 
 .floating-label-input:focus {
   border-color: #007bff;
-  color: white;
+  color: rgb(138, 136, 136);
 }
 
 .floating-label-input::placeholder {
@@ -34,7 +35,7 @@
   left: 12px;
   bottom: 14px;
   font-size: 16px;
-  color: #6e6666;
+  color: #767676;
   transition: all 0.3s ease;
   background-color: white;
   /* Match the background of your page or container */
@@ -45,7 +46,7 @@
 }
 
 body.dark .floating-label {
-  background-color: #444444;
+  background-color: var(--body-background-dark-0);
   /* thats all it is */
 }
 

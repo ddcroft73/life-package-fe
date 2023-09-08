@@ -38,19 +38,20 @@ const  Login = () => {;
   return (
 
    <Box  style={{ border: "1px solid black",display: 'flex', justifyContent: 'center', alignItems: 'center',padding: 20}}>
-       <Paper elevation={10}   
+       <Paper elevation={10}   variant="outlined"
             style={{
               width: '375px', 
-              height: '495px', 
-              backgroundColor: '#444444',
+              height: '515px', 
+              backgroundColor: 'var(--body-background-dark-0)',
+              border: "1px solid #007bff",
             }}>
 
-            <Box className="copyRight-box" style={{textAlign: 'left', fontSize: 12}} >              
+            <Box className="copyRight-box" style={{textAlign: 'left', fontSize: 12, color: 'gray'}} >              
               <Box style={{ border:'none',height:'auto', width:'100%', padding: 0, display: 'flex', justifyContent: 'center',}}>
                   <Box style={{
                     textAlign: "center",
                     backgroundColor:'#444444',
-                    border:"0px solid #817caa", height:55, width:"100%", fontSize: 25}}><i className="fas fa-sign-in-alt" /> &nbsp;Sign In</Box>
+                    border:"0px solid #817caa", height:55, width:"100%", fontSize: 25}}><i className="fas fa-sign-in-alt" /> &nbsp;Life Package</Box>
               </Box>
               
               <TextBox  label="UserName" type="text" width="100%" containerPadding={0} />
@@ -67,7 +68,7 @@ const  Login = () => {;
               
               <Box style={{
                   border: "0px solid black", 
-                  fontSize: 12, 
+                  fontSize: 15, 
                   color: "#bd841b", 
                   paddingTop: 8, 
                   paddingRight:0,
@@ -76,21 +77,21 @@ const  Login = () => {;
                   paddingBottom: 0,
                   }}>
                   <Box style={{border: "0px solid black", paddingTop: 0, paddingLeft:0}}>
-                    Forgot <a href='#'>Password</a>?
+                  <a href='8'> Forgot Password?</a>
                   </Box> 
                   <Box style={{border: "0px solid black", paddingTop: 0, paddingLeft:0}}>
-                   <a href='1'>Register</a> a New Account.
+                   <a href='1'>Register a New Account.</a> 
                   </Box> 
               </Box> 
               <p/><p/>
-              <Box style={{border: "0px solid black", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginBottom: 8}}>
+              <Box style={{border: "0px solid   black", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginBottom: 8}}>
                   <Box style={{display: 'flex', border: "0px solid black", padding: 0}}>
                     <div className="oauth"><i className="fa-brands fa-facebook-f" /></div>
                     <div className="oauth"><i className="fa-brands fa-twitter" /></div>
                     <div className="oauth"><i className="fa-brands fa-github" /></div>     
                     <div className="oauth"><i className="fa-brands fa-google" /></div>              
                   </Box>
-                    <Box style={{border: "0px solid #817caa", color: '#817caa',padding:0, paddingBottom: 15, fontSize: 12}}>Login with 0auth</Box>                   
+                    <Box style={{border: "0px solid #817caa", color: '#817caa',padding:0, paddingBottom: 45, fontSize: 12}}></Box>                   
               </Box>
               Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
           </Box>    
