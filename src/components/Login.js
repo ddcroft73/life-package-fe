@@ -3,12 +3,14 @@ import { userLogin } from '../api/api.js';
 import { useState } from 'react';
 import Box from "../components/elements/Box.js";
 import Button from "../components/elements/Button.js";
-import TextBox from '../components/elements/TextBox.js'
+import TextBox from '../components/elements/TextBox.js';
 import ThemeContext from '../theme/ThemeContext';
-import Paper from '../components/elements/Paper.js'
-import ToggleSwitch from '../components/elements/ToggleSwitch.js'
+import Paper from '../components/elements/Paper.js';
+import ToggleSwitch from '../components/elements/ToggleSwitch.js';
+import './Login.css';
 
-const  Login = () => {
+
+const  Login = () => {;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { theme, setTheme } = useContext(ThemeContext);
@@ -26,39 +28,72 @@ const  Login = () => {
       // handle error, e.g., show a notification, update state, etc.
     }
   }
+
+  const style = {
+       oAuth : {
+         padding: 8
+       },
+  }
+
   return (
 
-   <Box  style={{minWidth: "300px", maxWidth: "600px", border: "0px solid black",
-   display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-       <Paper elevation={4}   
+   <Box  style={{ border: "1px solid black",display: 'flex', justifyContent: 'center', alignItems: 'center',padding: 20}}>
+       <Paper elevation={10}   
             style={{
               width: '375px', 
-              height: '345px', 
+              height: '495px', 
               backgroundColor: '#444444',
             }}>
 
-           
-           <Box style={{ border:'none',height:'auto', width:'100%', padding: 0, display: 'flex', justifyContent: 'center',}}>
+            <Box className="copyRight-box" style={{textAlign: 'left', fontSize: 12}} >              
+              <Box style={{ border:'none',height:'auto', width:'100%', padding: 0, display: 'flex', justifyContent: 'center',}}>
+                  <Box style={{
+                    textAlign: "center",
+                    backgroundColor:'#444444',
+                    border:"0px solid #817caa", height:55, width:"100%", fontSize: 25}}><i className="fas fa-sign-in-alt" /> &nbsp;Sign In</Box>
+              </Box>
+              
+              <TextBox  label="UserName" type="text" width="100%" containerPadding={0} />
+              <TextBox  label="Password" type="password" width="100%" containerPadding={0} />
+              
               <Box style={{
-                textAlign: "center",
-                backgroundColor:'#44644',
-                border:"1px solid #817caa", height:55, width:"100%"}}>:Logo Here:</Box>
-           </Box>
-           <TextBox  label="UserName" type="text" width="100%" containerPadding={0} />
-           <TextBox  label="Password" type="password" width="100%" containerPadding={0} />
-           <Box style={{border:"none", paddingTop: 20,paddingLeft: 0, color: 'gray'}}
-             
-           ><ToggleSwitch />&nbsp;&nbsp;&nbsp;Remember me</Box>
-           <Button style={{marginTop: 10,width: '100%', fontSize:"18px"}}> Sign In</Button>
-          
-           <Box style={{border: "none", color: " #bd841b", paddingTop: 10, paddingLeft:0, display: 'flex'}}>
-               <Box style={{border: "none", paddingTop: 0, paddingLeft:0}}>
-                Forgot Password?
+                    border:"0px solid black", 
+                    fontSize: '16px',
+                    lineHeight: 1, 
+                    marginTop: 15,paddingLeft: 0, color: 'gray'}}>
+                  <div>
+                  <ToggleSwitch />&nbsp;&nbsp;Remember me</div></Box>
+              <Button style={{marginTop: 10,width: '100%', fontSize:"18px"}}> Sign In</Button>
+              
+              <Box style={{
+                  border: "0px solid black", 
+                  fontSize: 12, 
+                  color: "#bd841b", 
+                  paddingTop: 8, 
+                  paddingRight:0,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  paddingBottom: 0,
+                  }}>
+                  <Box style={{border: "0px solid black", paddingTop: 0, paddingLeft:0}}>
+                    Forgot <a href='#'>Password</a>?
+                  </Box> 
+                  <Box style={{border: "0px solid black", paddingTop: 0, paddingLeft:0}}>
+                   <a href='1'>Register</a> a New Account.
+                  </Box> 
               </Box> 
-              <Box style={{border: "none", paddingTop: 0, paddingLeft:10, textAlign: 'end'}}>
-                Register a new Account.
-              </Box> 
-           </Box> 
+              <p/><p/>
+              <Box style={{border: "0px solid black", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginBottom: 8}}>
+                  <Box style={{display: 'flex', border: "0px solid black", padding: 0}}>
+                    <div className="oauth"><i className="fa-brands fa-facebook-f" /></div>
+                    <div className="oauth"><i className="fa-brands fa-twitter" /></div>
+                    <div className="oauth"><i className="fa-brands fa-github" /></div>     
+                    <div className="oauth"><i className="fa-brands fa-google" /></div>              
+                  </Box>
+                    <Box style={{border: "0px solid #817caa", color: '#817caa',padding:0, paddingBottom: 15, fontSize: 12}}>Login with 0auth</Box>                   
+              </Box>
+              Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
+          </Box>    
        </Paper>
    </Box>
    

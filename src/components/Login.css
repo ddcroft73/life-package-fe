@@ -1,0 +1,10 @@
+#oauth-links {
+    display: inline-block; 
+}
+
+.oauth {
+    padding: 12px;
+    margin-right: 0px;
+    font-size: 16px;
+    color: #817caa;
+}

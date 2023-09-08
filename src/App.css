@@ -6,7 +6,9 @@
  }
 
 
-
+link{
+  color: orange;
+}
 /* Default and global CSS*/
 :root {
   --body-background: rgb(248, 234, 208);
@@ -20,6 +22,7 @@
   --button-background-dark: rgb(61, 58, 58);
   --button-hover-dark: rgb(77, 74, 74);
   --button-click-dark: rgb(134, 113, 113);
+  --button-border-dark: black;
 }
 
 
