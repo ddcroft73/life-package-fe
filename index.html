@@ -213,10 +213,12 @@ const DeliveryContainer = ( {children } ) => {
         },
         toolbar: {
          display: 'flex',
-         borderRadius: 5,
+         border: '1px solid #625b78', //#625b78',
+         borderTopLeftRadius: 5,
+         borderTopRightRadius: 5,
          height: 50,
          width: 'calc(100% - 6px)',
-         border: '0px solid #625b78', //#625b78',
+
          justifyContent: 'space-between',
          alignItems: 'center',
          overflow: 'auto',
@@ -242,7 +244,7 @@ const DeliveryContainer = ( {children } ) => {
             padding:'10px',
             borderRadius: '5px',
             overflow: 'auto',
-            border: '1px solid #625b78',
+            border: '2px solid #625b78',
         },
         menu: {
             width: 150,
@@ -413,7 +415,8 @@ const Switch = ( {name, packages, currState} ) => {
           backgroundColor: '#666666',
           borderRadius: '10px',
           //webkitBoxShadow: '0 10px 16px -6px #222',
-          boxShadow: '4px 4px 6px 3px #222'
+          boxShadow: '4px 4px 6px 3px #222',
+          border: '1px solid white'
       },
       titlebar: {
           display: 'flex',

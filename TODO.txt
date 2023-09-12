@@ -1,0 +1,15 @@
+
+
+I need to figure out how to save the logon data if there are multiple users on the same computer.
+  ex. I have an Admin and a User account. But on successful login, they are overwritten.
+  solution: Save the data under the username and not 'userData' This way every user can have their 
+  own access  DONE
+
+  Code the "Remember Me' slider optioin using localStorage to remeber. This will only remeber one account.  DONR
+
+  username and passwordvalidation
+
+  test the handleRememberMe code isEmailAddress() to make sure it is acting right when the user tries to save 
+  an invalid email
+
+  code in hidden divs to be exposed when user enters failed login attempts

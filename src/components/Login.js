@@ -9,35 +9,75 @@ import Paper from '../components/elements/Paper.js';
 import ToggleSwitch from '../components/elements/ToggleSwitch.js';
 import './Login.css';
 
+const isEmailAddress = (emailString) => {
+    if (emailString.includes('@') && emailString.includes('.')) {
+      return true;
+    }
+    return false;
+};
 
+
+// for debugging 
+//localStorage.setItem('login_attempts', 0);
 const  Login = () => {;
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { theme, setTheme } = useContext(ThemeContext);
+  //const [email, setEmail] = useState('');
 
+  const defaultRememberMeData = JSON.parse(localStorage.getItem('rememberMe')) || {};
+  const [email, setEmail] = useState(defaultRememberMeData.username || '');
+  const [password, setPassword] = useState('');
+  const [isChecked, setChecked] = useState(defaultRememberMeData.value || false);
+  
+  
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevents the default form submission behavior
 
     try {
-      const user = await userLogin(email, password);
-      // handle successful login, e.g., update state, redirect, etc.
+      // validate email and password:
 
-      console.log(user)
+      const hasAccess = await userLogin(email, password);
+      // handle successful login, e.g., update state, redirect, etc.
+     
+      // Login was succesful, Is this user admin? or Normal?
+      // if Admin, launch admin dashboard
+      // if user , launch this users dashboard
+      console.log(`hasAccess: ${hasAccess}`)
+      //console.log(`${email}, ${password}`)
 
     } catch (error) {
       // handle error, e.g., show a notification, update state, etc.
+      console.error("Error in userLogin()")
     }
-  }
+  };
+  const handleUsername = (value) => {
+       setEmail(value)
+  };
+  const handlePassword = (value) => {
+       setPassword(value)
+  };
+  const handleRememberMe = (value) => {
+     setChecked(value)
 
-  const style = {
-       oAuth : {
-         padding: 8
-       },
-  }
+     const rememberMe = {
+         "username": email,
+         "value": value
+     };
+
+     if (value === true && email != "" && isEmailAddress(email)){
+         localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
+     }else {
+      console.log("Not a valid email address as usrname.")
+     }    
+     
+    // if they selected Don't 
+    if (value === false) {
+      rememberMe.username = '';
+      localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
+    }
+  };
 
   return (
 
-   <Box  style={{ border: "1px solid black",display: 'flex', justifyContent: 'center', alignItems: 'center',padding: 20}}>
+   <Box  style={{ border: "0px solid black",display: 'flex', justifyContent: 'center', alignItems: 'center',padding: 20}}>
        <Paper elevation={10}   variant="outlined"
             style={{
               width: '375px', 
@@ -46,7 +86,7 @@ const  Login = () => {;
               border: "1px solid #007bff",
             }}>
 
-            <Box className="copyRight-box" style={{textAlign: 'left', fontSize: 12, color: 'gray'}} >              
+            <Box className="copyRight-box" style={{border: "0px soid black", textAlign: 'left', fontSize: 12, color: 'gray'}} >              
               <Box style={{ border:'none',height:'auto', width:'100%', padding: 0, display: 'flex', justifyContent: 'center',}}>
                   <Box style={{
                     textAlign: "center",
@@ -54,8 +94,11 @@ const  Login = () => {;
                     border:"0px solid #817caa", height:55, width:"100%", fontSize: 25}}><i className="fas fa-sign-in-alt" /> &nbsp;Life Package</Box>
               </Box>
               
-              <TextBox  label="UserName" type="text" width="100%" containerPadding={0} />
-              <TextBox  label="Password" type="password" width="100%" containerPadding={0} />
+              <TextBox id="email" label="Email" value={email} type="text" width="100%" containerPadding={0}
+                onChange={handleUsername} />
+
+              <TextBox  id="password" label="Password" type="password" width="100%" containerPadding={0} 
+               onChange={handlePassword}/>
               
               <Box style={{
                     border:"0px solid black", 
@@ -63,12 +106,16 @@ const  Login = () => {;
                     lineHeight: 1, 
                     marginTop: 15,paddingLeft: 0, color: 'gray'}}>
                   <div>
-                  <ToggleSwitch />&nbsp;&nbsp;Remember me</div></Box>
-              <Button style={{marginTop: 10,width: '100%', fontSize:"18px"}}> Sign In</Button>
+                  <ToggleSwitch value={isChecked} onChange={handleRememberMe}/>&nbsp;&nbsp;Remember me
+                  </div>
+              </Box>
+
+              <Button style={{marginTop: 10,width: '100%', fontSize:"18px"}}
+                  onClick={handleSubmit}> Sign In</Button>
               
               <Box style={{
                   border: "0px solid black", 
-                  fontSize: 15, 
+                  fontSize: 13, 
                   color: "#bd841b", 
                   paddingTop: 8, 
                   paddingRight:0,

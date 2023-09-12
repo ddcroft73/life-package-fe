@@ -11,7 +11,7 @@ import Box from "./components/elements/Box.js";
 const App = () => {
     return (
         <ThemeManager>
-            <Box style={{width: '1324px', height: '20px', display: 'flex', justifyContent: "end"}}>
+            <Box style={{width: '1324px', height: '20px', display: 'flex', justifyContent: "end", border: 'none'}}>
                 <ThemeToggle />
            </Box>            
             <Login />
