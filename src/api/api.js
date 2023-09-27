@@ -50,7 +50,7 @@ export async function userLogin(username, password) {
 
     try {
         const response = await axios.post(url, formData);        
-        const { access_token, token_type, user_role } = response.data;
+        const { access_token, token_type } = response.data;
         //let access_token, token_type, user_role;
 
         if (access_token && token_type === "bearer") {
@@ -59,12 +59,11 @@ export async function userLogin(username, password) {
 
             //reset login_attempts
             localStorage.removeItem('login_attempts');
-            // save the token for API access
+            // save the token for API access, HOW can i make this work seamlessly for multiple users?
             let access_data = {
                 username: username,
                 access_token: access_token,
-                token_type: "bearer",
-                user_role: user_role
+                token_type: "bearer"
             };
             localStorage.setItem("LifePackage", JSON.stringify(access_data));
             return access_data.user_role;
@@ -82,19 +81,5 @@ export async function userLogin(username, password) {
     }
 };
 
-export function decodeJwt(token) {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace("-", "+").replace("_", "/");
-    const jsonPayload = decodeURIComponent(
-        atob(base64)
-            .split("")
-            .map(function (c) {
-                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-            })
-            .join("")
-    );
-
-    return JSON.parse(jsonPayload);
-};
 
 

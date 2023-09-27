@@ -4,10 +4,9 @@ import AdminLogin from "./components/AdminLogin.js";
 import LandingPage from "./components/LandingPage.js";
 import UserDashboard from "./components/UserDashboard.js";
 import React, { useEffect } from "react";
-import {decodeJwt} from "./api/api.js"
+import {decodeJwt} from "./api/utils.js"
 import ThemeManager from "./theme/ThemeManager";
-//import ThemeToggle from "./theme/ThemeToggle";
-//import Box from "./components/elements/Box.js";
+
 import {
     Routes,
     Route,
@@ -51,16 +50,15 @@ function TokenHandler() {
             navigate("/user-dashboard");
         }
     }, []);
-    
+
     function isExpired(token) {
         function isExpired_(expTimestamp) {
             const currentTime = Math.floor(Date.now() / 1000); // Convert current time to UNIX timestamp in seconds
             return expTimestamp <= currentTime;
         }
         const decodedPayload = decodeJwt(token);
-        const { exp } = decodedPayload;
-        
-        return isExpired_(exp); // Placeholder
+        const { exp } = decodedPayload;        
+        return isExpired_(exp); 
     }
 
     function isAdmin(token) {
@@ -68,7 +66,6 @@ function TokenHandler() {
         const { user_role } = decodedPayload;
         return user_role === 'admin' ? true : false ; 
     }
-    
 
     return null; // This component doesn't render anything
 }
