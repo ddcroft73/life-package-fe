@@ -1,12 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useNavigation, useLocation } from "react-router-dom";
 import { userLogin } from '../api/api.js';
 import { useState } from 'react';
+import Admin from "./AdminLogin.js";
 import Box from "../components/elements/Box.js";
 import Button from "../components/elements/Button.js";
 import TextBox from '../components/elements/TextBox.js';
-import ThemeContext from '../theme/ThemeContext';
 import Paper from '../components/elements/Paper.js';
 import ToggleSwitch from '../components/elements/ToggleSwitch.js';
+
 import './Login.css';
 
 const isEmailAddress = (emailString) => {
@@ -21,7 +23,7 @@ const isEmailAddress = (emailString) => {
 //localStorage.setItem('login_attempts', 0);
 const  Login = () => {;
   //const [email, setEmail] = useState('');
-
+  //const navigation = useNavigation();
   const defaultRememberMeData = JSON.parse(localStorage.getItem('rememberMe')) || {};
   const [email, setEmail] = useState(defaultRememberMeData.username || '');
   const [password, setPassword] = useState('');
@@ -33,19 +35,16 @@ const  Login = () => {;
 
     try {
       // validate email and password:
-
       const hasAccess = await userLogin(email, password);
-      // handle successful login, e.g., update state, redirect, etc.
-     
-      // Login was succesful, Is this user admin? or Normal?
-      // if Admin, launch admin dashboard
-      // if user , launch this users dashboard
+      if (hasAccess === "admin") {
+          //navigate to admin Login
+      } else if (hasAccess === "user"){
+          // navigate to user dash
+      }
       console.log(`hasAccess: ${hasAccess}`)
-      //console.log(`${email}, ${password}`)
 
     } catch (error) {
-      // handle error, e.g., show a notification, update state, etc.
-      console.error("Error in userLogin()")
+      console.error(error.message)
     }
   };
   const handleUsername = (value) => {
@@ -94,7 +93,7 @@ const  Login = () => {;
                     border:"0px solid #817caa", height:55, width:"100%", fontSize: 25}}><i className="fas fa-sign-in-alt" /> &nbsp;Life Package</Box>
               </Box>
               
-              <TextBox id="email" label="Email" value={email} type="text" width="100%" containerPadding={0}
+              <TextBox  id="email" label="Email" value={email} type="text" width="100%" containerPadding={0}
                 onChange={handleUsername} />
 
               <TextBox  id="password" label="Password" type="password" width="100%" containerPadding={0} 

@@ -5,11 +5,17 @@ I need to figure out how to save the logon data if there are multiple users on t
   solution: Save the data under the username and not 'userData' This way every user can have their 
   own access  DONE
 
-  Code the "Remember Me' slider optioin using localStorage to remeber. This will only remeber one account.  DONR
-
   username and passwordvalidation
 
   test the handleRememberMe code isEmailAddress() to make sure it is acting right when the user tries to save 
   an invalid email
 
   code in hidden divs to be exposed when user enters failed login attempts
+
+  I need to come up with a more clever deterrent to brute force attacks.  
+     after 3 attempts impose a delay of 5 minutes
+     after 6 attempts impose a delay of 30 minutes
+     after 9, lovked out because yopur ass is up to no good. 
+     
+  Build an Admin PIN Component
+  set up routing. 

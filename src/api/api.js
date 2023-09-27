@@ -1,15 +1,39 @@
 
-
-// I need a function to send the username, and password to my api to login and
-// get a token. When the token cometh back, save it in localStorage. Ok... Im not  Keen on
-// just stuffing it in LS. I need to think of a better way to handle this. Probably still with LS,
-// but a bit more creative with the token string.
-
 import axios from 'axios';
 
 const baseUrl = 'http://localhost:8015/api/v1/';
 
 export async function userLogin(username, password) {
+    const handleFailedLogin = (failedAttempts, username) => {
+        const lockAccount = (username) => {
+            // send a request to the Auth API to lock the account of username.
+            // If such an account exists.
+        }; 
+        if (failedAttempts == 2) {
+            alert(
+                "You only have 6 tries to access your account. If you break this, You will have to contact support to get into the account."
+            );
+        }
+        if (failedAttempts == 5) {
+            alert(
+                "You only get one moretry. hy don;t you reset yopur pasword instead?"
+            );
+        }
+        if (failedAttempts == 6) {
+            // Write th results and set user to locked_out = True
+            alert(
+                "this account has been locked out. Contact (Contact info here) to open the account."
+            );
+            lockAccount(username);
+        }
+        const login_data = {
+            login_attempts: failedAttempts,
+            username: username,
+        };
+
+        localStorage.setItem("login_attempts", JSON.stringify(login_data));
+    };
+    
     const url = `${baseUrl}auth/login/access-token`;
     
     const formData = new FormData();
@@ -37,43 +61,40 @@ export async function userLogin(username, password) {
             localStorage.removeItem('login_attempts');
             // save the token for API access
             let access_data = {
+                username: username,
                 access_token: access_token,
                 token_type: "bearer",
                 user_role: user_role
             };
-            localStorage.setItem(username, JSON.stringify(access_data));
-            return true;
+            localStorage.setItem("LifePackage", JSON.stringify(access_data));
+            return access_data.user_role;
 
-        } else {          
-            login_attempts++;
-            handleFailedLogin(login_attempts, username);
-            return false;            
+        } else {        
+             throw new Error("Incorrect username or password.");                     
         }
     } catch (error) {
-        console.error("There was a problem with the login request:", error);
+        login_attempts++;
+        handleFailedLogin(login_attempts, username);
+
+        console.error("There was a problem with the login request:", error.message);
+        return false;   
+      
     }
 };
 
-const handleFailedLogin = (failedAttempts, username) => {
-    const lockAccount = (username) => {
-        // send a request to the Auth API to lock the account of username.
-        // If such an account exists.
-    };
-    if (failedAttempts == 2) {
-        alert("You only have 6 tries to access your account. If you break this, You will have to contact support to get into the account.");
-    }    
-    if (failedAttempts == 5) {
-        alert("You only get one moretry. hy don;t you reset yopur pasword instead?")
-    }
-    if (failedAttempts == 6) {
-        // Write th results and set user to locked_out = True
-        alert("this account has been locked out. Contact (Contact info here) to open the account.")
-        lockAccount(username)
-    }
-    const login_data = {
-        'login_attempts': failedAttempts,
-        'username': username,
-    };
+export function decodeJwt(token) {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    const jsonPayload = decodeURIComponent(
+        atob(base64)
+            .split("")
+            .map(function (c) {
+                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join("")
+    );
 
-    localStorage.setItem('login_attempts', JSON.stringify(login_data));
+    return JSON.parse(jsonPayload);
 };
+
+
