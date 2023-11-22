@@ -5,3 +5,25 @@
     font-size: 16px;
     color: #817caa;
 }
+
+.hr {
+    border: 1px solid rgb(117, 115, 115);   
+    width: 50%;
+    border-radius: 10px;
+}
+
+.error-message {
+    color: rgb(164, 56, 56);
+    font-size: 22px;
+}
+
+
+
+.error-box {
+    border-left: none;
+    border-right: none;
+}
+
+.error-box.show {
+    visibility: visible; /* Show when there's an error */
+}

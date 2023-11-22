@@ -27,7 +27,7 @@ a:active {
 /* Default and global CSS*/
 :root {
   --body-background: rgb(248, 234, 208);
-  --body-background-dark: rgb(19, 18, 17);
+  --body-background-dark: rgb(10,10,10);
   --body-background-dark-1: rgb(49, 46, 44);
   --body-background-dark-0: rgb(18, 17, 16);
 
@@ -56,5 +56,5 @@ body {
 
 /* dark theme */
 body.dark {
-  background-color: var(--body-background-dark-1);
+  background-color: var(--body-background-dark);
 }

@@ -2,7 +2,10 @@ import "./App.css";
 import Login from "./components/Login.js";
 import AdminLogin from "./components/AdminLogin.js";
 import LandingPage from "./components/LandingPage.js";
+import TwoFactorAuth from "./components/TwoFactorAuth.js";
 import UserDashboard from "./components/UserDashboard.js";
+import RegisterUser from "./components/RegisterUser.js";
+import PasswordRecover from "./components/PasswordRecover.js";
 import React, { useEffect } from "react";
 import {decodeJwt} from "./api/utils.js"
 import ThemeManager from "./theme/ThemeManager";
@@ -24,8 +27,11 @@ const App = () => {
                     <Route path="/" element={<TokenHandler />} />
                     <Route path="/landing-page" element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<RegisterUser />} />
+                    <Route path="/recover-password" element={<PasswordRecover />} />
                     <Route path="/user-dashboard" element={<UserDashboard />} />
                     <Route path="/admin-login" element={<AdminLogin />} />
+                    <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
                 </Routes>
             </Router>
         </ThemeManager>

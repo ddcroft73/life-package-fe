@@ -26,8 +26,8 @@
 
 /* Dark theme styles */
 body.dark .button {
-    background-color: var(--button-background-dark);   /* Darker gray background */
-    color: #eee;              /* Lighter text */
+    background-color: #484444;/*rgb(47, 66, 44);var(--button-background-dark);   /* Darker gray background */
+    color: "#817Daa";              /* Lighter text */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.1s ease;
     transform: scale(1);
@@ -35,8 +35,9 @@ body.dark .button {
 }
 
 body.dark .button:hover {
-    background-color: var(--button-hover-dark);
+    background-color:#817Daa;/*var(--button-hover-dark);*/
     border: 1px soild var(--button-border);
+    color: white;
 }
 
 body.dark .button:active {

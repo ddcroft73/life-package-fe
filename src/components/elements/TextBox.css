@@ -1,29 +1,33 @@
 .floating-label-container {
   position: relative;
   margin-top: 1rem;
+  border: 1px solid #817caa; 
+  border-radius: 8px;
   
   /*width: 400px;
   will change width*/
 }
 
 .floating-label-input {
-  border: 1px solid #817caa;  /*#4c3cc7;*/
-  border-radius: 4px;
+  border-bottom: 1px solid #817caa;  /*#4c3cc7;*/
+  border-radius: 8px;
   padding: 10px 12px;
   transition: all 0.3s ease;
-  background-color: transparent;
+  background-color: rgb(33, 33, 33);
   /* Make the input background transparent */
   z-index: 1;
   /* Ensure input is above the pseudo element */
   font-size: 18px;
   /*width: 350px;
    will change width*/
-  color: rgb(138, 136, 136);
+  color: rgb(112, 110, 110);
+  border: none;
 }
 
 .floating-label-input:focus {
   border-color: #007bff;
-  color: rgb(138, 136, 136);
+  color: rgb(112, 110, 110);
+  border: none;
 }
 
 .floating-label-input::placeholder {
@@ -33,9 +37,9 @@
 .floating-label {
   position: absolute;
   left: 12px;
-  bottom: 14px;
+  bottom: 12px;
   font-size: 16px;
-  color: #767676;
+  color: #3e3b3b;
   transition: all 0.3s ease;
   background-color: white;
   /* Match the background of your page or container */
@@ -43,16 +47,17 @@
   /* Some padding to prevent text touching the border */
   z-index: 2;
   /* Ensure label is above the pseudo element */
+  border: none;
 }
 
 body.dark .floating-label {
-  background-color: var(--body-background-dark-0);
+  background-color: transparent; /*var(--body-background-dark-0);*/
   /* thats all it is */
 }
 
 .floating-label-input:focus+.floating-label,
 .floating-label-input:not(:placeholder-shown)+.floating-label {
-  bottom: 38px;
+  bottom: 46px;
   font-size: 12px;
   color: #007bff;
 }

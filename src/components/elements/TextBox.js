@@ -37,12 +37,12 @@ const TextBox = ({ label, width = '200px', height = "auto", containerPadding = 0
 
     const containerStyle = {
         width: adjustedWidth,
-        height
+        height: height
     };
 
     const inputStyle = {
         width: adjustedWidth,
-        height,
+        height
     };
 
     const handleInputChange = (e) => {
