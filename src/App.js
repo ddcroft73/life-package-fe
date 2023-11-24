@@ -6,6 +6,7 @@ import TwoFactorAuth from "./components/TwoFactorAuth.js";
 import UserDashboard from "./components/UserDashboard.js";
 import RegisterUser from "./components/RegisterUser.js";
 import PasswordRecover from "./components/PasswordRecover.js";
+import VerifyEmail from "./components/VerifyEmail.js";
 import React, { useEffect } from "react";
 import {decodeJwt} from "./api/utils.js"
 import ThemeManager from "./theme/ThemeManager";
@@ -32,6 +33,7 @@ const App = () => {
                     <Route path="/user-dashboard" element={<UserDashboard />} />
                     <Route path="/admin-login" element={<AdminLogin />} />
                     <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
+                    <Route path="/verify-email" element={<VerifyEmail />} />
                 </Routes>
             </Router>
         </ThemeManager>

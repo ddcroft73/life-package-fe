@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation, useLocation, useNavigate } from "react-router-dom";
+import { useNavigation, useLocation, useNavigate, Link} from "react-router-dom";
 import { userLogin } from '../api/api.js';
 import { useState } from 'react';
 import Admin from "./AdminLogin.js";
@@ -8,19 +8,12 @@ import Button from "../components/elements/Button.js";
 import TextBox from '../components/elements/TextBox.js';
 import Paper from '../components/elements/Paper.js';
 import ToggleSwitch from '../components/elements/ToggleSwitch.js';
-import { Link } from 'react-router-dom';
+import Space from '../components/Space.js';
 
 import { isEmailAddress } from '../api/utils.js';
 import './Login.css';
 
 
-// Put this in elements/ It's dumb but worked where my design failed. 
-function Space({ howMuch }) {
-  return (
-    <div style={{ height: howMuch }}>
-    </div>
-  );
-};
 
 const  Login = () => {
   
@@ -139,7 +132,7 @@ const  Login = () => {
 
               <Box style={{border: "0px solid black", padding:0}}>
                 <TextBox  id="email" label="Email*" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
-                <Space howMuch={8} />
+                <Space howmuch={8} />
                 <TextBox  id="password" label="Password*" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
               </Box>
 
@@ -192,7 +185,7 @@ const  Login = () => {
               <p/><p/>
               <Box style={{border: "0px solid black", height:23, display: 'flex', lineHeight: 0, fontSize: 14, width: "100%"}}>
                 <div className="hr"></div> 
-                &nbsp;&nbsp;Or&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;Or&nbsp;&nbsp;&nbsp;
                 <div className="hr"></div>
               </Box>
 
@@ -204,7 +197,7 @@ const  Login = () => {
                             
               </Box>
 
-              <Space howMuch={25}/>
+              <Space howmuch={35}/>
 
               <Box style={{width: "375px", border:"0px solid black"}}>
 

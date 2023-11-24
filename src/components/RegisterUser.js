@@ -4,14 +4,32 @@ import { userRegister } from '../api/api.js';
 import { isEmailAddress } from '../api/utils.js';
 import Box from "../components/elements/Box.js";
 import Paper from "../components/elements/Paper.js";
+import TextBox from "../components/elements/TextBox.js";
+import Button from "../components/elements/Button.js";
+import Space from "../components/Space.js";
 import { useState } from 'react';
-
+import { Link, useNavigate } from 'react-router-dom';
 
 const RegisterUser = () => {
     const [email, setEmail] = useState('');
     const [fullName, setFullName] = useState('');
     const [passwordOne, setPasswordOne] = useState('');
     const [passwordTwo, setPasswordTwo] = useState('');
+    const navigate = useNavigate();
+
+    const handleEmail = (value) => {
+        setEmail(value);
+    };
+    const handleFullName = (value) => {
+        setFullName(value);
+    };
+    const handlePasswordOne = (value) => {
+        setPasswordOne(value);
+    };
+    const handlePasswordTwo = (value) => {
+        setPasswordTwo(value);
+    };
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -44,6 +62,7 @@ const RegisterUser = () => {
             if (!error) {
                 // show modal success
                 alert(`Account created for ${response.user.email}`)
+                navigate("verify-email/")
             }
             else {
                if (error === "user exists") {
@@ -65,46 +84,84 @@ const RegisterUser = () => {
             <Paper elevation={8} className="container">
                 <form className="registration-form" onSubmit={handleSubmit}>
                     <h1>Life Package</h1>
-                    
-                        <label htmlFor="email">Email *</label>
-                        <input
-                            type="text"
-                            id="email"
+                        <TextBox 
+                            id="email" 
+                            label="Email*" 
+                            value={email} 
+                            type="text" 
                             required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            width="100%" containerPadding={0} onChange={handleEmail} //onChange={(e) => setEmail(e.target.value)
                         />
-                    
-                        <label htmlFor="fullname">Full Name (Optional)</label>
-                        <input
-                            type="text"
-                            id="fullname"
-                            value={fullName}
-                            onChange={(e) => setFullName(e.target.value)}
+                       <Space howmuch={15} />
+                       <TextBox 
+                            id="fullName" 
+                            label="Full Name" 
+                            value={fullName} 
+                            type="text" 
+                            width="100%" containerPadding={0} onChange={handleFullName}
+                        />
+                        <Space howmuch={15} />
+                        
+                        <TextBox 
+                            id="password" 
+                            label="Password*" 
+                            value={passwordOne} 
+                            type="password" 
+                            required
+                            width="100%" containerPadding={0} onChange={handlePasswordOne}
                         />
 
-                        <label htmlFor="password">Password *</label>
-                        <input
-                            type="password"
-                            id="password"
+                      <Space howmuch={15} />
+                       <TextBox 
+                            id="repeat-password" 
+                            label="Repeat-Password*" 
+                            value={passwordTwo} 
+                            type="password" 
                             required
-                            value={passwordOne}
-                            onChange={(e) => setPasswordOne(e.target.value)}
+                            width="100%" containerPadding={0} onChange={handlePasswordTwo}
                         />
-                        
-                        <label htmlFor="repeat-password">Repeat Password *</label>
-                        <input
-                            type="password"
-                            id="repeat-password"
-                            required
-                            value={passwordTwo}
-                            onChange={(e) => setPasswordTwo(e.target.value)}
-                        />
-                        
-                    <button type="submit">Register</button>
+
+                    <Button type="submit">Register</Button>
+                    <Box style={{
+                        border: "0px solid black", 
+                        fontSize: 13, 
+                        color: "#bd841b", 
+                        padding: 0, 
+                        paddingTop:4,
+                        display: 'flex',
+                        justifyContent: 'space-between',
+
+                        paddingBottom: 5,
+                    }}>
+
+                        <Box style={{border: "0px solid black", padding:0, marginLeft:10, marginTop: 3}}>
+                            <Link to="/recover-password"> Contact Support</Link>
+                        </Box> 
+                        <Box style={{border: "0px solid black", padding:0, marginRight:10, marginTop: 3}}>
+                            <Link  to="/login">Already a member?  Log in</Link>
+                        </Box> 
+
+                   </Box> 
+                    <Space howmuch={35} />
+                    <Box style={{border: "0px solid black", height:23, display: 'flex', lineHeight: 0, fontSize: 14, width: "100%"}}>
+                        <div className="hr"></div> 
+                        &nbsp;&nbsp;&nbsp;Or&nbsp;&nbsp;&nbsp;
+                        <div className="hr"></div>
+                   </Box>    
+                   <Box style={{border: "0px solid   black", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginTop: 0, marginBottom: 8}}>
+                        <Box style={{display: 'flex', border: "0px solid black", padding: 0}}>
+                            <div className="oauth"><i className="fa-brands fa-facebook-f" /></div>
+                            <div className="oauth"><i className="fa-brands fa-google" /></div>              
+                        </Box>
+                   </Box>
+
                 </form>
             </Paper>
+            <Box className="copy-box" style={{fontSize: 12, width: "auto", marginTop: 10, border:"0px solid black", textAlign: 'center', color: "gray"}}>
+                 Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
+            </Box>
         </Box>
+        
     );
 };
 
