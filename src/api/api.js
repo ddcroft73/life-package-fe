@@ -1,11 +1,12 @@
 import { getCurrentDateTime } from './utils';
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:8015/api/v1/';
+const baseUrl = 'http://192.168.12.189:8015/api/v1/'; //'http://localhost:8015/api/v1/';
 
 
 
 export const userLogin = async (username, password) => {
+    
 
     const handleFailedLogin = (failedAttempts, username) => {
         const lockAccount = (username) => {
@@ -41,6 +42,7 @@ export const userLogin = async (username, password) => {
 
     const url = `${baseUrl}auth/login/access-token`;
     
+
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
@@ -54,57 +56,54 @@ export const userLogin = async (username, password) => {
     }
 
     try {
-        const response = await axios.post(url, formData);        
-        const { access_token, token_type, code, token, user_role} = response.data;
-                
-        if (code) {                                           // User has 2FA enabled        
-           let data = {
-               code: code,
-               token: token,
-               action: "use2FA"
-           };
-           localStorage.setItem("TwoFactorAuth", JSON.stringify(data));
-            //reset login_attempts
-           localStorage.removeItem('login_attempts');
-           return data;
+        const response = await axios.post(url, formData);
+        const { access_token, token_type, user_role, code, token} = response.data;
 
-        } else if (access_token && token_type === "bearer") { // user got in, no 2FA
-            console.log('Success');
+        if (code) {                                           // User has 2FA enabled        
+            let data = {
+                code: code,
+                token: token,
+                action: "use2FA"
+            };
+            localStorage.setItem("TwoFactorAuth", JSON.stringify(data));
             //reset login_attempts
             localStorage.removeItem('login_attempts');
-
-            let access_data = {
-                username: username,
-                access_token: access_token,
-                token_type: "bearer",
-                user_role: user_role
-            };
-
-            localStorage.setItem("LifePackage", JSON.stringify(access_data));
-            return access_data.user_role;
-
-        } 
-    // Invalid input, inactive user etc
+            return data;
+    
+            } 
+            else if (access_token && token_type === "bearer") { // user got in, no 2FA
+                console.log('Success');
+                localStorage.removeItem('login_attempts');
+    
+                let access_data = {
+                    username: username,
+                    access_token: access_token,
+                    token_type: "bearer",
+                    user_role: user_role
+                };
+    
+                localStorage.setItem("LifePackage", JSON.stringify(access_data));
+                return access_data.user_role;
+            } 
+                    
+        
+    // Invalid input, inactive user, wrong password or email
     } catch (error) {          
 
         if (error.response) {
             console.error('Error status:', error.response.status);
-            if (error.response.status === 400) {
+            
+           if (error.response.status >= 400) {
                
-               if (error.response.data.detail === 'wrong credintials') {
+               if (error.response.data.detail === 'wrong credentials') {
                   login_attempts++;
                   //handleFailedLogin(login_attempts, username);
-                  return "wrong credintials"; 
-
-               } else if (error.response.data.detail === 'inactive user'){
-                  return "inactive user";
-
-               } else if (error.response.data.detail === 'locked out'){
-                  return "locked out";
-               }                
-            }
-        }
-    }    
+                }
+                // jus tsend any detail back so I know exactly what happened.
+                return error.response.data.detail
+           }
+       }    
+    };
 };
 
 
@@ -128,27 +127,32 @@ export const userRegister = async (userData) => {
         
         if (response.status === 200) {
             console.log('Success!');
-
             // Handle your data here
-            console.log(response.data);
-            return response.data
+            // From here I can pass the info out and load up the users station.
+            return response.data // for now return the user and account data as it was created.
         } 
-        
     } catch (error) {
+
+        let resp = {};
+        
         if (error.response) {
             console.error('Error status:', error.response.status);
-            if (error.response.status === 400) {
-                return error.response.data.detail;
-            }
 
-        } else if (error.request) {
+            if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
+                resp.error = error.response.data.detail
+                return resp //error.response.data.detail;
+            }
+        } 
+        else if (error.request) {
             // The request was made but no response was received
             console.error('No response:', error.request);
-            return error.request;
+            resp.error = error.request
+            return resp//error.request;
         } else {
             // Something happened in setting up the request that triggered an Error
             console.error('Error:', error.message);
-            return error.message;
+            resp.error = error.message
+            return resp //error.message;
         }
     }
 };

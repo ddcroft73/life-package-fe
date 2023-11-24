@@ -1,12 +1,9 @@
 import React from 'react';
 import './RegisterUser.css';
-
 import { userRegister } from '../api/api.js';
 import { isEmailAddress } from '../api/utils.js';
-
 import Box from "../components/elements/Box.js";
 import Paper from "../components/elements/Paper.js";
-
 import { useState } from 'react';
 
 
@@ -39,21 +36,28 @@ const RegisterUser = () => {
 
         if (sendRequest) {
             const response = await userRegister(userData);
-            // If error should send the detail from the exception back here,
-            // if all good user info
-            if (response === "user exists") {
-               // show modal
-            } else if (response === 'server closed') {
-              // show modal
-            } else {
-                // user created no problem 
-                // launch the user workstation
+            const { error } = response
+            
+            
+            // If an error was caught it was packaged and sent back in response.error
+            // If not, then there will be an email for the user. response.user.email
+            if (!error) {
+                // show modal success
+                alert(`Account created for ${response.user.email}`)
             }
-
-
+            else {
+               if (error === "user exists") {
+                   // show modal
+                   alert("User exists")
+               } else if (error === 'server closed') {
+                   // show modal
+                   alert("Server Closed")
+               } else {
+                   alert(`Unkown: ${error}`)
+               }
+            }
             console.log("response:", `${JSON.stringify(response)}`);
-        }       
-        
+        }               
     };
 
     return (

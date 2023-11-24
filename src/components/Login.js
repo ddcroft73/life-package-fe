@@ -26,10 +26,12 @@ function Space({ howMuch }) {
 const  Login = () => {
   
   const defaultRememberMeData = JSON.parse(localStorage.getItem('rememberMe')) || {};
+  const [isChecked, setChecked] = useState(defaultRememberMeData.value || false);
   const [email, setEmail] = useState(defaultRememberMeData.username || '');
   const [password, setPassword] = useState('');
-  const [isChecked, setChecked] = useState(defaultRememberMeData.value || false);
   const [error, setError] = useState('');
+
+  let sendRequest = false;
 
   const navigate = useNavigate();
 
@@ -37,36 +39,48 @@ const  Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();     
     
-       // Validate the email and password first.
-    try {
-      const accessType = await userLogin(email, password);
-      
-      // All good
-      if (accessType.action === "use2FA") {
-          navigate('/two-factor-auth');        
-
-      } else if (accessType === "admin") {
-          navigate('/admin-login');
-
-      } else if (accessType === "user"){
-          navigate('/user-dashboard');
-      } 
-      
-      // Bad Response
-      else if (accessType === "inactive user"){
-         console.log(accessType);
-      }
-      else if (accessType === "locked out"){
-        console.log(accessType);
-     } 
-     else if (accessType === "wrong credintials") {
-        setError('Incorrect username or password.');
-        setTimeout(() => setError(''), 2000);
-     }
-
-    } catch (error) {
-      console.error(error.message);
+    if (email && password) {
+        sendRequest = true;
     }
+
+    if (sendRequest) {
+      try {
+        const response = await userLogin(email, password);
+        const {action} = response
+        
+        console.log(`response: ${response}`)
+        // All good
+        
+        if (action) {
+            navigate('/two-factor-auth');        
+        } 
+        
+        if (response === "admin") {
+            navigate('/admin-login');
+        } 
+        else if (response === "user"){
+            navigate('/user-dashboard');
+        } 
+        
+        // Bad Response
+        else if (response === "inactive user"){
+          console.log(response);
+        }
+        else if (response === "locked out"){
+          console.log(response);
+        }                      
+        else if (response === "wrong credentials") {
+          setError('Incorrect username or password.');
+          setTimeout(() => setError(''), 2000);
+        }
+
+      } catch (error) {
+        console.error(error.message);
+      }
+
+    } else {
+      alert("Missubg email or password.")
+    } 
   };
   
 
@@ -88,10 +102,7 @@ const  Login = () => {
 
      if (value === true && email != "" && isEmailAddress(email)){
          localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
-     }else {
-      console.log("Not a valid email address as usrname.");
-     }    
-     
+     }     
     // if they selected Don't 
     if (value === false) {
       rememberMe.username = '';
