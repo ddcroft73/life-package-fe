@@ -14,8 +14,7 @@ import { isEmailAddress } from '../api/utils.js';
 import './Login.css';
 
 
-// I am such a terrible front end programmer.... THis is the only way I could get a discernable 
-// amount of space between the 2 texboxes. 
+// Put this in elements/ It's dumb but worked where my design failed. 
 function Space({ howMuch }) {
   return (
     <div style={{ height: howMuch }}>
