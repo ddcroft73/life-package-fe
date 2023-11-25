@@ -1,7 +1,10 @@
 import { getCurrentDateTime } from './utils';
 import axios from 'axios';
 
-const baseUrl = 'http://192.168.12.189:8015/api/v1/'; //'http://localhost:8015/api/v1/';
+import  {SERVER_HOST}  from "./settings";
+
+
+const baseUrl = `http://${SERVER_HOST}/api/v1/`; //'http://localhost:8015/api/v1/';
 
 
 

@@ -27,3 +27,14 @@
 .error-box.show {
     visibility: visible; /* Show when there's an error */
 }
+
+
+
+.fade-out {
+    animation: fadeOutAnimation 3.2s;
+  }
+  
+  @keyframes fadeOutAnimation {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }

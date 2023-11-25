@@ -10,6 +10,7 @@ import Space from "../components/Space.js";
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+
 const RegisterUser = () => {
     const [email, setEmail] = useState('');
     const [fullName, setFullName] = useState('');
@@ -61,8 +62,10 @@ const RegisterUser = () => {
             // If not, then there will be an email for the user. response.user.email
             if (!error) {
                 // show modal success
-                alert(`Account created for ${response.user.email}`)
-                navigate("verify-email/")
+                const email = response.user.email;
+
+                alert(`Account created for ${email}`);                
+                navigate('/verify-email', { state: { email: email } });
             }
             else {
                if (error === "user exists") {
@@ -90,7 +93,7 @@ const RegisterUser = () => {
                             value={email} 
                             type="text" 
                             required
-                            width="100%" containerPadding={0} onChange={handleEmail} //onChange={(e) => setEmail(e.target.value)
+                            width="100%" containerPadding={5} onChange={handleEmail} //onChange={(e) => setEmail(e.target.value)
                         />
                        <Space howmuch={15} />
                        <TextBox 
@@ -135,7 +138,7 @@ const RegisterUser = () => {
                     }}>
 
                         <Box style={{border: "0px solid black", padding:0, marginLeft:10, marginTop: 3}}>
-                            <Link to="/recover-password"> Contact Support</Link>
+                            <Link to="/verify-email"> Contact Support</Link>
                         </Box> 
                         <Box style={{border: "0px solid black", padding:0, marginRight:10, marginTop: 3}}>
                             <Link  to="/login">Already a member?  Log in</Link>

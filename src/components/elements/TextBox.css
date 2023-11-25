@@ -3,7 +3,6 @@
   margin-top: 1rem;
   border: 1px solid #817caa; 
   border-radius: 8px;
-  
   /*width: 400px;
   will change width*/
 }
@@ -31,7 +30,7 @@
 }
 
 .floating-label-input::placeholder {
-  color: transparent;
+  color: black;
 }
 
 .floating-label {
@@ -39,9 +38,9 @@
   left: 12px;
   bottom: 12px;
   font-size: 16px;
-  color: #3e3b3b;
+  color: #757272;
   transition: all 0.3s ease;
-  background-color: white;
+  background-color: transparent;
   /* Match the background of your page or container */
   padding: 0 4px;
   /* Some padding to prevent text touching the border */
@@ -75,7 +74,7 @@ body.dark .floating-label {
   /* Adjust based on the size of the label */
   width: 120px;
   /* Make this wider than the label's max width */
-  background-color: white;
+  background-color: transparent;
   /* Match the background of your page or container */
   z-index: 0;
   /* Ensure this is below the input and label */

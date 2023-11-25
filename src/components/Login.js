@@ -22,6 +22,8 @@ const  Login = () => {
   const [email, setEmail] = useState(defaultRememberMeData.username || '');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  
+  const [fadeOut, setFadeOut] = useState(false);
 
   let sendRequest = false;
 
@@ -44,11 +46,14 @@ const  Login = () => {
         // All good
         
         if (action) {
-            navigate('/two-factor-auth');        
+            setFadeOut(true);
+            setTimeout(() =>  navigate('/two-factor-auth'), 3000);          
         } 
         
         if (response === "admin") {
-            navigate('/admin-login');
+            setFadeOut(true);
+            setTimeout(() =>   navigate('/admin-login'), 3000);     
+           
         } 
         else if (response === "user"){
             navigate('/user-dashboard');
@@ -60,10 +65,13 @@ const  Login = () => {
         }
         else if (response === "locked out"){
           console.log(response);
+        } 
+        else if (response === "non-verified"){
+            console.log(response);
         }                      
         else if (response === "wrong credentials") {
           setError('Incorrect username or password.');
-          setTimeout(() => setError(''), 2000);
+          setTimeout(() => setError(''), 5000);
         }
 
       } catch (error) {
@@ -103,7 +111,8 @@ const  Login = () => {
   };
 
   return (
-
+  
+  <div className={fadeOut ? 'fade-out' : ''}>
    <Box  style={{ border: "0px solid #817Daa", display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 20}}>
        <Paper elevation={6}   variant="outlined"
             style={{
@@ -140,7 +149,8 @@ const  Login = () => {
                 {error && (
                   <Box style={{border: "0px solid black", fontSize: 14, padding: 0, color: "rgb(164, 56, 56)", textAlign: "center"}} className="error-message">
                     {error}
-                  </Box>)}
+                  </Box>
+                )}
               </Box>
              
               <Box className="toggle-box" style={{
@@ -208,7 +218,8 @@ const  Login = () => {
        </Paper>
 
    </Box>
-   
+  
+  </div> 
   );
 }
 
