@@ -124,7 +124,7 @@ const RegisterUser = () => {
                             width="100%" containerPadding={0} onChange={handlePasswordTwo}
                         />
 
-                    <Button type="submit">Register</Button>
+                    <Button style={{border: "1px solid white"}} type="submit">Register</Button>
                     <Box style={{
                         border: "0px solid black", 
                         fontSize: 13, 
