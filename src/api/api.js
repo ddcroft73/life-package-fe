@@ -1,16 +1,23 @@
 import { getCurrentDateTime } from './utils';
 import axios from 'axios';
-
-import  {SERVER_HOST}  from "./settings";
-
-
-const baseUrl = `http://${SERVER_HOST}/api/v1/`; //'http://localhost:8015/api/v1/';
+import  {BASE_URL, SERVER_HOST}  from "./settings";
 
 
+//const baseUrl = `http://${SERVER_HOST}/api/v1/`; //'http://localhost:8015/api/v1/';
+/** 
+ *   It is Highly possible i am about to remove this and hust do evrything in the respected 
+ *   Component. Unless the app gets complicated I dont see a reason to do twice the work.
+*/
 
-export const userLogin = async (username, password) => {
-    
 
+export const userLogin = async (username, password) => {    
+    /**
+     * 
+     * @param {
+     * } username 
+     * @param {*} password 
+     * @returns 
+     */
     const handleFailedLogin = (failedAttempts, username) => {
         const lockAccount = (username) => {
             // send a request to the Auth API to lock the account of username.
@@ -43,15 +50,14 @@ export const userLogin = async (username, password) => {
     };
     
 
-    const url = `${baseUrl}auth/login/access-token`;
+    const url = `${BASE_URL}/auth/login/access-token`;
     
 
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
 
-    let userData = {};
-    userData = JSON.parse(localStorage.getItem('login_attempts') || "{}");
+    let userData = JSON.parse(localStorage.getItem('login_attempts') || "{}");
     
     let login_attempts = userData.login_attempts;
     if (login_attempts === undefined || login_attempts === null) {
@@ -61,6 +67,7 @@ export const userLogin = async (username, password) => {
     try {
         const response = await axios.post(url, formData);
         const { access_token, token_type, user_role, code, token} = response.data;
+   
 
         if (code) {                                           // User has 2FA enabled        
             let data = {
@@ -69,8 +76,8 @@ export const userLogin = async (username, password) => {
                 action: "use2FA"
             };
             localStorage.setItem("TwoFactorAuth", JSON.stringify(data));
-            //reset login_attempts
             localStorage.removeItem('login_attempts');
+
             return data;
     
             } 
@@ -112,7 +119,7 @@ export const userLogin = async (username, password) => {
 
 export const userRegister = async (userData) => {
 
-    const url = `${baseUrl}users/registration`;
+    const url = `${BASE_URL}/users/registration`;
     
     const payload = {
         "user_in": {

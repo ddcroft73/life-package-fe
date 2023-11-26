@@ -85,17 +85,34 @@ const RegisterUser = () => {
     return (
         <Box className="box" style={{ border: "0px solid black", paddingTop: "20px" }}>
             <Paper elevation={8} className="container">
+            <Box style={{ border:"1px soid white",height:'auto', width:'100%', padding: 0, display: 'flex', justifyContent: 'center',}}>
+                  <Box style={{
+                    textAlign: "center",
+                    backgroundColor:'#484444',
+                    border:"1px solid #817Daa", 
+                    height:60, 
+                    color: "#817Daa",
+                    width:"95%", 
+                    fontSize: 25,
+                    marginTop: 25,
+                    marginBottom: 0,
+                    lineHeight: 1.5
+                   }}>
+                      Life Package&#8482;  Registration                   
+                    
+                  </Box>
+              </Box>
                 <form className="registration-form" onSubmit={handleSubmit}>
-                    <h1>Life Package</h1>
+                  
                         <TextBox 
                             id="email" 
                             label="Email*" 
                             value={email} 
                             type="text" 
                             required
-                            width="100%" containerPadding={5} onChange={handleEmail} //onChange={(e) => setEmail(e.target.value)
+                            width="100%" containerPadding={0} onChange={handleEmail} //onChange={(e) => setEmail(e.target.value)
                         />
-                       <Space howmuch={15} />
+                       <Space howmuch={5} />
                        <TextBox 
                             id="fullName" 
                             label="Full Name" 
@@ -103,7 +120,7 @@ const RegisterUser = () => {
                             type="text" 
                             width="100%" containerPadding={0} onChange={handleFullName}
                         />
-                        <Space howmuch={15} />
+                        <Space howmuch={5} />
                         
                         <TextBox 
                             id="password" 
@@ -114,7 +131,7 @@ const RegisterUser = () => {
                             width="100%" containerPadding={0} onChange={handlePasswordOne}
                         />
 
-                      <Space howmuch={15} />
+                      <Space howmuch={5} />
                        <TextBox 
                             id="repeat-password" 
                             label="Repeat-Password*" 
@@ -124,7 +141,8 @@ const RegisterUser = () => {
                             width="100%" containerPadding={0} onChange={handlePasswordTwo}
                         />
 
-                    <Button style={{border: "1px solid white"}} type="submit">Register</Button>
+                    <Space howmuch={35} />
+                    <Button style={{border: "1px solid white", fontSize: 23}} type="submit">Sign up</Button>
                     <Box style={{
                         border: "0px solid black", 
                         fontSize: 13, 
@@ -138,14 +156,14 @@ const RegisterUser = () => {
                     }}>
 
                         <Box style={{border: "0px solid black", padding:0, marginLeft:10, marginTop: 3}}>
-                            <Link to="/verify-email"> Contact Support</Link>
+                            <Link to="/two-factor-auth"> Contact Support</Link>
                         </Box> 
                         <Box style={{border: "0px solid black", padding:0, marginRight:10, marginTop: 3}}>
                             <Link  to="/login">Already a member?  Log in</Link>
                         </Box> 
 
                    </Box> 
-                    <Space howmuch={35} />
+                    <Space howmuch={25} />
                     <Box style={{border: "0px solid black", height:23, display: 'flex', lineHeight: 0, fontSize: 14, width: "100%"}}>
                         <div className="hr"></div> 
                         &nbsp;&nbsp;&nbsp;Or&nbsp;&nbsp;&nbsp;

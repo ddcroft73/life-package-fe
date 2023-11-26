@@ -18,4 +18,6 @@ I need to figure out how to save the logon data if there are multiple users on t
      after 9, lovked out because yopur ass is up to no good. 
      
   Build an Admin PIN Component
-  set up routing. 
+  add modal for general use
+  password rec0
+  add logic for 2FA

@@ -9,11 +9,11 @@ import axios from 'axios';
 const VerifyEmail =  () => { //
     const location = useLocation();
     const { email } = location.state || {};
+
     const [message, setMessage] = useState('');
     const [cnt, setCnt] = useState(2);
 
     const [fadeOut, setFadeOut] = useState(false);
-
     const navigate = useNavigate();
     
     const resendEmailVerification = async () => {
@@ -25,9 +25,9 @@ const VerifyEmail =  () => { //
         // send the email address in the url
         try {
             // send request to resend endpoint
-            let response={};
-            response.status = 200;
-            //const response = await axios.put(resendLink);            
+            //let response={};
+            //response.status = 200;
+            const response = await axios.put(resendLink);            
 
             if (response.status === 200) {
                 setCnt(cnt+1);
@@ -35,7 +35,7 @@ const VerifyEmail =  () => { //
                 if (cnt < 4) {
                     setMessage(`${cnt} Emails dispatched to: ${email}...`);   
                 } else {
-                    setMessage("Three's the limit... ")
+                    setMessage("Three's the limit... you are being redirected to login.")
                     setFadeOut(true);
                     setTimeout(() => navigate("/login"), 3000);
                 }                
@@ -44,7 +44,7 @@ const VerifyEmail =  () => { //
         catch (error) {
             if (error.response) {
                 console.error('Error status:', error.response.status);
-    // Ill fix this later. 
+                // Ill fix this later. 
                 if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
                     alert(error.response.data.detail);
                 } else{
@@ -52,11 +52,7 @@ const VerifyEmail =  () => { //
                 }
             } 
         }
-
-
     };
-
-
     return (
         <div className={fadeOut ? 'fade-out' : ''}>
         <Box style={{border: "0px solid gray", maxWidth: 700, backgroundColor: "rgb(18, 17, 16)", height: 'auto', textAlign:"center"}}>

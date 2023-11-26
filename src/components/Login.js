@@ -33,26 +33,24 @@ const  Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();     
     
-    if (email && password) {
-        sendRequest = true;
-    }
+    if (email && password) {sendRequest = true;}
 
     if (sendRequest) {
       try {
         const response = await userLogin(email, password);
-        const {action} = response
+        const {action} = response;
+        
         
         console.log(`response: ${response}`)
-        // All good
-        
+        // All good        
         if (action) {
             setFadeOut(true);
-            setTimeout(() =>  navigate('/two-factor-auth'), 3000);          
+            setTimeout(() =>  navigate('/two-factor-auth', { state: { email: email } }), 3000);          
         } 
         
         if (response === "admin") {
             setFadeOut(true);
-            setTimeout(() =>   navigate('/admin-login'), 3000);     
+            setTimeout(() =>  navigate('/admin-login'), 3000);     
            
         } 
         else if (response === "user"){
@@ -74,12 +72,12 @@ const  Login = () => {
           setTimeout(() => setError(''), 5000);
         }
 
-      } catch (error) {
+      } catch (error) {        
         console.error(error.message);
       }
 
     } else {
-      alert("Missubg email or password.")
+      alert("Missing email or password.")
     } 
   };
   

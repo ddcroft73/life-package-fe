@@ -1,10 +1,22 @@
 import Box from "./elements/Box.js";
 import React, { useState } from 'react';
+import { useNavigate , useLocation}  from 'react-router-dom';
 import Button from "./elements/Button.js"
 import Paper from "./elements/Paper.js"
+import axios from 'axios';
+import { BASE_URL, SERVER_HOST } from "../api/settings.js";
+import { decodeJwt } from "../api/utils.js";
+
 
 const TwoFactorAuth = ({ onSubmit }) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
+  const [message, setMessage] = useState('');
+  const [cnt, setCnt] = useState(2);
+  const [fadeOut, setFadeOut] = useState(false);
+  
+  const location = useLocation();
+  const { email } = location.state || {};
+  const navigate = useNavigate();  
   
     const handleChange = (index) => (e) => {
         const value = e.target.value;
@@ -24,67 +36,178 @@ const TwoFactorAuth = ({ onSubmit }) => {
     const handleKeyDown = (index) => (e) => {
         // Allow backspace to clear the current input and then move to the previous input
         if (e.key === 'Backspace') {
-          e.preventDefault();
-      
-          const newCode = [...code];
-          // If there is a value in the current input, clear it
-          if (code[index]) {
-            newCode[index] = '';
-            setCode(newCode);
-          }
-          // If the current input is already empty, delete the previous input's value
-          else if (index > 0 && !code[index]) {
-            newCode[index - 1] = '';
-            setCode(newCode);
-            // Move focus to the previous input
-            const prevInput = e.target.previousSibling;
-            if (prevInput) {
-              prevInput.focus();
+            e.preventDefault();
+        
+            const newCode = [...code];
+            // If there is a value in the current input, clear it
+            if (code[index]) {
+              newCode[index] = '';
+              setCode(newCode);
             }
-          }
-        }
-      };
-      
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(code.join(''))
-    
-    // send the code and the token to the srver to verify. The token basically just makes sure
-    // its for the same email that logged in and it has a time limit. 
+            // If the current input is already empty, delete the previous input's value
+            else if (index > 0 && !code[index]) {
+              newCode[index - 1] = '';
+              setCode(newCode);
+              // Move focus to the previous input
+              const prevInput = e.target.previousSibling;
+              if (prevInput) {
+                prevInput.focus();
+              }
+            }
+         }
+     };
 
-    // need to access localStorage to get the code and token, then send the users input, and token to the server
-    // to auth when that comes back, save the Token, the user is good to go! unless there were errors.
+  const resend2FA = () => {
+    const url = `${BASE_URL}/auth/2FA/resend-2FA-code`;
+    const resendLink = `${url}?email=${email}`
+    
+    
+    // send the email address in the url
+    try {
+        // send request to resend endpoint
+        let response={};
+        response.status = 200;
+        //const response = await axios.put(resendLink);            
+
+        if (response.status === 200) {
+            setCnt(cnt+1);
+
+            if (cnt < 4) {
+                setMessage(`${cnt} codes dispatched to: ${email}...`);   
+            } else {
+                setMessage("Three's the limit... redirecting to login.")
+                setFadeOut(true);
+                setTimeout(() => navigate("/login"), 3000);
+            }                
+        }
+    }
+    catch (error) {
+        if (error.response) {
+            console.error('Error status:', error.response.status);
+// Ill fix this later. DIsplays sit all now
+            if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
+                alert(error.response.data.detail);
+            } else{
+                alert(error.response.data.detail); 
+            }
+        } 
+     }
+  };
+  
+  
+  const verify2faCode = async (e) => {
+    e.preventDefault();
+    // /auth/2FA/verify-2FA-code/
+    let userData = JSON.parse(localStorage.getItem('TwoFactorAuth') || "{}");
+    let code_2FA = userData.code;
+    const token = userData.token; 
+    const email = decodeJwt(token).email;
+    const users_code = code.join('');
+
+    if (code_2FA && token && users_code.length === 6) {
+        try {
+             const url = `${BASE_URL}/auth/2FA/verify-2FA-code/`;            
+             const payload = {
+               "code_2FA": code_2FA,
+               "code_user": users_code,
+               "email_account": email,
+               "timed_token": token
+             };
+
+              const response = await axios.put(url, payload)
+              const { access_token, token_type, user_role } = response.data;
+
+              if (response.status === 200) {
+                  console.log('Success!');
+                 if (access_token && token_type === "bearer") { 
+                    console.log('Success');
+                    localStorage.removeItem('login_attempts');
+        
+                    let access_data = {
+                        username: email,
+                        access_token: access_token,
+                        token_type: "bearer",
+                        user_role: user_role
+                    };      
+                    localStorage.setItem("LifePackage", JSON.stringify(access_data));
+
+                    // navigate accordingly.                    
+                    if (user_role === "admin") {
+                       // load the admin PIN
+
+                    } else if (user_role === "user") {
+                       // user workstation
+                       setFadeOut(true);
+                       setTimeout(() => navigate("/user-dashboard"), 3000);                      
+                    }
+                    
+                 } 
+              }   
+        // Error due to server response
+        } catch(error) {
+            // 
+            if (error.response) {
+              console.error('Error status:', error.response.status);
+  // Ill fix this later. 
+              if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
+                setMessage(error.response.data.detail);
+                setTimeout(() => setMessage(""), 3000);               
+              }
+          } 
+        }
+
+    // Error user input, data from localStorage
+    } else if (users_code.length != 6) {
+        setMessage('Missing 1 or more characters input.')
+        setTimeout(() => setMessage(""), 3000);
+    } else if (!code_2FA || !token) {
+        setMessage("Error: Click below to resend 2FA code.")
+        setTimeout(() => setMessage(""), 3000);
+    }
   };
 
   return (
-    <div style={styles.container}>
-      <Paper elevation={6} style={styles.formBox}>
-        <div style={styles.lockIcon}>🔒</div>
-        <h1 style={styles.title}>Life Package</h1>
-        <p style={styles.subtitle}>Enter 6-digit code You received via email or sms.</p>
-        <form onSubmit={handleSubmit}>
-        <div style={styles.inputsContainer}>
-        {code.map((digitOrLetter, index) => (
-            <input
-            onKeyDown={handleKeyDown(index)}
-            key={index}
-            style={styles.input}
-            type="text"
-            maxLength="1"
-            value={digitOrLetter}
-            onChange={handleChange(index)}
-            pattern="[0-9a-zA-Z]"   // This pattern allows digits and letters
-            autoFocus={index === 0} // Focus the first input on mount
-            />
-        ))}
-        </div>
-          <Button type="submit" style={styles.button}>Submit</Button>
-        </form>
-      </Paper>
-    </div>
+       <div className={fadeOut ? 'fade-out' : ''}>
+          <Box style={styles.container}>
+            <Box style={styles.formBox}>
+              <div style={styles.lockIcon}>🔒</div>
+              <h1 style={styles.title}>Life Package</h1>
+              <Box style={styles.subtitle}>Enter the 6-digit code You received via email or sms.</Box>
+                <Box style={{border: "0px solid black", height: 22}}>
+                  {message && (
+                  <Box style={{position: "relative", top: -8, border: "0px solid black", fontSize: 14, zIndex: 10, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
+                      {message}
+                  </Box>
+                  )}
+                </Box >      
+              <form onSubmit={verify2faCode}>
+                    <Box style={styles.inputsContainer}>
+                      {code.map((digitOrLetter, index) => (
+                          <input
+                          onKeyDown={handleKeyDown(index)}
+                          key={index}
+                          style={styles.input}
+                          type="text"
+                          maxLength="1"
+                          value={digitOrLetter}
+                          onChange={handleChange(index)}
+                          pattern="[0-9a-zA-Z]"   // This pattern allows digits and letters
+                          autoFocus={index === 0} // Focus the first input on mount
+                          />
+                      ))}
+                    </Box>
+
+                    <Box style={{lineHeight: 1.2, border: "0px solid gray", color: "gray", textAlign: "left"}}>
+                    If you don't receive the code within a few minutes, please check your spam folder
+                    or <span style={{cursor: "pointer",padding:3, color: 'orange'}} onClick={resend2FA}>click here</span> to resend.
+                    </Box>
+                  <Button type="submit" style={styles.button}>Submit</Button>
+              </form>
+            </Box>
+          </Box>
+      </div>    
   );
 };
-
 
 
 
@@ -92,11 +215,14 @@ const TwoFactorAuth = ({ onSubmit }) => {
 const styles = {
   container: {
     display: 'flex', 
+    border: "0px solid gray",
+    borderRadius: '15px', 
     marginTop: 20,
     justifyContent: 'center', 
+    width: 375,
     alignItems: 'center', 
     height: 'auto', 
-    backgroundColor: 'rgb(18, 17, 16)',
+    backgroundColor: "transparent",//'rgb(49, 46, 44)',
     fontFamily:  "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;"
   },
   hyphen: {
@@ -107,7 +233,8 @@ const styles = {
   },
   formBox: {
     backgroundColor: 'rgb(49, 46, 44)', 
-    borderRadius: '10px', 
+    border: "1px solid gray",
+    borderRadius: '15px', 
     textAlign: 'center',
    /* padding: '40px',
     textAlign: 'center',
@@ -127,12 +254,18 @@ const styles = {
   },
   subtitle: {
     color: 'white',
-    marginBottom: '20px'
+    marginTop: 0,
+    marginBottom: '0px',
+    border: '0px solid white', 
+    textAlign: "left",
   },
   inputsContainer: {
     display: 'flex', 
     justifyContent: 'center',
-    marginBottom: '20px',
+    marginBottom: '0px',
+    marginTop: '0px',
+    paddingTop: "10px",
+    border: '0px solid white', 
   },
   input: {
     width: '40px', 
@@ -141,7 +274,7 @@ const styles = {
     fontSize: '32px', 
     textAlign: 'center',
     borderRadius: '6px', 
-    border: '1px solid white', // Adjust as needed
+    border: '1px solid gray', // Adjust as needed
     backgroundColor: 'rgb(33, 33, 33)',
     color: 'white'
   },
@@ -149,70 +282,13 @@ const styles = {
     padding: '15px', 
     backgroundColor: '#484444', // Placeholder color, replace with the color you want
     color: 'white', 
-     border: '1px solid white', 
-    borderRadius: '8px', 
+    border: '1px solid white', 
+    //borderRadius: '8px', 
     cursor: 'pointer',
     fontSize: '20px',
-    width: '90%', // Full-width button
+    width: '95%', // Full-width button
+    marginBottom: 10
   }
 };
 
 export default TwoFactorAuth;
-
- /*
-  const handleChange = (index) => (e) => {
-    const value = e.target.value;
-    const newCode = [...code];
-    
-    if (value.match(/[0-9a-zA-Z]/)) {
-      newCode[index] = value.toUpperCase(); // Convert to upper case
-      setCode(newCode);
-  
-      // If current input is before the hyphen and a value has been entered, focus the next input
-      if (index < 2 && value) {
-        const nextInput = e.target.parentElement.children[index + 1];
-        nextInput && nextInput.focus();
-      } 
-      // If current input is right before the hyphen, jump over the hyphen
-      else if (index === 2 && value) {
-        const nextInput = e.target.parentElement.children[index + 2]; // Skip over the hyphen
-        nextInput && nextInput.focus();
-      }
-      // For inputs after the hyphen, continue as normal
-      else if (index > 2 && value) {
-        const nextInput = e.target.parentElement.children[index + 1];
-        nextInput && nextInput.focus();
-      }
-    } else if (!value) {
-      // If the input is cleared, reset its value in the state
-      newCode[index] = '';
-      setCode(newCode);
-    }
-  };
-  
-  const handleKeyDown = (index) => (e) => {
-    if (e.key === 'Backspace') {
-      // Prevent default behavior of backspace key
-      e.preventDefault();
-      const newCode = [...code];
-      newCode[index] = '';
-      setCode(newCode);
-  
-      // If current input is after the hyphen and is empty, move focus to the previous input
-      if (index > 3 && !code[index]) {
-        const prevInput = e.target.parentElement.children[index - 1];
-        prevInput && prevInput.focus();
-      }
-      // If current input is right after the hyphen and is empty, jump back over the hyphen
-      else if (index === 3 && !code[index]) {
-        const prevInput = e.target.parentElement.children[index - 2]; // Skip over the hyphen
-        prevInput && prevInput.focus();
-      }
-      // For inputs before the hyphen, continue as normal
-      else if (index < 3 && !code[index]) {
-        const prevInput = e.target.parentElement.children[index - 1];
-        prevInput && prevInput.focus();
-      }
-    }
-  };
-  */
