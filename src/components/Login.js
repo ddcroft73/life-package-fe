@@ -54,7 +54,8 @@ const  Login = () => {
            
         } 
         else if (response === "user"){
-            navigate('/user-dashboard');
+          setFadeOut(true);
+          setTimeout(() =>  navigate('/user-dashboard'), 3000);  
         } 
         
         // Bad Response
@@ -165,7 +166,7 @@ const  Login = () => {
                   </div>
               </Box>
 
-              <Button style={{marginTop: '1px', width: '100%', fontSize:"18px", border:"1px solid white"}}
+              <Button style={{marginTop: '1px', width: '100%', fontSize:"24px", border:"1px solid white"}}
                   onClick={handleSubmit}> Sign In
               </Button>
               

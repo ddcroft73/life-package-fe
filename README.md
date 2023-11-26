@@ -16,12 +16,17 @@ Right. So at some ppint I need to add Dark\light Mode. I have the theme infrastr
 - **Login**: The login screen is simple. I built some components to mimic MUI `Paper`, and `Input`. I mayat some pint impor the actual library, but I actually omly need a few, and I've built them locally. ALl Code for handling the repsones is done.
 - **Registration**: Currrently working on this one. I have the basics and I'll go back and tweak the UI. All the code for creating users as well as handing the responses is done.
 - **Two Factor Auth**: I've built the UI componet. No code yet.
-- **Routing**: I jave set up the routing.ALl it needs is more... routes.
-
+- **Routing**: I have set up the routing.ALl it needs is more... routes.
+### 11/26/23
+- **Code for 2FA**: added code to verify code and resend verification. 
+- **Modal**: Reusable modal. It'snot very fancy at all but it gives me the ability to have different type modals in the same component. ONe or two buttons, programable.
+- **Finished Registration**: It;s really simple to look at it. But it's really dynamic, and was a great playground for the Modal.
 
 ### TODO:
 - A landing page to see if there is any interest. I should have done this ages ago, but if I'm being honest. It's the content that scares me half to death. I havent hashed it all out as to how it should appeal to the general public. I am going to us AI to help me pinpoint whats what, and as soon as I just start it, it'll be done. just gotta get to it.. just gotta do it!   "gotta do it, H.I.!" -Edwina "Ed" McDunnough, Raising Arizona
-- 2FA code
+
+- Admin PIN entry component.. THought Id get to it. nope
+- add annimation sparingly to UI for subtle effects. fade-in, fade-out, etc
 - Themes
 - UI Password recovery
 - user Workstation

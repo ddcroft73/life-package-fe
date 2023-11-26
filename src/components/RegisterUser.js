@@ -1,14 +1,16 @@
 import React from 'react';
 import './RegisterUser.css';
+
 import { userRegister } from '../api/api.js';
 import { isEmailAddress } from '../api/utils.js';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Box from "../components/elements/Box.js";
 import Paper from "../components/elements/Paper.js";
 import TextBox from "../components/elements/TextBox.js";
 import Button from "../components/elements/Button.js";
 import Space from "../components/Space.js";
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import Modal from './Modal';
 
 
 const RegisterUser = () => {
@@ -16,19 +18,43 @@ const RegisterUser = () => {
     const [fullName, setFullName] = useState('');
     const [passwordOne, setPasswordOne] = useState('');
     const [passwordTwo, setPasswordTwo] = useState('');
+
+    const [message, setMessage] = useState('');
+    const [modalConfig, setModalConfig] = useState({});
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
     const navigate = useNavigate();
 
-    const handleEmail = (value) => {
-        setEmail(value);
+    const handleEmail = (value) => setEmail(value);
+    const handleFullName = (value) => setFullName(value);
+    const handlePasswordOne = (value) => setPasswordOne(value);
+    const handlePasswordTwo = (value) => setPasswordTwo(value);
+    
+    // Predefined actions
+    const confirmAction = () =>  navigate('/verify-email', { state: { email: email } }); 
+    const cancelAction = () => setIsModalVisible(false);
+    
+    // Function to show modal with OK button, just for message
+    const showMessageModal = (content) => {
+        setModalConfig({
+        content,
+        buttons: [
+            { text: 'OK', handler: cancelAction }
+        ]
+        });
+        setIsModalVisible(true);
     };
-    const handleFullName = (value) => {
-        setFullName(value);
-    };
-    const handlePasswordOne = (value) => {
-        setPasswordOne(value);
-    };
-    const handlePasswordTwo = (value) => {
-        setPasswordTwo(value);
+
+    // Function to program modal for an action on OK
+    const showConfirmModal = (content) => {
+        setModalConfig({
+        content,
+        buttons: [
+            { text: 'OK', handler: confirmAction },
+            //{ text: 'Cancel', handler: cancelAction }
+        ]
+        });
+        setIsModalVisible(true);
     };
 
 
@@ -42,11 +68,13 @@ const RegisterUser = () => {
             userData.fullName = fullName;
         }
         if (!isEmailAddress(email)) {
-            console.log(`${email} is not a valid email address. Try again mfr...`);
+            setMessage(`${email} is not a valid email address.`)
+            setTimeout(() => setMessage(""), 3000);
             sendRequest = false;
         }        
         if (passwordOne !== passwordTwo) {
-            console.log("Passwords do not match.");
+            setMessage("Passwords do not match.");
+            setTimeout(() => setMessage(""), 3000);
             sendRequest = false;
         }
 
@@ -63,19 +91,75 @@ const RegisterUser = () => {
             if (!error) {
                 // show modal success
                 const email = response.user.email;
-
-                alert(`Account created for ${email}`);                
-                navigate('/verify-email', { state: { email: email } });
+                  // show modal
+                   //alert("User exists")
+                   let currContent = (
+                    <>
+                      <div style={{width:"100%", padding:0, color: "white"}}><h2>Success:</h2></div>
+                      <Box style={{
+                        width:"100%", 
+                        padding:0, 
+                        color: "gray",
+                        border: "0px solid black"}}>  
+                            An Account was created for:<span style={{color:"orange"}}>{email}</span>.  
+                            
+                      </Box>
+                    </>
+                  );
+                   showConfirmModal(currContent);                 
+                   
             }
             else {
                if (error === "user exists") {
                    // show modal
-                   alert("User exists")
+                   //alert("User exists")
+                   let currContent = (
+                    <>
+                      <div style={{width:"100%", padding:0, color: "red"}}><h2>Error:</h2></div>
+                      <Box style={{
+                        width:"100%", 
+                        padding:0, 
+                        color: "gray",
+                        border: "0px solid black"}}>       
+                            The user: <span style={{color:"orange"}}>{email}</span> already exists.
+                        
+                      </Box>
+                    </>
+                  );
+                  showMessageModal(currContent);
+
                } else if (error === 'server closed') {
                    // show modal
-                   alert("Server Closed")
+                   let currContent = (
+                    <>
+                      <div style={{width:"100%", padding:0, color: "Error"}}><h2>Error:</h2></div>
+                      <Box style={{
+                        width:"100%", 
+                        padding:0, 
+                        color: "gray",
+                        border: "0px solid black"}}>                                
+                        The system is not taking new users at this time. For more information, 
+                        contact <span style={{color:"orange"}}>Support</span>.
+                      </Box>
+                    </>
+                  );
+                  showMessageModal(currContent);
                } else {
-                   alert(`Unkown: ${error}`)
+                    // show modal
+                   // Unknown error
+                   let currContent = (
+                    <>
+                      <div style={{width:"100%", padding:0, color: "Error"}}><h2>Error:</h2></div>
+                      <Box style={{
+                        width:"100%", 
+                        padding:0, 
+                        color: "gray",
+                        border: "0px solid black"}}>                            
+                          <span style={{color:"white"}}>{error}</span>.
+                      </Box>
+                    </>
+                  );
+                  showMessageModal(currContent);
                }
             }
             console.log("response:", `${JSON.stringify(response)}`);
@@ -84,6 +168,14 @@ const RegisterUser = () => {
 
     return (
         <Box className="box" style={{ border: "0px solid black", paddingTop: "20px" }}>
+
+            <Modal
+                show={isModalVisible}
+                content={modalConfig.content}
+                buttons={modalConfig.buttons}
+                // can also pass onCancel here if needed
+            />
+
             <Paper elevation={8} className="container">
             <Box style={{ border:"1px soid white",height:'auto', width:'100%', padding: 0, display: 'flex', justifyContent: 'center',}}>
                   <Box style={{
@@ -140,8 +232,16 @@ const RegisterUser = () => {
                             required
                             width="100%" containerPadding={0} onChange={handlePasswordTwo}
                         />
+                    
 
-                    <Space howmuch={35} />
+                    <Box style={{border: "0px solid black",height: 35}}>
+                      {message && (
+                       <Box style={{border: "0px solid black", lineHeight: 2, fontSize: 14, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
+                        {message}
+                       </Box>
+                        )}
+                    </Box >    
+
                     <Button style={{border: "1px solid white", fontSize: 23}} type="submit">Sign up</Button>
                     <Box style={{
                         border: "0px solid black", 
@@ -163,7 +263,9 @@ const RegisterUser = () => {
                         </Box> 
 
                    </Box> 
-                    <Space howmuch={25} />
+                   
+                   <Space howmuch={15}/>
+
                     <Box style={{border: "0px solid black", height:23, display: 'flex', lineHeight: 0, fontSize: 14, width: "100%"}}>
                         <div className="hr"></div> 
                         &nbsp;&nbsp;&nbsp;Or&nbsp;&nbsp;&nbsp;

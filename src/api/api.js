@@ -13,8 +13,7 @@ import  {BASE_URL, SERVER_HOST}  from "./settings";
 export const userLogin = async (username, password) => {    
     /**
      * 
-     * @param {
-     * } username 
+     * @param {* } username 
      * @param {*} password 
      * @returns 
      */
