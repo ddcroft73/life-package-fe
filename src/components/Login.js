@@ -9,7 +9,7 @@ import TextBox from '../components/elements/TextBox.js';
 import Paper from '../components/elements/Paper.js';
 import ToggleSwitch from '../components/elements/ToggleSwitch.js';
 import Space from '../components/Space.js';
-
+import Modal from './Modal.js';
 import { isEmailAddress } from '../api/utils.js';
 import './Login.css';
 
@@ -24,6 +24,9 @@ const  Login = () => {
   const [error, setError] = useState('');
   
   const [fadeOut, setFadeOut] = useState(false);
+  
+  const [modalConfig, setModalConfig] = useState({});
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   let sendRequest = false;
 
@@ -66,31 +69,90 @@ const  Login = () => {
           console.log(response);
         } 
         else if (response === "non-verified"){
-            console.log(response);
+
+            // show modal
+                   //alert("User exists")
+                   let currContent = (
+                    <>
+                      <div style={{width:"100%", padding:0, color: "red"}}>
+                         <h2>Error:</h2>
+                      </div>
+                      <Box style={{
+                        width:"100%", 
+                        padding:0, 
+                        color: "gray",
+                        border: "0px solid black"}}>       
+                            The user: <span style={{color:"orange"}}>{email}</span> has not 
+                            been verified on this system. <br/><br/>
+                            Check your email and verify to login.                         
+                      </Box>
+                    </>
+                  );
+                  showMessageModal(currContent);
         }                      
         else if (response === "wrong credentials") {
           setError('Incorrect username or password.');
           setTimeout(() => setError(''), 5000);
         }
 
-      } catch (error) {        
-        console.error(error.message);
+      } catch (error) {       
+         let currContent = (
+                <>
+                  <div style={{width:"100%", padding:0, color: "red"}}>
+                    <h2>Error:</h2>
+                  </div>
+                  <Box style={{
+                    width:"100%", 
+                    padding:0, 
+                    color: "white",
+                    border: "0px solid black"}}>       
+                        There seems to be a problem with the connection. Check your
+                        internet, or maybe the server is down... Hell I dont't know. Something fucked up.                         
+                  </Box>
+                </>
+          );
+            showMessageModal(currContent);
+            console.error(error.message);
       }
 
     } else {
-      alert("Missing email or password.")
+      setError('Missing email or password.');
+      setTimeout(() => setError(''), 5000);
     } 
   };
   
-
-
-  const handleUsername = (value) => {
-       setEmail(value);
-  };
+  const handleUsername = (value) => setEmail(value);
   const handlePassword = (value) => {
        setPassword(value);
        setError('');
   };
+
+    // Predefined actions
+    const confirmAction = () =>  navigate('/verify-email', { state: { email: email } }); 
+    const cancelAction = () => setIsModalVisible(false);
+    
+    // Function to show modal with OK button, just for message
+    const showMessageModal = (content) => {
+        setModalConfig({
+        content,
+        buttons: [
+            { text: 'OK', handler: cancelAction }
+        ]
+        });
+        setIsModalVisible(true);
+    };
+
+    // Function to program modal for an action on OK
+    const showConfirmModal = (content) => {
+        setModalConfig({
+        content,
+        buttons: [
+            { text: 'OK', handler: confirmAction },
+            //{ text: 'Cancel', handler: cancelAction }
+        ]
+        });
+        setIsModalVisible(true);
+    };
   const handleRememberMe = (value) => {
      setChecked(value);
 
@@ -113,6 +175,14 @@ const  Login = () => {
   
   <div className={fadeOut ? 'fade-out' : ''}>
    <Box  style={{ border: "0px solid #817Daa", display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 20}}>
+      
+            <Modal
+                show={isModalVisible}
+                content={modalConfig.content}
+                buttons={modalConfig.buttons}
+                // can also pass onCancel here if needed
+            />
+
        <Paper elevation={6}   variant="outlined"
             style={{
               width: '375px', 

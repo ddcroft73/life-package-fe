@@ -101,7 +101,7 @@ const RegisterUser = () => {
                         padding:0, 
                         color: "gray",
                         border: "0px solid black"}}>  
-                            An Account was created for:<span style={{color:"orange"}}>{email}</span>.  
+                            An account was created for:<span style={{color:"orange"}}>{email}</span>.  
                             
                       </Box>
                     </>
@@ -132,24 +132,44 @@ const RegisterUser = () => {
                    // show modal
                    let currContent = (
                     <>
-                      <div style={{width:"100%", padding:0, color: "Error"}}><h2>Error:</h2></div>
+                      <div style={{width:"100%", padding:0, color: "red"}}
+                         ><h2>Error:</h2>
+                      </div>
                       <Box style={{
                         width:"100%", 
                         padding:0, 
                         color: "gray",
                         border: "0px solid black"}}>                                
-                        The system is not taking new users at this time. For more information, 
-                        contact <span style={{color:"orange"}}>Support</span>.
+                            The system is not taking new users at this time. For more information, 
+                            contact <span style={{color:"orange"}}>Support</span>.
                       </Box>
                     </>
                   );
                   showMessageModal(currContent);
-               } else {
+               } else if (error === "no response") {
+                    // show modal
+                    let currContent = (
+                        <>
+                        <div style={{width:"100%", padding:0, color: "red"}}>
+                            <h2>Error:</h2>
+                        </div>
+                        <Box style={{
+                            width:"100%", 
+                            padding:0, 
+                            color: "white",
+                            border: "0px solid black"}}>       
+                                There seems to be a problem with the connection. Check your
+                                internet, or maybe the server is down... Hell I dont't know. Something fucked up.                         
+                        </Box>
+                        </>
+                    );
+                    showMessageModal(currContent);
+               }else {
                     // show modal
                    // Unknown error
                    let currContent = (
                     <>
-                      <div style={{width:"100%", padding:0, color: "Error"}}><h2>Error:</h2></div>
+                      <div style={{width:"100%", padding:0, color: "red"}}><h2>Error:</h2></div>
                       <Box style={{
                         width:"100%", 
                         padding:0, 
@@ -162,7 +182,6 @@ const RegisterUser = () => {
                   showMessageModal(currContent);
                }
             }
-            console.log("response:", `${JSON.stringify(response)}`);
         }               
     };
 

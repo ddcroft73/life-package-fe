@@ -155,15 +155,16 @@ export const userRegister = async (userData) => {
         else if (error.request) {
             // The request was made but no response was received
             console.error('No response:', error.request);
-            resp.error = error.request
+            resp.error = "no response"
             return resp//error.request;
+
         } else {
             // Something happened in setting up the request that triggered an Error
             console.error('Error:', error.message);
             resp.error = error.message
             return resp //error.message;
-        }
-    }
+        } 
+    } 
 };
 
 
