@@ -10,6 +10,7 @@ import Paper from '../components/elements/Paper.js';
 import ToggleSwitch from '../components/elements/ToggleSwitch.js';
 import Space from '../components/Space.js';
 import Modal from './Modal.js';
+import Or from './Or.js';
 import { isEmailAddress } from '../api/utils.js';
 import './Login.css';
 
@@ -183,45 +184,51 @@ const  Login = () => {
                 // can also pass onCancel here if needed
             />
 
-       <Paper elevation={6}   variant="outlined"
+       <Paper elevation={0}   variant="outlined"
             style={{
               width: '375px', 
               height: '555px', 
-              backgroundColor: 'var(--body-background-dark-1)',
+              backgroundColor: "transparent",//'var(--body-background-dark-1)',
               border: "0px solid #817Daa",
             }}>
 
           <Box className="copyRight-box" style={{border: "1px soid #817Daa", textAlign: 'none', fontSize: 12, color: 'gray'}} >     
 
-              <Box style={{ border:"1px soid white",height:'auto', width:'100%', padding: 0, display: 'flex', justifyContent: 'center',}}>
+              <Box style={{ border:"1px soid white",
+                           height:'auto', width:'100%',
+                           padding: 0, display: 'flex', 
+                           justifyContent: 'center',
+                           marginBottom: 15}}>
                   <Box style={{
                     textAlign: "center",
-                    backgroundColor:'#484444',
-                    border:"1px solid #817Daa", 
+                    backgroundColor: "var(--body-background-dark)",//'#484444',
+                    border:"0px solid #817Daa", 
                     height:125, 
                     width:"100%", 
                     fontSize: 25,
-                    marginBottom: 20}}>
-                      <div style={{fontSize: 54, color: "#817Daa"}}>
+                    marginBottom: 0}}>
+                      <div style={{fontSize: 54, color: "#817Dda"}}>
                       <i className="fas fa-sign-in-alt" /></div> &nbsp;Life Package &#8482;                   
                     
                   </Box>
               </Box>
-
-              <Box style={{border: "0px solid black", padding:0}}>
+              <Space howmuch={8} />
+            <Box style={{backgroundColor: "rgb(22, 22, 22)", borderRadius: 15, border: "1px solid gray"}}>
+              <div style={{border: "0px solid black",  backgroundColor: ""}}>
                 <TextBox  id="email" label="Email*" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
                 <Space howmuch={8} />
                 <TextBox  id="password" label="Password*" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
-              </Box>
+              </div>
 
-              <Box style={{border: "0px solid black",height: 15}}>
+              <div style={{border: "0px solid black",height: 25, lineHeight: 6,  borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
                 {error && (
-                  <Box style={{border: "0px solid black", fontSize: 14, padding: 0, color: "rgb(164, 56, 56)", textAlign: "center"}} className="error-message">
+                  <Box style={{border: "0px solid black", fontSize: 20, padding: 0, color: "rgb(164, 56, 56)", textAlign: "center"}} className="error-message">
                     {error}
                   </Box>
                 )}
+              </div>
               </Box>
-             
+              <Space howmuch={46}/>
               <Box className="toggle-box" style={{
                     border:"0px solid black", 
                     fontSize: '14px',
@@ -235,11 +242,12 @@ const  Login = () => {
                   <ToggleSwitch value={isChecked} onChange={handleRememberMe}/>&nbsp;&nbsp;Remember me
                   </div>
               </Box>
-
-              <Button style={{marginTop: '1px', width: '100%', fontSize:"24px", border:"1px solid white"}}
-                  onClick={handleSubmit}> Sign In
-              </Button>
-              
+              <div style={{display: "flex", justifyContent: "center"}}>
+                <Button style={{marginTop: '1px', width: '100%', fontSize:"24px", backgroundColor: "#817Dda", 
+                border:"1px solid gray", lineHeight: 0, height: 35}}
+                    onClick={handleSubmit}>Log in 
+                </Button> 
+              </div>
               <Box style={{
                   border: "0px solid black", 
                   fontSize: 13, 
@@ -260,26 +268,19 @@ const  Login = () => {
                   </Box> 
 
               </Box> 
+              <Space howmuch={15} />   
 
-              <p/><p/>
-              <Box style={{border: "0px solid black", height:23, display: 'flex', lineHeight: 0, fontSize: 14, width: "100%"}}>
-                <div className="hr"></div> 
-                &nbsp;&nbsp;&nbsp;Or&nbsp;&nbsp;&nbsp;
-                <div className="hr"></div>
-              </Box>
-
-              <Box style={{border: "0px solid   black", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginTop: 0, marginBottom: 8}}>
-                  <Box style={{display: 'flex', border: "0px solid black", padding: 0}}>
-                    <div className="oauth"><i className="fa-brands fa-facebook-f" /></div>
-                    <div className="oauth"><i className="fa-brands fa-google" /></div>              
+              <Box style={{border: "0px solid black", backgroundColor: "", width: "100%", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginTop: 0, marginBottom: 8}}>
+                  <Box style={{display: 'flex', border: "0px solid black", padding: 0, backgroundColor: ""}}>
+                    <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-facebook-f" /></div>
+                    <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-google" /></div>              
                   </Box>
                             
               </Box>
 
-              <Space howmuch={35}/>
+              <Space howmuch={5}/>
 
               <Box style={{width: "375px", border:"0px solid black"}}>
-
                  Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
               </Box>
 
@@ -293,3 +294,11 @@ const  Login = () => {
 }
 
 export default Login;
+
+
+const styles = {
+    "oAuth": {
+      fontSize: 26
+    },
+
+};
