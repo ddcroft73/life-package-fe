@@ -2,14 +2,14 @@
   position: relative;
   margin-top: 1rem;
   border: 1px solid #817caa; 
-  border-radius: 8px;
+  border-radius: 5px;
   /*width: 400px;
   will change width*/
 }
 
 .floating-label-input {
   border-bottom: 1px solid #817caa;  /*#4c3cc7;*/
-  border-radius: 8px;
+  border-radius: 5px;
   padding: 10px 12px;
   transition: all 0.3s ease;
   background-color: rgb(33, 33, 33);

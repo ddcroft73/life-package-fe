@@ -213,7 +213,7 @@ const  Login = () => {
                   </Box>
               </Box>
               <Space howmuch={8} />
-            <Box style={{backgroundColor: "rgb(22, 22, 22)", borderRadius: 15, border: "1px solid gray"}}>
+            <Box style={{backgroundColor: "rgb(22, 22, 22)", borderRadius: 8, border: "1px solid gray"}}>
               <div style={{border: "0px solid black",  backgroundColor: ""}}>
                 <TextBox  id="email" label="Email*" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
                 <Space howmuch={8} />
@@ -227,8 +227,7 @@ const  Login = () => {
                   </Box>
                 )}
               </div>
-              </Box>
-              <Space howmuch={46}/>
+              
               <Box className="toggle-box" style={{
                     border:"0px solid black", 
                     fontSize: '14px',
@@ -243,7 +242,7 @@ const  Login = () => {
                   </div>
               </Box>
               <div style={{display: "flex", justifyContent: "center"}}>
-                <Button style={{marginTop: '1px', width: '100%', fontSize:"24px", backgroundColor: "#817Dda", 
+                <Button style={{marginTop: '1px', width: '100%', fontSize:"20px", backgroundColor: "#817Dda", 
                 border:"1px solid gray", lineHeight: 0, height: 35}}
                     onClick={handleSubmit}>Log in 
                 </Button> 
@@ -268,7 +267,12 @@ const  Login = () => {
                   </Box> 
 
               </Box> 
-              <Space howmuch={15} />   
+              
+              </Box>              
+
+              <Space howmuch={96}/>
+
+
 
               <Box style={{border: "0px solid black", backgroundColor: "", width: "100%", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginTop: 0, marginBottom: 8}}>
                   <Box style={{display: 'flex', border: "0px solid black", padding: 0, backgroundColor: ""}}>
