@@ -122,11 +122,11 @@ const  Login = () => {
     } 
   };
   
-  const handleUsername = (value) => setEmail(value);
-  const handlePassword = (value) => {
+   const handleUsername = (value) => setEmail(value);
+   const handlePassword = (value) => {
        setPassword(value);
        setError('');
-  };
+    };
 
     // Predefined actions
     const confirmAction = () =>  navigate('/verify-email', { state: { email: email } }); 
@@ -154,23 +154,23 @@ const  Login = () => {
         });
         setIsModalVisible(true);
     };
-  const handleRememberMe = (value) => {
-     setChecked(value);
+    const handleRememberMe = (value) => {
+      setChecked(value);
 
-     const rememberMe = {
-         "username": email,
-         "value": value
-     };
+      const rememberMe = {
+          "username": email,
+          "value": value
+      };
 
-     if (value === true && email != "" && isEmailAddress(email)){
-         localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
-     }     
-    // if they selected Don't 
-    if (value === false) {
-      rememberMe.username = '';
-      localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
-    }
-  };
+      if (value === true && email != "" && isEmailAddress(email)){
+          localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
+      }     
+      // if they selected Don't 
+      if (value === false) {
+        rememberMe.username = '';
+        localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
+      }
+    };
 
   return (
   

@@ -46,3 +46,14 @@
 .login-button:hover {
   background-color: #3b82f6; /* Slightly lighter blue for hover effect */
 }
+
+
+  
+.fade-out {
+  animation: fadeOutAnimation 3.2s;
+}
+
+@keyframes fadeOutAnimation {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
