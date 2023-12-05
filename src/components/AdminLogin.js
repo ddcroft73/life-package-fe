@@ -1,38 +1,117 @@
-
 import Box from "./elements/Box.js";
 import Button from "./elements/Button.js";
 import TextBox from "./elements/TextBox.js";
 import Space from "./Space.js";
 import { Link, useNavigate} from "react-router-dom";
-
+import Modal from "./Modal.js";
 import React, { useState } from 'react';
-import { FaSignInAlt } from 'react-icons/fa'; // This is for the login icon
+import { BASE_URL } from "../api/settings.js";
 import './AdminLogin.css'; // Make sure to create a corresponding CSS file
+import axios from "axios";
+
 
 const AdminLogin = () => {
     const [pin, setPin] = useState('');  
     const [message, setMessage] = useState('');   
     const [fadeOut, setFadeOut] = useState(false);
+    const [modalConfig, setModalConfig] = useState({});
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const navigate = useNavigate();    
 
-    const navigate = useNavigate();
+    const confirmAction = () =>  setIsModalVisible(false); //navigate('/verify-email', { state: { email: email } });     
+    const showMessageModal = (content) => {
+        setModalConfig({
+        content,
+        buttons: [
+            { text: 'OK', handler: confirmAction }
+        ]
+        });
+        setIsModalVisible(true);
+    };
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Handle the PIN submission here
-        console.log('PIN submitted:', pin);
 
-        setFadeOut(true);
-        setTimeout(() =>  navigate('/admin-login'), 3000);     
-      
-        setMessage("YO Message mfr!!")
+        const isNumeric = (str) => {
+            return /^\d+$/.test(str);
+        };
+
+        if (isNumeric(pin)) {
+            if (pin.length > 3) {
+
+                const userData = JSON.parse(localStorage.getItem("LifePackage"));
+                const token = userData ? userData.access_token : null;
+
+                if (token) {
+                    const userInputPIN =  pin;
+                    const endPoint = `${BASE_URL}/auth/login/verify-admin-pin?pin_number=${userInputPIN}`;
+                    const headers = {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    };
+                    
+                    try {
+                        let response = {};
+                        response.status = 200;
+                        //const response = await axios.post(endPoint, headers);
+                        
+                        if (response.status === 200) {
+                           // all good store the admin token.
+
+                        }
+
+                    } catch(error) {       
+                        
+                        if (error.response) {
+                            console.error('Error status:', error.response.status);
+                    
+                            if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
+                                setMessage(error.response.data.detail);
+                                setTimeout(() => setMessage(""), 3000);               
+                            }
+                        } 
+                    }
+                    
+                } else {
+                    // No Access Token.... WTF?
+                    let modalContent = (
+                        <>
+                        <div style={{width:"100%", padding:0, color: "orange"}}>
+                            <h2>Access Token Error:</h2>
+                        </div>
+                        <Box style={{
+                            width:"100%", 
+                            padding:0, 
+                            color: "white",
+                            border: "0px solid black"}}>       
+                                You seem to be missing the access token. You can 
+                                fix this by going <Link style={{lineHeight: 1}} to='/login'>back</Link> and logging in again.
+                        </Box>
+                        </>
+                    );
+                    showMessageModal(modalContent); 
+                }
+
+            } else if (pin.length != 0){                
+                setMessage("The PIN is at least four digits.")
+                setTimeout(() =>  setMessage(''), 3000); 
+
+            } else if (pin.length === 0){
+                setMessage("The PIN cannot be empty. .")
+                setTimeout(() =>  setMessage(''), 3000); 
+            }    
+
+        } else {
+            setMessage("The PIN must be all numbers.")
+            setTimeout(() =>  setMessage(''), 3000);  
+        }
     };
     
-    const handleCancel = () => {
+    const handleCancel = (event) => {
          // I mean what can you do? go back to Login
-
         setFadeOut(true);
-        setTimeout(() =>  navigate('/user-dashboard'), 3000);   
+        setTimeout(() =>  navigate('/login'), 3000);   
     };
 
     const handlePIN = (value) => {
@@ -42,6 +121,13 @@ const AdminLogin = () => {
     return (
        <div className={fadeOut ? 'fade-out' : ''}>
           <Box style={{marginTop: 35, width: 350, border: "none"}}>
+
+             <Modal
+                show={isModalVisible}
+                content={modalConfig.content}
+                buttons={modalConfig.buttons}
+             />
+
               <Box style={{
                           
                           textAlign: "center",
@@ -64,7 +150,7 @@ const AdminLogin = () => {
               <form onSubmit={handleSubmit}>
                 
                   <div style={{border: "0px solid black",  backgroundColor: ""}}>
-                      <TextBox  id="pin" label="PIN*" type="password" width="100%" containerPadding={0} onChange={handlePIN}/>
+                      <TextBox  id="pin" label="PIN*" type="password"  width="100%" containerPadding={0} onChange={handlePIN}/>
                   </div>
 
                   <Space howmuch={40-15} />

@@ -25,6 +25,7 @@ const  Login = () => {
   const [error, setError] = useState('');
   
   const [fadeOut, setFadeOut] = useState(false);
+  const [fadeOut2, setFadeOut2] = useState(false);
   
   const [modalConfig, setModalConfig] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -42,12 +43,14 @@ const  Login = () => {
     if (sendRequest) {
       try {
         const response = await userLogin(email, password);
-        const {action} = response;
+        const {action, user_role} = response;
         
         
         console.log(`response: ${response}`)
         // All good        
         if (action) {
+
+            // is this an administrator? If it is , then after 2Fa they need to go to admin login
             setFadeOut(true);
             setTimeout(() =>  navigate('/two-factor-auth', { state: { email: email } }), 3000);          
         } 
@@ -70,9 +73,8 @@ const  Login = () => {
           console.log(response);
         } 
         else if (response === "non-verified"){
-
             // show modal
-                   //alert("User exists")
+            // Modal is built ust like you would build a component and return it. 
                    let currContent = (
                     <>
                       <div style={{width:"100%", padding:0, color: "red"}}>
@@ -117,8 +119,9 @@ const  Login = () => {
       }
 
     } else {
-      setError('Missing email or password.');
-      setTimeout(() => setError(''), 5000);
+      setError('Missing email or password.');     
+      setFadeOut2(true); 
+      setTimeout(() => setError(''), 3000);
     } 
   };
   
@@ -181,7 +184,6 @@ const  Login = () => {
                 show={isModalVisible}
                 content={modalConfig.content}
                 buttons={modalConfig.buttons}
-                // can also pass onCancel here if needed
             />
 
        <Paper elevation={0}   variant="outlined"
@@ -219,15 +221,17 @@ const  Login = () => {
                 <Space howmuch={8} />
                 <TextBox  id="password" label="Password*" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
               </div>
-
-              <div style={{border: "0px solid black",height: 25, lineHeight: 6,  borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
-                {error && (
-                  <Box style={{border: "0px solid black", fontSize: 20, padding: 0, color: "rgb(164, 56, 56)", textAlign: "center"}} className="error-message">
-                    {error}
-                  </Box>
-                )}
+               
+              <div className={fadeOut2 ? 'fade-out' : ''}>
+                  <div style={{border: "0px solid black", height: 25,  position: "relative", top: 10, borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
+                    {error && (
+                      <Box style={{border: "0px solid black", fontSize: 20, padding: 0, color: "rgb(164, 56, 56)", textAlign: "center"}} className="error-message">
+                        {error}
+                      </Box>
+                    )}
+                  </div>
               </div>
-              
+
               <Box className="toggle-box" style={{
                     border:"0px solid black", 
                     fontSize: '14px',

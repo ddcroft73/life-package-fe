@@ -17,38 +17,7 @@ export const userLogin = async (username, password) => {
      * @param {*} password 
      * @returns 
      */
-    const handleFailedLogin = (failedAttempts, username) => {
-        const lockAccount = (username) => {
-            // send a request to the Auth API to lock the account of username.
-            // If such an account exists.
-        }; 
-
-        if (failedAttempts == 2) {
-            alert(
-                "You only have 6 tries to access your account. If you break this, You will have to contact support to get into the account."
-            );
-        }
-        if (failedAttempts == 5) {
-            alert(
-                "You only get one moretry. hy don;t you reset yopur pasword instead?"
-            );
-        }
-        if (failedAttempts == 6) {
-            // Write th results and set user to locked_out = True
-            alert(
-                "this account has been locked out. Contact (Contact info here) to open the account."
-            );
-            lockAccount(username);
-        }
-        const login_data = {
-            login_attempts: failedAttempts,
-            username: username,
-        };
-
-        localStorage.setItem("login_attempts", JSON.stringify(login_data));
-    };
-    
-
+   
     const url = `${BASE_URL}/auth/login/access-token`;
     
 
@@ -56,45 +25,39 @@ export const userLogin = async (username, password) => {
     formData.append('username', username);
     formData.append('password', password);
 
-    let userData = JSON.parse(localStorage.getItem('login_attempts') || "{}");
-    
-    let login_attempts = userData.login_attempts;
-    if (login_attempts === undefined || login_attempts === null) {
-       login_attempts = 0;
-    }
-
     try {
         const response = await axios.post(url, formData);
-        const { access_token, token_type, user_role, code, token} = response.data;
-   
+        const { access_token, token_type, user_role, code, token} = response.data;   
+        
+        // i NEED TO WORK ON THIS FLOW. 
+        // The big part is the flow when its' an admin, and they have 2FA enabled.
+        // Will be altering the return data from the server.
 
         if (code) {                                           // User has 2FA enabled        
             let data = {
                 code: code,
                 token: token,
+                user_role: user_role,
                 action: "use2FA"
             };
-            localStorage.setItem("TwoFactorAuth", JSON.stringify(data));
-            localStorage.removeItem('login_attempts');
 
+            localStorage.setItem("TwoFactorAuth", JSON.stringify(data));
             return data;
     
-            } 
-            else if (access_token && token_type === "bearer") { // user got in, no 2FA
-                console.log('Success');
-                localStorage.removeItem('login_attempts');
-    
-                let access_data = {
-                    username: username,
-                    access_token: access_token,
-                    token_type: "bearer",
-                    user_role: user_role
-                };
-    
-                localStorage.setItem("LifePackage", JSON.stringify(access_data));
-                return access_data.user_role;
-            } 
-                    
+       } 
+        else if (access_token && token_type === "bearer") { // user got in, no 2FA
+            console.log('Success');
+
+            let access_data = {
+                username: username,
+                access_token: access_token,
+                token_type: "bearer",
+                user_role: user_role
+            };
+
+            localStorage.setItem("LifePackage", JSON.stringify(access_data));
+            return access_data.user_role;
+      }                     
         
     // Invalid input, inactive user, wrong password or email
     } catch (error) {          
@@ -102,14 +65,12 @@ export const userLogin = async (username, password) => {
         if (error.response) {
             console.error('Error status:', error.response.status);
             
-           if (error.response.status >= 400) {
-               
+           if (error.response.status >= 400) {               
                if (error.response.data.detail === 'wrong credentials') {
-                  login_attempts++;
-                  //handleFailedLogin(login_attempts, username);
-                }
-                // jus tsend any detail back so I know exactly what happened.
-                return error.response.data.detail
+                  
+               }
+               // jus tsend any detail back so I know exactly what happened.
+              return error.response.data.detail
            }
        }    
     };
@@ -167,7 +128,3 @@ export const userRegister = async (userData) => {
     } 
 };
 
-
-export const verifyTwoFactorCode = async () => {
-
-};

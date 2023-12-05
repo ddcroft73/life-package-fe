@@ -84,7 +84,7 @@ const TwoFactorAuth = ({ onSubmit }) => {
     catch (error) {
         if (error.response) {
             console.error('Error status:', error.response.status);
-// Ill fix this later. DIsplays sit all now
+// Ill fix this later. DIsplays it all now
             if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
                 alert(error.response.data.detail);
             } else{
@@ -97,23 +97,27 @@ const TwoFactorAuth = ({ onSubmit }) => {
   
   const verify2faCode = async (e) => {
     e.preventDefault();
+
     // /auth/2FA/verify-2FA-code/
     let userData = JSON.parse(localStorage.getItem('TwoFactorAuth') || "{}");
     let code_2FA = userData.code;
     const token = userData.token; 
     const email = decodeJwt(token).email;
+    const userRole = userData.user_role;
+    
     const users_code = code.join('');
 
-    if (code_2FA && token && users_code.length === 6) {
-        try {
-             const url = `${BASE_URL}/auth/2FA/verify-2FA-code/`;            
-             const payload = {
-               "code_2FA": code_2FA,
-               "code_user": users_code,
-               "email_account": email,
-               "timed_token": token
-             };
 
+    if (code_2FA && token && users_code.length === 6) {
+        const url = `${BASE_URL}/auth/2FA/verify-2FA-code/`;            
+        const payload = {
+          "code_2FA": code_2FA,
+          "code_user": users_code,
+          "email_account": email,
+          "timed_token": token
+        };
+
+        try {
               const response = await axios.put(url, payload)
               const { access_token, token_type, user_role } = response.data;
 
@@ -121,7 +125,6 @@ const TwoFactorAuth = ({ onSubmit }) => {
                   console.log('Success!');
                  if (access_token && token_type === "bearer") { 
                     console.log('Success');
-                    localStorage.removeItem('login_attempts');
         
                     let access_data = {
                         username: email,
@@ -133,16 +136,18 @@ const TwoFactorAuth = ({ onSubmit }) => {
 
                     // navigate accordingly.                    
                     if (user_role === "admin") {
-                       // load the admin PIN
+                       // load the admin PIN// user workstation
+                       setFadeOut(true);
+                       setTimeout(() => navigate("/admin-login"), 3000);    
 
                     } else if (user_role === "user") {
                        // user workstation
                        setFadeOut(true);
                        setTimeout(() => navigate("/user-dashboard"), 3000);                      
-                    }
-                    
+                    }                    
                  } 
               }   
+              
         // Error due to server response
         } catch(error) {
             // 
