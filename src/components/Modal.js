@@ -17,7 +17,8 @@ function Modal({ show, buttons, content }) {
               backgroundColor: "rgba(49, 46, 44, .8)",
               minWidth: 350,
               maxWidth: 400,
-              height: 'auto'
+              height: 'auto',
+              border: "1px solid orange",
             }} className="modal">
   
             <Box style={styles.modalContent}>

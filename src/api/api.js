@@ -67,6 +67,7 @@ export const userLogin = async (username, password) => {
             
            if (error.response.status >= 400) {               
                if (error.response.data.detail === 'wrong credentials') {
+                // This could also mean the user does not exist...
                   
                }
                // jus tsend any detail back so I know exactly what happened.

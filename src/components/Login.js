@@ -94,8 +94,26 @@ const  Login = () => {
                   showMessageModal(currContent);
         }                      
         else if (response === "wrong credentials") {
-          setError('Incorrect username or password.');
-          setTimeout(() => setError(''), 5000);
+          let currContent = (
+            <>             
+              <div style={{width:"100%", padding:0, color: "orange"}}>
+                <h2>Invalid entry:</h2>
+              </div>
+              <Box style={{
+                width:"100%", 
+                padding:0, 
+                color: "white",
+                border: "0px solid black"}}>       
+                    One of three scenarios is True:<br/><br/>
+                    1<span style={{color:"orange"}}>.</span> There is no <span style={{color:"orange"}}>{email}</span> in the system.<br/>
+                    2<span style={{color:"orange"}}>.</span> There is and the password is wrong.<br/>
+                    3<span style={{color:"orange"}}>.</span> The username\email address is wrong. <br/>                    
+              </Box>
+              
+            </>
+      );
+        showMessageModal(currContent);
+        console.error(error.message);
         }
 
       } catch (error) {       

@@ -2,7 +2,7 @@ import Box from "./elements/Box.js";
 import Button from "./elements/Button.js";
 import TextBox from "./elements/TextBox.js";
 import Space from "./Space.js";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate, } from "react-router-dom";
 import Modal from "./Modal.js";
 import React, { useState } from 'react';
 import { BASE_URL } from "../api/settings.js";
@@ -16,6 +16,7 @@ const AdminLogin = () => {
     const [fadeOut, setFadeOut] = useState(false);
     const [modalConfig, setModalConfig] = useState({});
     const [isModalVisible, setIsModalVisible] = useState(false);
+
     const navigate = useNavigate();    
 
     const confirmAction = () =>  setIsModalVisible(false); //navigate('/verify-email', { state: { email: email } });     
@@ -42,7 +43,7 @@ const AdminLogin = () => {
 
                 const userData = JSON.parse(localStorage.getItem("LifePackage"));
                 const token = userData ? userData.access_token : null;
-
+                console.log(token)
                 if (token) {
                     const userInputPIN =  pin;
                     const endPoint = `${BASE_URL}/auth/login/verify-admin-pin?pin_number=${userInputPIN}`;
@@ -52,13 +53,19 @@ const AdminLogin = () => {
                     };
                     
                     try {
-                        let response = {};
-                        response.status = 200;
-                        //const response = await axios.post(endPoint, headers);
+                        //let response = {};
+                        //response.status = 200;
+                        const response = await axios.post(endPoint, {}, {headers: headers});
+                        const { token } = response.data;
                         
                         if (response.status === 200) {
                            // all good store the admin token.
+                          let adminToken = {};
+                          adminToken.token = token
+                          localStorage.setItem("adminToken", JSON.stringify(adminToken));
 
+                          // load admin workstation
+                          navigate("/admin-dashboard");
                         }
 
                     } catch(error) {       

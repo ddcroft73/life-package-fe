@@ -6,9 +6,10 @@ import TwoFactorAuth from "./components/TwoFactorAuth.js";
 import UserDashboard from "./components/UserDashboard.js";
 import RegisterUser from "./components/RegisterUser.js";
 import PasswordRecover from "./components/PasswordRecover.js";
+import AdminDashboard from "./components/AdminDashboard.js";
 import VerifyEmail from "./components/VerifyEmail.js";
 import React, { useEffect } from "react";
-import {decodeJwt} from "./api/utils.js"
+import {decodeJwt} from "./api/utils.js";
 import ThemeManager from "./theme/ThemeManager";
 
 import {
@@ -34,6 +35,7 @@ const App = () => {
                     <Route path="/admin-login" element={<AdminLogin />} />
                     <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
                     <Route path="/verify-email" element={<VerifyEmail />} />
+                    <Route path="/admin-dashboard" element={<AdminDashboard />} />
                 </Routes>
             </Router>
         </ThemeManager>
@@ -52,8 +54,18 @@ function TokenHandler() {
             navigate("/landing-page");
         } else if (isExpired(token)) {
             navigate("/login");
-        } else if (isAdmin(token)) {
-            navigate("/admin-login");
+        } else if (isAdmin(token)) {            
+            const adminData = JSON.parse(localStorage.getItem("adminToken")) || {};
+            const adminToken = adminData ? adminData.token : null;                  
+            if (adminToken) {
+                if (isExpired(adminToken)) {
+                    navigate("/admin-login");
+                } else {
+                    navigate("/admin-dashboard");
+                }                
+            } else {
+                navigate("/admin-login");
+            }
         } else {
             navigate("/user-dashboard");
         }
