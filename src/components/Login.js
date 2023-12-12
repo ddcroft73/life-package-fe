@@ -1,7 +1,6 @@
-import React from 'react';
+import React , { useState, useEffect } from 'react';
 import { useNavigation, useLocation, useNavigate, Link} from "react-router-dom";
 import { userLogin } from '../api/api.js';
-import { useState } from 'react';
 import Admin from "./AdminLogin.js";
 import Box from "../components/elements/Box.js";
 import Button from "../components/elements/Button.js";
@@ -34,6 +33,9 @@ const  Login = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = "User Login: LifePackage 2023";
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();     
@@ -292,7 +294,7 @@ const  Login = () => {
               
               </Box>              
 
-              <Space howmuch={96}/>
+              <Space howmuch={66}/>
 
 
 

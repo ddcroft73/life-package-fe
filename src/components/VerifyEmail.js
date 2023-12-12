@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect } from 'react';
 import './VerifyEmail.css'; // Make sure to create a corresponding CSS file with the desired styles
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Box from "./elements/Box";
@@ -16,6 +16,11 @@ const VerifyEmail =  () => { //
     const [fadeOut, setFadeOut] = useState(false);
     const navigate = useNavigate();
     
+    useEffect(() => {
+        document.title = "Verify Email Address: LifePackage 2023";
+    }, []);
+
+
     const resendEmailVerification = async () => {
         const baseUrl = `http://${SERVER_HOST}/api/v1/`;
         const url = `${baseUrl}auth/resend-verification`;

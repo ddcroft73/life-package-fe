@@ -1,5 +1,5 @@
 import Box from "./elements/Box.js";
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { useNavigate , useLocation}  from 'react-router-dom';
 import Button from "./elements/Button.js"
 import Paper from "./elements/Paper.js"
@@ -18,44 +18,48 @@ const TwoFactorAuth = ({ onSubmit }) => {
   const { email } = location.state || {};
   const navigate = useNavigate();  
   
-    const handleChange = (index) => (e) => {
-        const value = e.target.value;
-        const newCode = [...code];
-        
-        if (value.match(/[0-9a-zA-Z]/)) {
-            newCode[index] = value.toUpperCase(); 
+  useEffect(() => {
+    document.title = "Two Factor Authentication: LifePackage 2023";
+  }, []);
+
+  const handleChange = (index) => (e) => {
+      const value = e.target.value;
+      const newCode = [...code];
+      
+      if (value.match(/[0-9a-zA-Z]/)) {
+          newCode[index] = value.toUpperCase(); 
+          setCode(newCode);
+      
+          // Auto-focus the next input after a digit or letter is typed
+          if (e.target.nextSibling) {
+              e.target.nextSibling.focus();
+          }
+      }
+  };
+
+  const handleKeyDown = (index) => (e) => {
+      // Allow backspace to clear the current input and then move to the previous input
+      if (e.key === 'Backspace') {
+          e.preventDefault();
+      
+          const newCode = [...code];
+          // If there is a value in the current input, clear it
+          if (code[index]) {
+            newCode[index] = '';
             setCode(newCode);
-        
-            // Auto-focus the next input after a digit or letter is typed
-            if (e.target.nextSibling) {
-                e.target.nextSibling.focus();
+          }
+          // If the current input is already empty, delete the previous input's value
+          else if (index > 0 && !code[index]) {
+            newCode[index - 1] = '';
+            setCode(newCode);
+            // Move focus to the previous input
+            const prevInput = e.target.previousSibling;
+            if (prevInput) {
+              prevInput.focus();
             }
+          }
         }
     };
-
-    const handleKeyDown = (index) => (e) => {
-        // Allow backspace to clear the current input and then move to the previous input
-        if (e.key === 'Backspace') {
-            e.preventDefault();
-        
-            const newCode = [...code];
-            // If there is a value in the current input, clear it
-            if (code[index]) {
-              newCode[index] = '';
-              setCode(newCode);
-            }
-            // If the current input is already empty, delete the previous input's value
-            else if (index > 0 && !code[index]) {
-              newCode[index - 1] = '';
-              setCode(newCode);
-              // Move focus to the previous input
-              const prevInput = e.target.previousSibling;
-              if (prevInput) {
-                prevInput.focus();
-              }
-            }
-         }
-     };
 
   const resend2FA = () => {
     const url = `${BASE_URL}/auth/2FA/resend-2FA-code`;

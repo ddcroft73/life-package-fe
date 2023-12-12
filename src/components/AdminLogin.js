@@ -4,7 +4,7 @@ import TextBox from "./elements/TextBox.js";
 import Space from "./Space.js";
 import { Link, useNavigate, } from "react-router-dom";
 import Modal from "./Modal.js";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BASE_URL } from "../api/settings.js";
 import './AdminLogin.css'; // Make sure to create a corresponding CSS file
 import axios from "axios";
@@ -18,6 +18,11 @@ const AdminLogin = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const navigate = useNavigate();    
+    
+    useEffect(() => {
+        document.title = "Administrator Login: LifePackage 2023";
+    }, []);
+
 
     const confirmAction = () =>  setIsModalVisible(false); //navigate('/verify-email', { state: { email: email } });     
     const showMessageModal = (content) => {

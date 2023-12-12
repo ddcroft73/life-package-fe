@@ -3,7 +3,7 @@ import './RegisterUser.css';
 
 import { userRegister } from '../api/api.js';
 import { isEmailAddress } from '../api/utils.js';
-import { useState } from 'react';
+import { useState, useEffect  } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Box from "../components/elements/Box.js";
 import Paper from "../components/elements/Paper.js";
@@ -34,6 +34,11 @@ const RegisterUser = () => {
     const confirmAction = () =>  navigate('/verify-email', { state: { email: email } }); 
     const cancelAction = () => setIsModalVisible(false);
     
+    useEffect(() => {
+        document.title = "User Registration: LifePackage 2023";
+    }, []);
+
+
     // Function to show modal with OK button, just for message
     const showMessageModal = (content) => {
         setModalConfig({
