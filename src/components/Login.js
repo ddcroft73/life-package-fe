@@ -40,7 +40,9 @@ const  Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();     
     
-    if (email && password) {sendRequest = true;}
+    if (email && password) {
+      sendRequest = true;
+    }
 
     if (sendRequest) {
       try {
@@ -141,7 +143,10 @@ const  Login = () => {
     } else {
       setError('Missing email or password.');     
       setFadeOut2(true); 
-      setTimeout(() => setError(''), 3000);
+      setTimeout(() => {
+        setError('')
+        setFadeOut2(false)
+      }, 3000);
     } 
   };
   
@@ -230,7 +235,7 @@ const  Login = () => {
                     fontSize: 25,
                     marginBottom: 0}}>
                       <div style={{fontSize: 54, color: "#817Dda"}}>
-                      <i className="fas fa-sign-in-alt" /></div> &nbsp;Life Package &#8482;                   
+                      <i className="fas fa-sign-in-alt" /></div> &nbsp;Life Package <span style={{fontSize:18}}>&#8482;</span>            
                     
                   </Box>
               </Box>
@@ -266,7 +271,7 @@ const  Login = () => {
                   </div>
               </Box>
               <div style={{display: "flex", justifyContent: "center"}}>
-                <Button style={{marginTop: '1px', width: '100%', fontSize:"20px", backgroundColor: "#817Dda", 
+                <Button style={{marginTop: '1px', width: '100%', fontSize:"20px",  
                 border:"1px solid gray", lineHeight: 0, height: 35}}
                     onClick={handleSubmit}>Log in 
                 </Button> 
@@ -295,8 +300,6 @@ const  Login = () => {
               </Box>              
 
               <Space howmuch={66}/>
-
-
 
               <Box style={{border: "0px solid black", backgroundColor: "", width: "100%", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginTop: 0, marginBottom: 8}}>
                   <Box style={{display: 'flex', border: "0px solid black", padding: 0, backgroundColor: ""}}>
