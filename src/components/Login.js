@@ -146,7 +146,7 @@ const  Login = () => {
       setTimeout(() => {
         setError('')
         setFadeOut2(false)
-      }, 3000);
+      }, 3900);
     } 
   };
   
@@ -199,11 +199,11 @@ const  Login = () => {
         localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
       }
     };
-
+  // justifyContent: 'center', alignItems: 'center', 
   return (
   
   <div className={fadeOut ? 'fade-out' : ''}>
-   <Box  style={{ border: "0px solid #817Daa", display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 20}}>
+   <Box  style={{ border: "0px solid #817Daa", display: 'flex', padding: 0}}>
       
             <Modal
                 show={isModalVisible}
@@ -240,7 +240,7 @@ const  Login = () => {
                   </Box>
               </Box>
               <Space howmuch={8} />
-            <Box style={{backgroundColor: "rgb(22, 22, 22)", borderRadius: 8, border: "1px solid gray"}}>
+            <Box style={{backgroundColor: "rgb(22, 22, 22)", borderRadius: 8, border: "1px solid #817Daa"}}>
               <div style={{border: "0px solid black",  backgroundColor: ""}}>
                 <TextBox  id="email" label="Email*" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
                 <Space howmuch={8} />
@@ -299,7 +299,7 @@ const  Login = () => {
               
               </Box>              
 
-              <Space howmuch={66}/>
+              <Space howmuch={50}/>
 
               <Box style={{border: "0px solid black", backgroundColor: "", width: "100%", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginTop: 0, marginBottom: 8}}>
                   <Box style={{display: 'flex', border: "0px solid black", padding: 0, backgroundColor: ""}}>

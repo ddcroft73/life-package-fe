@@ -8,12 +8,16 @@ import TextBox from './elements/TextBox';
 import { Link, useNavigate } from "react-router-dom";
 import { isEmailAddress } from '../api/utils';
 import Space from './Space';
+import { BASE_URL } from '../api/settings';
+import axios from "axios";
+import Modal from './Modal.js';
 
 
 const PasswordRecover = () => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
-    
+    const [modalConfig, setModalConfig] = useState({});
+    const [isModalVisible, setIsModalVisible] = useState(false);    
     const [fadeOut, setFadeOut] = useState(false);
 
     const navigate = useNavigate();
@@ -22,11 +26,68 @@ const PasswordRecover = () => {
         document.title = "Reset Password: LifePackage 2023";
     }, []);
 
-    const handleSend = (event) => {
+    const handleSend = async (event) => {
         event.preventDefault();
-        if (isEmailAddress(email)){
 
+        // Predefined actions
+        //const confirmAction = () =>  navigate('/verify-email', { state: { email: email } }); 
+        const cancelAction = () => setIsModalVisible(false);
+        
+        // Function to show modal with OK button, just for message
+        const showMessageModal = (content) => {
+            setModalConfig({
+            content,
+            buttons: [
+                { text: 'OK', handler: cancelAction }
+            ]
+            });
+            setIsModalVisible(true);
+        };
+
+        if (isEmailAddress(email)){
+            ///api/v1/auth/password-recovery/{email}
             console.log(email)
+            const endPoint = `${BASE_URL}/auth/password-recovery/${email}`;
+            console.log(endPoint)
+
+            try {
+                const response = await axios.post(endPoint);
+                const {msg} = response.data;
+
+                if (response.status_code === 200) {
+                    let currContent = (
+                        <>
+                          <div style={{width:"100%", padding:0, color: "red"}}>
+                            <h2>Error:</h2>
+                          </div>
+                          <Box style={{
+                            width:"100%", 
+                            padding:0, 
+                            color: "white",
+                            border: "0px solid black"}}>       
+                                There seems to be a problem with the connection. Check your
+                                internet, or maybe the server is down... Hell I dont't know. Something fucked up.                         
+                          </Box>
+                        </>
+                  );
+                    showMessageModal(currContent);
+                    console.error(error.message);
+                }
+
+            } catch(error) {
+                if (error.response) {
+                    console.error('Error status:', error.response.status);                    
+                   if (error.response.status >= 400) {               
+                    setError(error.response.data.detail);    
+                    setFadeOut(true); 
+                    setTimeout(() => {
+                        setError('');
+                        setFadeOut(false); 
+                    }, 3900);  // The extra 900 ms allows the Error to pop back up a second.
+                      
+                   }
+               }    
+            }
 
         } else {
             setError("Invalid email address.");    
@@ -34,7 +95,7 @@ const PasswordRecover = () => {
             setTimeout(() => {
                 setError('');
                 setFadeOut(false); 
-            }, 3000);
+            }, 3900);
         }
         
     };
@@ -45,6 +106,13 @@ const PasswordRecover = () => {
 
     return (
             <div className="password-reset-container" style={{ backgroundColor: 'transparent' }}>
+            <Modal
+                show={isModalVisible}
+                content={modalConfig.content}
+                buttons={modalConfig.buttons}
+            />
+
+
                 <div className="password-reset-logo">
                     <Box style={{
                             textAlign: "center",
@@ -56,7 +124,7 @@ const PasswordRecover = () => {
                             color: "gray",
                             marginBottom: 0}}>
                                 <div style={{fontSize: 54, color: "#817Dda"}}>
-                                <i className="fa fa-lock" /></div> &nbsp;Life Package <span style={{fontSize:18}}>&#8482;</span>                                       
+                                <i className="fa fa-key" /></div> &nbsp;Life Package <span style={{fontSize:18}}>&#8482;</span>                                       
                     </Box>
                 <Space howmuch={20} />    
                 </div>
