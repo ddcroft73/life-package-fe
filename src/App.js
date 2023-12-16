@@ -6,6 +6,9 @@ import TwoFactorAuth from "./components/TwoFactorAuth.js";
 import UserDashboard from "./components/UserDashboard.js";
 import RegisterUser from "./components/RegisterUser.js";
 import PasswordRecover from "./components/PasswordRecover.js";
+
+import PasswordReset from "./components/PasswordReset.js";
+
 import AdminDashboard from "./components/AdminDashboard.js";
 import VerifyEmail from "./components/VerifyEmail.js";
 import React, { useEffect } from "react";
@@ -31,6 +34,7 @@ const App = () => {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<RegisterUser />} />
                     <Route path="/recover-password" element={<PasswordRecover />} />
+                    <Route path="/password-reset" element={<PasswordReset />} />
                     <Route path="/user-dashboard" element={<UserDashboard />} />
                     <Route path="/admin-login" element={<AdminLogin />} />
                     <Route path="/two-factor-auth" element={<TwoFactorAuth />} />

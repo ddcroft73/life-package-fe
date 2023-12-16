@@ -8,9 +8,7 @@
 }
 
 .hr {
-    border: 1px solid rgb(117, 115, 115);   
-    width: 50%;
-    border-radius: 10px;
+    border: 0px solid rgba(117, 115, 115, 0.3);   
 }
 
 .error-message {

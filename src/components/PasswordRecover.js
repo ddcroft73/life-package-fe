@@ -1,6 +1,6 @@
 
 import React , {useEffect, useState} from 'react';
-import './PasswordReset.css'; 
+import './PasswordRecover.css'; 
 
 import Box from './elements/Box';
 import Button from './elements/Button';
@@ -46,32 +46,30 @@ const PasswordRecover = () => {
 
         if (isEmailAddress(email)){
             ///api/v1/auth/password-recovery/{email}
-            console.log(email)
             const endPoint = `${BASE_URL}/auth/password-recovery/${email}`;
-            console.log(endPoint)
 
             try {
                 const response = await axios.post(endPoint);
                 const {msg} = response.data;
 
-                if (response.status_code === 200) {
+                console.log()
+
+                if (msg) {
                     let currContent = (
                         <>
-                          <div style={{width:"100%", padding:0, color: "red"}}>
-                            <h2>Error:</h2>
+                          <div style={{width:"100%", padding:0, color: "blue"}}>
+                            <h2>Email sent...</h2>
                           </div>
                           <Box style={{
                             width:"100%", 
                             padding:0, 
                             color: "white",
                             border: "0px solid black"}}>       
-                                There seems to be a problem with the connection. Check your
-                                internet, or maybe the server is down... Hell I dont't know. Something fucked up.                         
+                            {msg}                         
                           </Box>
                         </>
                   );
                     showMessageModal(currContent);
-                    console.error(error.message);
                 }
 
             } catch(error) {
@@ -106,12 +104,12 @@ const PasswordRecover = () => {
 
     return (
             <div className="password-reset-container" style={{ backgroundColor: 'transparent' }}>
-            <Modal
-                show={isModalVisible}
-                content={modalConfig.content}
-                buttons={modalConfig.buttons}
-            />
-
+                
+                <Modal
+                    show={isModalVisible}
+                    content={modalConfig.content}
+                    buttons={modalConfig.buttons}
+                />
 
                 <div className="password-reset-logo">
                     <Box style={{
@@ -138,7 +136,13 @@ const PasswordRecover = () => {
                            <div className={fadeOut ? 'fade-out' : ''}>
                                 <div style={{border: "0px solid black", height: 20,  position: "relative", top: 0, borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
                                     {error && (
-                                    <Box style={{border: "0px solid black", fontSize: 20, padding: 0, color: "rgb(164, 56, 56)", textAlign: "center"}} className="error-message">
+                                    <Box style={{
+                                            border: "0px solid black", 
+                                            fontSize: 14, 
+                                            padding: 0, 
+                                            color: "orange", 
+                                            textAlign: "center"
+                                        }} className="error-message">
                                         {error}
                                     </Box>
                                     )}

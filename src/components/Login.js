@@ -239,7 +239,9 @@ const  Login = () => {
                     
                   </Box>
               </Box>
+
               <Space howmuch={8} />
+
             <Box style={{backgroundColor: "rgb(22, 22, 22)", borderRadius: 8, border: "1px solid #817Daa"}}>
               <div style={{border: "0px solid black",  backgroundColor: ""}}>
                 <TextBox  id="email" label="Email*" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
@@ -262,7 +264,6 @@ const  Login = () => {
                     fontSize: '14px',
                     lineHeight: 1, 
                     marginTop: 20,
-                    //paddingLeft: 0, 
                     padding:0,
                     paddingBottom:7,
                     color: 'gray'}}>
@@ -300,7 +301,7 @@ const  Login = () => {
               </Box>              
 
               <Space howmuch={50}/>
-
+             {/* <Or title={"OAuth?"}/> */}
               <Box style={{border: "0px solid black", backgroundColor: "", width: "100%", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginTop: 0, marginBottom: 8}}>
                   <Box style={{display: 'flex', border: "0px solid black", padding: 0, backgroundColor: ""}}>
                     <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-facebook-f" /></div>
