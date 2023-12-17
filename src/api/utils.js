@@ -37,3 +37,28 @@ export const isEmailAddress = (emailString) => {
     }
     return false;
 };
+
+export function verifyPasswordStrength(password) {
+    const minLength = 8;
+    let failureMessages = [];
+
+    if (password.length < minLength) {
+        failureMessages.push("Length must be 8 or more characters");
+    }
+    if (!/[A-Z]/.test(password)) {
+        failureMessages.push("Needs at least one uppercase letter.");
+    }
+    if (!/[a-z]/.test(password)) {
+        failureMessages.push("Needs at least one lowercase letter.");
+    }
+    if (!/\d/.test(password)) {
+        failureMessages.push("Needs at least one digit.");
+    }
+    if (!/[!@#$%^&*]/.test(password)) {
+        failureMessages.push("Needs at least one special character.");
+    }
+    if (failureMessages.length === 0) {
+        return true;
+    }
+    return failureMessages;
+};

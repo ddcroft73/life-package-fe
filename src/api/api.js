@@ -5,7 +5,7 @@ import  {BASE_URL, SERVER_HOST}  from "./settings";
 
 //const baseUrl = `http://${SERVER_HOST}/api/v1/`; //'http://localhost:8015/api/v1/';
 /** 
- *   It is Highly possible i am about to remove this and hust do evrything in the respected 
+ *   It is Highly possible i am about to remove this and just do evrything in the respected 
  *   Component. Unless the app gets complicated I dont see a reason to do twice the work.
 */
 

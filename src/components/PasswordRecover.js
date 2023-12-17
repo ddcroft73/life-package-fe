@@ -34,42 +34,51 @@ const PasswordRecover = () => {
         const cancelAction = () => setIsModalVisible(false);
         
         // Function to show modal with OK button, just for message
-        const showMessageModal = (content) => {
+        const showMessageModal = (content, borderColor) => {
             setModalConfig({
             content,
             buttons: [
                 { text: 'OK', handler: cancelAction }
-            ]
+            ],
+            borderColor: borderColor
             });
             setIsModalVisible(true);
         };
+    
 
         if (isEmailAddress(email)){
             ///api/v1/auth/password-recovery/{email}
             const endPoint = `${BASE_URL}/auth/password-recovery/${email}`;
 
             try {
+                //let msg = `A password recovery email has been sent to ${email}.`
                 const response = await axios.post(endPoint);
                 const {msg} = response.data;
 
-                console.log()
-
-                if (msg) {
+                if (msg) {                    
+                    let sentence = msg.split(" ");
                     let currContent = (
                         <>
-                          <div style={{width:"100%", padding:0, color: "blue"}}>
-                            <h2>Email sent...</h2>
+                          <div style={{width:"100%", padding:0, color: "green"}}>
+                          <div style={{
+                             width: "100%", backgroundColor: "rgba(0,0,0,0.400)", 
+                             borderLeft: `2px solid yellow`, paddingLeft: 8, paddingBottom: 0}}>
+                             <h2>Email Sent!</h2>
+                         </div>    
+                            
                           </div>
                           <Box style={{
                             width:"100%", 
                             padding:0, 
                             color: "white",
                             border: "0px solid black"}}>       
-                            {msg}                         
+                            {sentence.map((word, index) => (
+                                `${word} `  // playing with this
+                            ))}                         
                           </Box>
                         </>
                   );
-                    showMessageModal(currContent);
+                    showMessageModal(currContent, "green");
                 }
 
             } catch(error) {
@@ -109,6 +118,7 @@ const PasswordRecover = () => {
                     show={isModalVisible}
                     content={modalConfig.content}
                     buttons={modalConfig.buttons}
+                    borderColor={modalConfig.borderColor}
                 />
 
                 <div className="password-reset-logo">
@@ -130,7 +140,7 @@ const PasswordRecover = () => {
                         <form>
                             <div>
                              <Box style={{color: "white", border: "0px solid gray"}}> 
-                            If you lost your password you can reset it by entering your email below.
+                            If you lost your password you can reset it. Get the ball rolling by entering your email below.
                             </Box>   
                             
                            <div className={fadeOut ? 'fade-out' : ''}>
@@ -138,7 +148,7 @@ const PasswordRecover = () => {
                                     {error && (
                                     <Box style={{
                                             border: "0px solid black", 
-                                            fontSize: 14, 
+                                            fontSize: 18, 
                                             padding: 0, 
                                             color: "orange", 
                                             textAlign: "center"

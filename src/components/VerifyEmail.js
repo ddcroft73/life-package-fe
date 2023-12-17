@@ -14,10 +14,11 @@ const VerifyEmail =  () => { //
     const [cnt, setCnt] = useState(2);
 
     const [fadeOut, setFadeOut] = useState(false);
+    const [fadeOut2, setFadeOut2] = useState(false);
     const navigate = useNavigate();
     
     useEffect(() => {
-        document.title = "Verify Email Address: LifePackage 2023";
+        document.title = "Verify Email Address: Life Package 2023";
     }, []);
 
 
@@ -27,11 +28,7 @@ const VerifyEmail =  () => { //
         const resendLink = `${url}?email=${email}`;
         //http://192.168.12.189:8015/api/v1/auth/resend-verification?email=undefined
         
-        // send the email address in the url
         try {
-            // send request to resend endpoint
-            //let response={};
-            //response.status = 200;
             const response = await axios.put(resendLink);            
 
             if (response.status === 200) {
@@ -51,9 +48,12 @@ const VerifyEmail =  () => { //
                 console.error('Error status:', error.response.status);
                 // Ill fix this later. 
                 if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
-                    alert(error.response.data.detail);
-                } else{
-                    alert(error.response.data.detail); 
+                    setFadeOut2(true);
+                    setMessage(error.response.data.detail)
+                    setTimeout(() => {
+                        setMessage("")
+                        setFadeOut2(false);
+                    }, 3900);  
                 }
             } 
         }
@@ -63,13 +63,17 @@ const VerifyEmail =  () => { //
         <Box style={{border: "0px solid gray", maxWidth: 700, backgroundColor: "rgb(18, 17, 16)", height: 'auto', textAlign:"center"}}>
             
             <Box style={{border: "1px solid gray", color: "gray"}} className="verify-email-container">
+
+             <div className={fadeOut2 ? 'fade-out' : ''}>
                 <Box style={{border: "0px solid black",height: 15}}>
                     {message && (
                     <Box style={{border: "0px solid black", fontSize: 14, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
                         {message}
                     </Box>
                     )}
-                </Box >                    
+                </Box >   
+             </div>
+
                     <h1 style={{color: "rgb(213, 208, 208)"}}><i style={{ color: 'gray'}} className="fa fa-envelope" />&nbsp;&nbsp;Please verify your email &nbsp;<i style={{ color: 'gray'}} className="fa fa-envelope-open" /></h1>
 
                     <Box className="verification-message" style={{textAlign: 'left', paddingTop: 20, borderTop: '0px solid gray', borderRadius: 0, color: "gray"}}>

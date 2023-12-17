@@ -1,7 +1,8 @@
+
 import React , { useState, useEffect } from 'react';
-import { useNavigation, useLocation, useNavigate, Link} from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
+
 import { userLogin } from '../api/api.js';
-import Admin from "./AdminLogin.js";
 import Box from "../components/elements/Box.js";
 import Button from "../components/elements/Button.js";
 import TextBox from '../components/elements/TextBox.js';
@@ -15,8 +16,15 @@ import './Login.css';
 
 
 
-const  Login = () => {
-  
+// Most of these are in the .css file
+const styles = {
+  "oAuth": {
+    fontSize: 26
+  },
+};
+
+const  Login = () => {  
+
   const defaultRememberMeData = JSON.parse(localStorage.getItem('rememberMe')) || {};
   const [isChecked, setChecked] = useState(defaultRememberMeData.value || false);
   const [email, setEmail] = useState(defaultRememberMeData.username || '');
@@ -34,10 +42,10 @@ const  Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "User Login: LifePackage 2023";
+    document.title = "User Login: Life Package 2023";
   }, []);
 
-  const handleSubmit = async (event) => {
+  const handleLoginClick = async (event) => {
     event.preventDefault();     
     
     if (email && password) {
@@ -49,11 +57,9 @@ const  Login = () => {
         const response = await userLogin(email, password);
         const {action, user_role} = response;
         
-        
-        console.log(`response: ${response}`)
+
         // All good        
         if (action) {
-
             // is this an administrator? If it is , then after 2Fa they need to go to admin login
             setFadeOut(true);
             setTimeout(() =>  navigate('/two-factor-auth', { state: { email: email } }), 3000);          
@@ -69,62 +75,129 @@ const  Login = () => {
           setTimeout(() =>  navigate('/user-dashboard'), 3000);  
         } 
         
-        // Bad Response
+
+        // Bad Responses
         else if (response === "inactive user"){
-          console.log(response);
-        }
-        else if (response === "locked out"){
-          console.log(response);
-        } 
-        else if (response === "non-verified"){
-            // show modal
-            // Modal is built ust like you would build a component and return it. 
-                   let currContent = (
-                    <>
-                      <div style={{width:"100%", padding:0, color: "red"}}>
-                         <h2>Error:</h2>
-                      </div>
-                      <Box style={{
-                        width:"100%", 
-                        padding:0, 
-                        color: "gray",
-                        border: "0px solid black"}}>       
-                            The user: <span style={{color:"orange"}}>{email}</span> has not 
-                            been verified on this system. <br/><br/>
-                            Check your email and verify to login.                         
-                      </Box>
-                    </>
-                  );
-                  showMessageModal(currContent);
-        }                      
-        else if (response === "wrong credentials") {
+          // show modal
+          // Modal is built ust like you would build a component and return it. 
           let currContent = (
-            <>             
-              <div style={{width:"100%", padding:0, color: "orange"}}>
-                <h2>Invalid entry:</h2>
+          <>
+            <div style={{width:"100%", padding:0, color: "orange"}}>
+              <div style={{
+                          width: "100%", backgroundColor: "rgba(0,0,0,0.600)", 
+                          borderLeft: `2px solid orange`, paddingLeft: 8, paddingBottom: 0}}>          
+                <h2>User has been deactivated</h2>
+              </div>       
+            </div>
+            <Box style={{
+              width:"100%", 
+              padding:0, 
+              color: "white",
+              border: "0px solid black"}}>       
+                  The user: <span style={{color:"orange"}}>{email}</span><br/>
+                  has been de-activated. <br/><br/>
+                  Please contact <Link to="/support" style={{textDecoration: 'underLine'}}>support</Link> for further information.                        
+            </Box>
+          </>
+        );
+        showMessageModal(currContent, "orange");
+        }
+
+/*  LOCKED OUT  */
+        else if (response === "locked out"){
+          let currContent = (
+            <>
+              <div style={{width:"100%", padding:0, color: "red"}}>
+                <div style={{
+                            width: "100%", backgroundColor: "rgba(0,0,0,0.600)", 
+                            borderLeft: `2px solid orange`, paddingLeft: 8, paddingBottom: 0}}>          
+                  <h2>User Account Locked Out</h2>
+                </div>       
               </div>
               <Box style={{
                 width:"100%", 
                 padding:0, 
                 color: "white",
                 border: "0px solid black"}}>       
-                    One of three scenarios is True:<br/><br/>
-                    1<span style={{color:"orange"}}>.</span> There is no <span style={{color:"orange"}}>{email}</span> in the system.<br/>
-                    2<span style={{color:"orange"}}>.</span> There is and the password is wrong.<br/>
+                  The user: <span style={{color:"orange"}}>{email}</span><br/>
+                  has had their account locked out for some reason. <br/><br/>
+                  <Box style={{width: "100%", display: "flex", justifyContent: "space-around", borderTop: "0px solid red", border: "0px solid red" }}>
+                    <div><Link to="/support" style={{color:"white"}}>Contact Support</Link></div>
+                    <div><Link to="/support" style={{color:"white"}}>FAQ</Link></div>
+                  </Box>
+              </Box>
+            </>
+          );
+          showMessageModal(currContent, "red");
+
+        } 
+
+/*  USER NOT VERIFIED  */
+        else if (response === "non-verified"){
+            // show modal
+            // Modal is built ust like you would build a component and return it. 
+            let currContent = (
+            <>
+              <div style={{width:"100%", padding:0, color: "orange"}}>
+                <div style={{
+                            width: "100%", backgroundColor: "rgba(0,0,0,0.600)", 
+                            borderLeft: `2px solid orange`, paddingLeft: 8, paddingBottom: 0}}>          
+                  <h2>User Not Verified</h2>
+                </div>       
+              </div>
+              <Box style={{
+                width:"100%", 
+                padding:0, 
+                color: "white",
+                border: "0px solid black"}}>       
+                    The user: <span style={{color:"orange"}}>{email}</span><br/>
+                    has not been verified on this system. <br/><br/>
+                    Check your email and verify to login.                         
+              </Box>
+            </>
+          );
+          showMessageModal(currContent, "orange");
+        }                      
+
+
+/*  WRONG CREDS, USER DOESN'T EXIST  */
+        else if (response === "wrong credentials") {
+          let currContent = (
+            <>             
+              <div style={{width:"100%", padding:0, color: "orange"}}>
+                 <div style={{
+                            width: "100%", backgroundColor: "rgba(0,0,0,0.600)", 
+                            borderLeft: `2px solid orange`, paddingLeft: 8, paddingBottom: 0}}>
+                       <h2>Invalid Entry</h2>
+                 </div>                 
+              </div>
+              <Box style={{
+                width:"100%", 
+                padding:0, 
+                color: "white",
+                border: "0px solid black"}}>       
+                    One of three scenarios is <span style={{color:"orange"}}>True</span>:<br/><br/>
+                    1<span style={{color:"orange"}}>.</span> There is no <span style={{color:"orange"}}>{email}</span><br/> in the system.<br/>
+                    2<span style={{color:"orange"}}>.</span> There is, and the password is wrong.<br/>
                     3<span style={{color:"orange"}}>.</span> The username\email address is wrong. <br/>                    
               </Box>
               
             </>
       );
-        showMessageModal(currContent);
+        showMessageModal(currContent, "orange");
         console.error(error.message);
         }
 
+/*  NO CONNECTION  */
       } catch (error) {       
          let currContent = (
                 <>
                   <div style={{width:"100%", padding:0, color: "red"}}>
-                    <h2>Error:</h2>
+                    <div style={{
+                            width: "100%", backgroundColor: "rgba(0,0,0,0.300)", 
+                            borderLeft: `2px solid red`, paddingLeft: 5, paddingBottom: 0}}>
+                       <h2>Error:</h2>
+                    </div>                    
                   </div>
                   <Box style={{
                     width:"100%", 
@@ -136,7 +209,7 @@ const  Login = () => {
                   </Box>
                 </>
           );
-            showMessageModal(currContent);
+            showMessageModal(currContent, "red");
             console.error(error.message);
       }
 
@@ -161,27 +234,31 @@ const  Login = () => {
     const cancelAction = () => setIsModalVisible(false);
     
     // Function to show modal with OK button, just for message
-    const showMessageModal = (content) => {
+    const showMessageModal = (content, borderColor) => {
         setModalConfig({
         content,
         buttons: [
             { text: 'OK', handler: cancelAction }
-        ]
+        ],
+        borderColor: borderColor
         });
         setIsModalVisible(true);
     };
 
     // Function to program modal for an action on OK
-    const showConfirmModal = (content) => {
+    const showConfirmModal = (content, borderColor) => {
         setModalConfig({
         content,
         buttons: [
             { text: 'OK', handler: confirmAction },
             //{ text: 'Cancel', handler: cancelAction }
-        ]
+        ],
+        borderColor: borderColor
         });
         setIsModalVisible(true);
     };
+
+
     const handleRememberMe = (value) => {
       setChecked(value);
 
@@ -200,137 +277,132 @@ const  Login = () => {
       }
     };
   // justifyContent: 'center', alignItems: 'center', 
-  return (
-  
-  <div className={fadeOut ? 'fade-out' : ''}>
-   <Box  style={{ border: "0px solid #817Daa", display: 'flex', padding: 0}}>
-      
-            <Modal
-                show={isModalVisible}
-                content={modalConfig.content}
-                buttons={modalConfig.buttons}
-            />
 
-       <Paper elevation={0}   variant="outlined"
-            style={{
-              width: '375px', 
-              height: '555px', 
-              backgroundColor: "transparent",//'var(--body-background-dark-1)',
-              border: "0px solid #817Daa",
-            }}>
 
-          <Box className="copyRight-box" style={{border: "1px soid #817Daa", textAlign: 'none', fontSize: 12, color: 'gray'}} >     
+  return (  
+        <div className={fadeOut ? 'fade-out' : ''}>
+        <Box  style={{ border: "0px solid #817Daa", display: 'flex', padding: 0}}>
+            
+                  <Modal
+                      show={isModalVisible}
+                      content={modalConfig.content}
+                      buttons={modalConfig.buttons}
+                      borderColor={modalConfig.borderColor}
+                  />
 
-              <Box style={{ border:"1px soid white",
-                           height:'auto', width:'100%',
-                           padding: 0, display: 'flex', 
-                           justifyContent: 'center',
-                           marginBottom: 15}}>
-                  <Box style={{
-                    textAlign: "center",
-                    backgroundColor: "var(--body-background-dark)",//'#484444',
-                    border:"0px solid #817Daa", 
-                    height:125, 
-                    width:"100%", 
-                    fontSize: 25,
-                    marginBottom: 0}}>
-                      <div style={{fontSize: 54, color: "#817Dda"}}>
-                      <i className="fas fa-sign-in-alt" /></div> &nbsp;Life Package <span style={{fontSize:18}}>&#8482;</span>            
+               <Paper elevation={0}   variant="outlined"
+                  style={{
+                    width: '375px', 
+                    height: '555px', 
+                    backgroundColor: "transparent",//'var(--body-background-dark-1)',
+                    border: "0px solid #817Daa",
+                  }}
+               >
+
+                <Box className="copyRight-box" style={{border: "1px soid #817Daa", textAlign: 'none', fontSize: 12, color: 'gray'}} >     
+
+                    <Box style={{ border:"1px soid white",
+                                height:'auto', width:'100%',
+                                padding: 0, display: 'flex', 
+                                justifyContent: 'center',
+                                marginBottom: 15}}>
+                        <Box style={{
+                          textAlign: "center",
+                          backgroundColor: "var(--body-background-dark)",//'#484444',
+                          border:"0px solid #817Daa", 
+                          height:125, 
+                          width:"100%", 
+                          fontSize: 25,
+                          marginBottom: 0}}>
+                            <div style={{fontSize: 54, color: "#817Dda"}}>
+                            <i className="fas fa-sign-in-alt" /></div> &nbsp;Life Package <span style={{fontSize:18}}>&#8482;</span>            
+                          
+                        </Box>
+                    </Box>
+
+                    <Space howmuch={8} />
+
+                  <Box style={{backgroundColor: "rgb(22, 22, 22)", borderRadius: 8, border: "1px solid #817Daa"}}>
+                    <div style={{border: "0px solid black",  backgroundColor: ""}}>
+                      <TextBox  id="email" label="Email*" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
+                      <Space howmuch={8} />
+                      <TextBox  id="password" label="Password*" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
+                    </div>
                     
-                  </Box>
-              </Box>
+                    <div className={fadeOut2 ? 'fade-out' : ''}>
+                        <div style={{border: "0px solid black", height: 25,  position: "relative", top: 10, borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
+                          {error && (
+                            <Box style={{border: "0px solid black", fontSize: 20, padding: 0, color: "rgb(164, 56, 56)", textAlign: "center"}} className="error-message">
+                              {error}
+                            </Box>
+                          )}
+                        </div>
+                    </div>
 
-              <Space howmuch={8} />
+                    <Box className="toggle-box" style={{
+                          border:"0px solid black", 
+                          fontSize: '14px',
+                          lineHeight: 1, 
+                          marginTop: 20,
+                          padding:0,
+                          paddingBottom:7,
+                          color: 'gray'}}>
+                        <div>
+                        <ToggleSwitch value={isChecked} onChange={handleRememberMe}/>&nbsp;&nbsp;Remember me
+                        </div>
+                    </Box>
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                      <Button style={{marginTop: '1px', width: '100%', fontSize:"20px",  
+                      border:"1px solid gray", lineHeight: 0, height: 35}}
+                          onClick={handleLoginClick}>Log in 
+                      </Button> 
+                    </div>
+                    <Box style={{
+                        border: "0px solid black", 
+                        fontSize: 13, 
+                        color: "#bd841b", 
+                        padding: 0, 
+                        paddingTop:4,
+                        display: 'flex',
+                        justifyContent: 'space-between',
 
-            <Box style={{backgroundColor: "rgb(22, 22, 22)", borderRadius: 8, border: "1px solid #817Daa"}}>
-              <div style={{border: "0px solid black",  backgroundColor: ""}}>
-                <TextBox  id="email" label="Email*" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
-                <Space howmuch={8} />
-                <TextBox  id="password" label="Password*" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
-              </div>
-               
-              <div className={fadeOut2 ? 'fade-out' : ''}>
-                  <div style={{border: "0px solid black", height: 25,  position: "relative", top: 10, borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
-                    {error && (
-                      <Box style={{border: "0px solid black", fontSize: 20, padding: 0, color: "rgb(164, 56, 56)", textAlign: "center"}} className="error-message">
-                        {error}
-                      </Box>
-                    )}
-                  </div>
-              </div>
+                        paddingBottom: 5,
+                        }}>
 
-              <Box className="toggle-box" style={{
-                    border:"0px solid black", 
-                    fontSize: '14px',
-                    lineHeight: 1, 
-                    marginTop: 20,
-                    padding:0,
-                    paddingBottom:7,
-                    color: 'gray'}}>
-                  <div>
-                  <ToggleSwitch value={isChecked} onChange={handleRememberMe}/>&nbsp;&nbsp;Remember me
-                  </div>
-              </Box>
-              <div style={{display: "flex", justifyContent: "center"}}>
-                <Button style={{marginTop: '1px', width: '100%', fontSize:"20px",  
-                border:"1px solid gray", lineHeight: 0, height: 35}}
-                    onClick={handleSubmit}>Log in 
-                </Button> 
-              </div>
-              <Box style={{
-                  border: "0px solid black", 
-                  fontSize: 13, 
-                  color: "#bd841b", 
-                  padding: 0, 
-                  paddingTop:4,
-                  display: 'flex',
-                  justifyContent: 'space-between',
+                        <Box style={{border: "0px solid black", padding:0, marginLeft:10, marginTop: 3}}>
+                          <Link to="/recover-password"> Forgot Password?</Link>
+                        </Box> 
+                        <Box style={{border: "0px solid black", padding:0, marginRight:10, marginTop: 3}}>
+                          <Link  to="/register">Register a New Account.</Link>
+                        </Box> 
 
-                  paddingBottom: 5,
-                  }}>
+                    </Box> 
+                    
+                    </Box>              
 
-                  <Box style={{border: "0px solid black", padding:0, marginLeft:10, marginTop: 3}}>
-                     <Link to="/recover-password"> Forgot Password?</Link>
-                  </Box> 
-                  <Box style={{border: "0px solid black", padding:0, marginRight:10, marginTop: 3}}>
-                     <Link  to="/register">Register a New Account.</Link>
-                  </Box> 
+                    <Space howmuch={50}/>
+                  {/* <Or title={"OAuth?"}/> */}
+                    <Box style={{border: "0px solid black", backgroundColor: "", width: "100%", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginTop: 0, marginBottom: 8}}>
+                        <Box style={{display: 'flex', border: "0px solid black", padding: 0, backgroundColor: ""}}>
+                          <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-facebook-f" /></div>
+                          <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-google" /></div>              
+                        </Box>
+                                  
+                    </Box>
 
-              </Box> 
-              
-              </Box>              
+                    <Space howmuch={5}/>
 
-              <Space howmuch={50}/>
-             {/* <Or title={"OAuth?"}/> */}
-              <Box style={{border: "0px solid black", backgroundColor: "", width: "100%", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginTop: 0, marginBottom: 8}}>
-                  <Box style={{display: 'flex', border: "0px solid black", padding: 0, backgroundColor: ""}}>
-                    <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-facebook-f" /></div>
-                    <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-google" /></div>              
-                  </Box>
-                            
-              </Box>
+                    <Box style={{width: "375px", border:"0px solid black"}}>
+                      Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
+                    </Box>
 
-              <Space howmuch={5}/>
+                </Box>    
+            </Paper>
 
-              <Box style={{width: "375px", border:"0px solid black"}}>
-                 Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
-              </Box>
-
-          </Box>    
-       </Paper>
-
-   </Box>
-  
-  </div> 
+        </Box>
+        
+        </div> 
   );
 }
 
 export default Login;
-
-
-const styles = {
-    "oAuth": {
-      fontSize: 26
-    },
-
-};

@@ -13,6 +13,7 @@ const TwoFactorAuth = ({ onSubmit }) => {
   const [message, setMessage] = useState('');
   const [cnt, setCnt] = useState(2);
   const [fadeOut, setFadeOut] = useState(false);
+  const [fadeOut2, setFadeOut2] = useState(false);
   
   const location = useLocation();
   const { email } = location.state || {};
@@ -61,17 +62,15 @@ const TwoFactorAuth = ({ onSubmit }) => {
         }
     };
 
-  const resend2FA = () => {
+  const resend2FA = async () => {
     const url = `${BASE_URL}/auth/2FA/resend-2FA-code`;
-    const resendLink = `${url}?email=${email}`
+    const resendLink = `${url}?email=${email}`    
     
-    
-    // send the email address in the url
     try {
         // send request to resend endpoint
-        let response={};
-        response.status = 200;
-        //const response = await axios.put(resendLink);            
+        //let response={};
+        //response.status = 200;
+        const response = await axios.put(resendLink);            
 
         if (response.status === 200) {
             setCnt(cnt+1);
@@ -88,12 +87,15 @@ const TwoFactorAuth = ({ onSubmit }) => {
     catch (error) {
         if (error.response) {
             console.error('Error status:', error.response.status);
-// Ill fix this later. DIsplays it all now
-            if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
-                alert(error.response.data.detail);
-            } else{
-                alert(error.response.data.detail); 
-            }
+
+            if (error.response.status >= 400) {  // 401, 404, 403, 409, etc                
+              setFadeOut2(true);
+              setMessage(error.response.data.detail)
+              setTimeout(() => {
+                setMessage("")
+                 setFadeOut2(false);
+              }, 3900);               
+            } 
         } 
      }
   };
@@ -142,12 +144,19 @@ const TwoFactorAuth = ({ onSubmit }) => {
                     if (user_role === "admin") {
                        // load the admin PIN// user workstation
                        setFadeOut(true);
-                       setTimeout(() => navigate("/admin-login"), 3000);    
+                       setTimeout(() => {
+                          navigate("/admin-login")
+                          setFadeOut(false);
+                      }, 3000);    
 
                     } else if (user_role === "user") {
                        // user workstation
                        setFadeOut(true);
-                       setTimeout(() => navigate("/user-dashboard"), 3000);                      
+                       setTimeout(() => {
+                          navigate("/user-dashboard")
+                          setFadeOut(false);
+                      }, 3000);    
+
                     }                    
                  } 
               }   
@@ -159,19 +168,42 @@ const TwoFactorAuth = ({ onSubmit }) => {
               console.error('Error status:', error.response.status);
   // Ill fix this later. 
               if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
-                setMessage(error.response.data.detail);
-                setTimeout(() => setMessage(""), 3000);               
+                
+                setFadeOut2(true);
+                setMessage(error.response.data.detail)
+                setTimeout(() => {
+                  setMessage("")
+                   setFadeOut2(false);
+               }, 3900);    
+
+       //         setMessage(error.response.data.detail);
+       //         setTimeout(() => setMessage(""), 3000);               
               }
           } 
         }
 
     // Error user input, data from localStorage
     } else if (users_code.length != 6) {
-        setMessage('Missing 1 or more characters input.')
-        setTimeout(() => setMessage(""), 3000);
+          setFadeOut2(true);
+          setMessage('Missing 1 or more characters input.')
+          setTimeout(() => {
+            setMessage("")
+            setFadeOut2(false);
+        }, 3900);   
+
+    //    setMessage('Missing 1 or more characters input.')
+    //    setTimeout(() => setMessage(""), 3000);
+
     } else if (!code_2FA || !token) {
-        setMessage("Error: Click below to resend 2FA code.")
-        setTimeout(() => setMessage(""), 3000);
+          setFadeOut2(true);
+          setMessage("Error: Click below to resend 2FA code.")
+          setTimeout(() => {
+            setMessage("")
+            setFadeOut2(false);
+        }, 3900);  
+
+    //    setMessage("Error: Click below to resend 2FA code.")
+    //    setTimeout(() => setMessage(""), 3000);
     }
   };
 
@@ -182,13 +214,17 @@ const TwoFactorAuth = ({ onSubmit }) => {
               <div style={styles.lockIcon}>🔒</div>
               <h1 style={styles.title}>Life Package</h1>
               <Box style={styles.subtitle}>Enter the 6-digit code You received via email or sms.</Box>
+
+              <div className={fadeOut2 ? 'fade-out' : ''}>
                 <Box style={{border: "0px solid black", height: 22}}>
                   {message && (
                   <Box style={{position: "relative", top: -8, border: "0px solid black", fontSize: 14, zIndex: 10, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
                       {message}
                   </Box>
                   )}
-                </Box >      
+                </Box >  
+              </div> 
+
               <form onSubmit={verify2faCode}>
                     <Box style={styles.inputsContainer}>
                       {code.map((digitOrLetter, index) => (
