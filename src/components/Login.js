@@ -45,8 +45,7 @@ const  Login = () => {
     document.title = "User Login: Life Package 2023";
   }, []);
 
-  const handleLoginClick = async (event) => {
-    event.preventDefault();     
+  const handleLoginClick = async () => {
     
     if (email && password) {
       sendRequest = true;
@@ -166,8 +165,8 @@ const  Login = () => {
             <>             
               <div style={{width:"100%", padding:0, color: "orange"}}>
                  <div style={{
-                            width: "100%", backgroundColor: "rgba(0,0,0,0.600)", 
-                            borderLeft: `2px solid orange`, paddingLeft: 8, paddingBottom: 0}}>
+                            width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
+                            borderLeft: `0px solid orange`, paddingLeft: 8, paddingBottom: 0}}>
                        <h2>Invalid Entry</h2>
                  </div>                 
               </div>

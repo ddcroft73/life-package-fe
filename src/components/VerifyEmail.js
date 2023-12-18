@@ -3,7 +3,7 @@ import './VerifyEmail.css'; // Make sure to create a corresponding CSS file with
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Box from "./elements/Box";
 
-import {SERVER_HOST} from '../api/settings';
+import {BASE_URL} from '../api/settings';
 import axios from 'axios';
 
 const VerifyEmail =  () => { //
@@ -23,10 +23,9 @@ const VerifyEmail =  () => { //
 
 
     const resendEmailVerification = async () => {
-        const baseUrl = `http://${SERVER_HOST}/api/v1/`;
-        const url = `${baseUrl}auth/resend-verification`;
+        const url = `${BASE_URL}auth/resend-verification`;
         const resendLink = `${url}?email=${email}`;
-        //http://192.168.12.189:8015/api/v1/auth/resend-verification?email=undefined
+        //http://192.168.12.189:8015/api/v1/auth/resend-verification?email=someemail@email.com
         
         try {
             const response = await axios.put(resendLink);            

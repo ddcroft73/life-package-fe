@@ -25,26 +25,25 @@ const PasswordRecover = () => {
     useEffect(() => {
         document.title = "Reset Password: LifePackage 2023";
     }, []);
-
-    const handleSend = async (event) => {
-        event.preventDefault();
-
-        // Predefined actions
-        //const confirmAction = () =>  navigate('/verify-email', { state: { email: email } }); 
-        const cancelAction = () => setIsModalVisible(false);
-        
-        // Function to show modal with OK button, just for message
-        const showMessageModal = (content, borderColor) => {
-            setModalConfig({
-            content,
-            buttons: [
-                { text: 'OK', handler: cancelAction }
-            ],
-            borderColor: borderColor
-            });
-            setIsModalVisible(true);
-        };
     
+    // Predefined actions
+    //const confirmAction = () =>  navigate('/verify-email', { state: { email: email } }); 
+    const cancelAction = () => setIsModalVisible(false);
+    
+    // Function to show modal with OK button, just for message
+    const showMessageModal = (content, borderColor) => {
+        setModalConfig({
+        content,
+        buttons: [
+            { text: 'OK', handler: cancelAction }
+        ],
+        borderColor: borderColor
+        });
+        setIsModalVisible(true);
+    };
+
+
+    const handleSend = async () => {    
 
         if (isEmailAddress(email)){
             ///api/v1/auth/password-recovery/{email}
@@ -137,7 +136,7 @@ const PasswordRecover = () => {
                 <Space howmuch={20} />    
                 </div>
                     <Box  style={{ backgroundColor:  'rgb(22,22,22)', border: "1px solid #817Dda" }}>
-                        <form>
+                        
                             <div>
                              <Box style={{color: "white", border: "0px solid gray"}}> 
                             If you lost your password you can reset it. Get the ball rolling by entering your email below.
@@ -168,7 +167,7 @@ const PasswordRecover = () => {
                                 Send Reset Link
                             </Button>
                             </div>
-                        </form>
+                            
                         <Box style={{border: "0px solid gray", padding: 5, marginTop: 5}}>
                             <Box style={{border: "0px solid gray", 
                                          fontSize: 14, 

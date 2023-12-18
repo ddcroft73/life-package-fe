@@ -23,6 +23,7 @@ const TwoFactorAuth = ({ onSubmit }) => {
     document.title = "Two Factor Authentication: LifePackage 2023";
   }, []);
 
+  // little currying action...lol 
   const handleChange = (index) => (e) => {
       const value = e.target.value;
       const newCode = [...code];
@@ -31,7 +32,6 @@ const TwoFactorAuth = ({ onSubmit }) => {
           newCode[index] = value.toUpperCase(); 
           setCode(newCode);
       
-          // Auto-focus the next input after a digit or letter is typed
           if (e.target.nextSibling) {
               e.target.nextSibling.focus();
           }
@@ -39,28 +39,26 @@ const TwoFactorAuth = ({ onSubmit }) => {
   };
 
   const handleKeyDown = (index) => (e) => {
-      // Allow backspace to clear the current input and then move to the previous input
+    
       if (e.key === 'Backspace') {
           e.preventDefault();
-      
-          const newCode = [...code];
-          // If there is a value in the current input, clear it
-          if (code[index]) {
-            newCode[index] = '';
-            setCode(newCode);
-          }
-          // If the current input is already empty, delete the previous input's value
-          else if (index > 0 && !code[index]) {
-            newCode[index - 1] = '';
-            setCode(newCode);
-            // Move focus to the previous input
-            const prevInput = e.target.previousSibling;
-            if (prevInput) {
-              prevInput.focus();
-            }
+                
+        const newCode = [...code];
+        if (code[index]) {
+          newCode[index] = '';
+          setCode(newCode);
+        }
+        else if (index > 0 && !code[index]) {
+          newCode[index - 1] = '';
+          setCode(newCode);
+          // Move focus to the previous input
+          const prevInput = e.target.previousSibling;
+          if (prevInput) {
+            prevInput.focus();
           }
         }
-    };
+      }
+  };
 
   const resend2FA = async () => {
     const url = `${BASE_URL}/auth/2FA/resend-2FA-code`;
