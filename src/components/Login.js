@@ -193,8 +193,8 @@ const  Login = () => {
                 <>
                   <div style={{width:"100%", padding:0, color: "red"}}>
                     <div style={{
-                            width: "100%", backgroundColor: "rgba(0,0,0,0.300)", 
-                            borderLeft: `2px solid red`, paddingLeft: 5, paddingBottom: 0}}>
+                            width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
+                            borderLeft: `0px solid red`, paddingLeft: 5, paddingBottom: 0}}>
                        <h2>Error:</h2>
                     </div>                    
                   </div>

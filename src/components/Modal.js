@@ -20,8 +20,6 @@ function Modal({ show, buttons, content, borderColor="blue"}) {
               maxWidth: 400,
               height: 'auto',
               border: `1px solid ${borderColor}`,
-              position: "relative", 
-              top: -200, // adjust vertial alignment, more towards the top of the screen.
             }} className="modal">
   
             <Box style={styles.modalContent}>
