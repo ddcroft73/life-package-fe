@@ -283,7 +283,7 @@ const RegisterUser = () => {
                             <Link to="/two-factor-auth"> Contact Support</Link>
                         </Box> 
                         <Box style={{border: "0px solid black", padding:0, marginRight:10, marginTop: 3}}>
-                            <Link  to="/login">Already a member?  Log in</Link>
+                            <Link  to="/password-reset">Already a member?  Log in</Link>
                         </Box> 
 
                    </Box> 

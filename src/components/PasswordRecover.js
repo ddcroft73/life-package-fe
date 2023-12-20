@@ -111,7 +111,21 @@ const PasswordRecover = () => {
     };
 
     return (
-            <div className="password-reset-container" style={{ backgroundColor: 'transparent' }}>
+            <div className="password-reset-container"
+               style={{
+                  backgroundColor: 'transparent',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: 20,
+                  borderRadius: 8,
+                  maxWidth: 450,
+                  width: '100%',
+                  margin: 'auto',
+                  color: "gray"
+                 }}
+           >
                 
                 <Modal
                     show={isModalVisible}
@@ -124,7 +138,7 @@ const PasswordRecover = () => {
                     <Box style={{
                             textAlign: "center",
                             backgroundColor: "var(--body-background-dark)",//'#484444',
-                            border:"0px solid #817Daa", 
+                            border:"0px solid gray", 
                             height:125, 
                             width:"100%", 
                             fontSize: 25,
@@ -135,12 +149,19 @@ const PasswordRecover = () => {
                     </Box>
                 <Space howmuch={20} />    
                 </div>
-                    <Box  style={{ backgroundColor:  'rgb(22,22,22)', border: "1px solid #817Dda" }}>
+                    <Box  style={{ backgroundColor:  'transparent', border: "1px solid gray" }}>
                         
-                            <div>
-                             <Box style={{color: "white", border: "0px solid gray"}}> 
-                            If you lost your password you can reset it. Get the ball rolling by entering your email below.
-                            </Box>   
+                        <div>
+                             <div style={{
+                                  textAlign: "center",
+                                  color: "white"
+                                 }}
+                             >
+                                <h2>Recover Password</h2>
+                             </div>
+                             <Box style={{color: "white", border: "0px solid gray", paddingTop: 0}}> 
+                                  If you have lost your password you can easily reset it. Get the ball rolling by entering your email below.
+                             </Box>   
                             
                            <div className={fadeOut ? 'fade-out' : ''}>
                                 <div style={{border: "0px solid black", height: 20,  position: "relative", top: 0, borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
@@ -162,11 +183,21 @@ const PasswordRecover = () => {
                                 id="email" 
                                 label="Email*" 
                                 value={email} 
-                                type="text" width="100%" containerPadding={0}  onChange={handleEmail}/>
-                            <Button onClick={handleSend}  style={{ border:"1px solid gray",}}>
+                                type="text" 
+                                width="100%" 
+                                containerPadding={0}  
+                                onChange={handleEmail}
+                            />
+                            <Button onClick={handleSend}  
+                              style={{ 
+                                border:"1px solid gray",
+                                marginTop: 30,
+                                }}
+                            >
                                 Send Reset Link
                             </Button>
-                            </div>
+
+                        </div>
                             
                         <Box style={{border: "0px solid gray", padding: 5, marginTop: 5}}>
                             <Box style={{border: "0px solid gray", 
@@ -184,7 +215,28 @@ const PasswordRecover = () => {
                         </Box>    
                     </Box>       
 
-                    
+                    <Box className='footer'
+                       style={{
+                         height: 100,
+                         display: 'flex',
+                         flexDirection: 'column',
+                         border: '0px solid gray'
+                       }}
+                    >
+                        <div style={{
+                            flex: 1,
+                        }}>
+
+                        </div>
+                        <div style={{
+                             textAlign: "center",
+                             fontSize: 12,
+
+                            }}
+                        >
+                            Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
+                        </div>
+                    </Box>
             </div>
         );
 };

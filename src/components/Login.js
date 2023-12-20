@@ -280,34 +280,47 @@ const  Login = () => {
 
   return (  
         <div className={fadeOut ? 'fade-out' : ''}>
-        <Box  style={{ border: "0px solid #817Daa", display: 'flex', padding: 0}}>
-            
-                  <Modal
-                      show={isModalVisible}
-                      content={modalConfig.content}
-                      buttons={modalConfig.buttons}
-                      borderColor={modalConfig.borderColor}
-                  />
+           <Modal
+              show={isModalVisible}
+              content={modalConfig.content}
+              buttons={modalConfig.buttons}
+              borderColor={modalConfig.borderColor}
+           />
+        <Box  style={{
+                  width: '100%', 
+                  height: 'auto', 
+                  maxWidth: 650, 
+                  minWidth: 375, 
+                  border: "0px solid #817Daa", 
+                  display: 'flex', 
+                  padding: 10
+              }}
+        >
 
-               <Paper elevation={0}   variant="outlined"
-                  style={{
-                    width: '375px', 
-                    height: '555px', 
-                    backgroundColor: "transparent",//'var(--body-background-dark-1)',
-                    border: "0px solid #817Daa",
-                  }}
-               >
-
-                <Box className="copyRight-box" style={{border: "1px soid #817Daa", textAlign: 'none', fontSize: 12, color: 'gray'}} >     
-
-                    <Box style={{ border:"1px soid white",
-                                height:'auto', width:'100%',
-                                padding: 0, display: 'flex', 
+                <Box className="copyRight-box"
+                    style={{
+                      border: "0px soid #817Daa", 
+                      textAlign: 'none', 
+                      fontSize: 12, 
+                      color: 'gray',
+                      width: '100%', 
+                      height: 'auto', 
+                      maxWidth: 650, 
+                      minWidth: 375, 
+                    }} 
+                >     
+                    <Box style={{ border:"0px soid white",
+                                height:'auto', 
+                                width:'100%',
+                                maxWidth: 650, 
+                                minWidth: 375, 
+                                padding: 0, 
+                                display: 'flex', 
                                 justifyContent: 'center',
                                 marginBottom: 15}}>
                         <Box style={{
                           textAlign: "center",
-                          backgroundColor: "var(--body-background-dark)",//'#484444',
+                          backgroundColor: "transparent",//"var(--body-background-dark)",//'#484444',
                           border:"0px solid #817Daa", 
                           height:125, 
                           width:"100%", 
@@ -321,7 +334,8 @@ const  Login = () => {
 
                     <Space howmuch={8} />
 
-                  <Box style={{backgroundColor: "rgb(22, 22, 22)", borderRadius: 8, border: "1px solid #817Daa"}}>
+                  <Box style={{backgroundColor: "transparent", borderRadius: 8, border: "1px solid gray"}}>
+                     
                     <div style={{border: "0px solid black",  backgroundColor: ""}}>
                       <TextBox  id="email" label="Email*" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
                       <Space howmuch={8} />
@@ -338,16 +352,20 @@ const  Login = () => {
                         </div>
                     </div>
 
-                    <Box className="toggle-box" style={{
+                    <Box className="toggle-box" 
+                       style={{
                           border:"0px solid black", 
                           fontSize: '14px',
                           lineHeight: 1, 
                           marginTop: 20,
                           padding:0,
                           paddingBottom:7,
-                          color: 'gray'}}>
+                          color: 'gray',
+                          paddingLeft: 8,
+                        }}
+                    >
                         <div>
-                        <ToggleSwitch value={isChecked} onChange={handleRememberMe}/>&nbsp;&nbsp;Remember me
+                           <ToggleSwitch value={isChecked} onChange={handleRememberMe}/>&nbsp;&nbsp;Remember me
                         </div>
                     </Box>
                     <div style={{display: "flex", justifyContent: "center"}}>
@@ -391,12 +409,12 @@ const  Login = () => {
 
                     <Space howmuch={5}/>
 
-                    <Box style={{width: "375px", border:"0px solid black"}}>
+                    <div style={{textAlign: 'center', width: '100%'}}>
                       Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
-                    </Box>
+                    </div>
 
                 </Box>    
-            </Paper>
+            
 
         </Box>
         
