@@ -1,6 +1,6 @@
 import Box from "./elements/Box.js";
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import Button from "./elements/Button.js";
 import TextBox from "./elements/TextBox.js";
 import Space from "./Space.js";
@@ -77,28 +77,38 @@ const PasswordReset = () => {
                justifyContent: 'center',
                marginBottom: 15}}
          >
-           <Box style={{
-                textAlign: "center",
-                backgroundColor: "transparent",
-                border:"0px solid #817Daa",
-                height:125,
-                width:"100%",
-                fontSize: 25,
-                marginBottom: 0,
-                color: 'gray',
-                fontWeight: 'normal'}}
-           >
-               <div style={{fontSize: 54, color: "#817Dda"}}>
-                 <i className="fas fa-key" />
-               </div> &nbsp;Life Package <span style={{fontSize:25}}>&#8482;</span>           
-           </Box>
+          <Box style={{
+                          textAlign: "center",
+                          backgroundColor: "transparent ",//'#484444',
+                          border:"0px solid #817Daa",
+                          height:'auto',
+                          width:"auto",
+                          fontSize: 22,
+                    }}
+                    ><div style={{
+                      fontSize: 54,
+                      color: "#817Dda"
+                      }}
+                      >
+                      </div>
+                      <i style={{ color: "#819DCc", fontSize: 32}}
+                        className="fas fa-shapes" />
+                        &nbsp;
+                        <span style={{
+                              position: "relative",
+                              top: 5,
+                              fontSize:46,
+                              fontWeight: "lighter"
+                              }}
+                        >|</span> <span style={{fontSize: 30}}>LifePackage</span>  &#8482;                             
+                      </Box>
           
         </Box>
          
         <Box className="main-container"
             style={{
-              backgroundColor: "rgb(22,22,22);",
-              marginTop: 10,
+              backgroundColor: "transparent",
+              marginTop: 40,
               border: "1px solid gray",
             }}
         >
@@ -110,9 +120,15 @@ const PasswordReset = () => {
                padding: 5
               }}
             >
-              <div>
-                <h2>Reset Password</h2>
+              <div style={{display: "flex", justifyContent: 'center', border: "0px solid white"}}>
+                <div style={{display: "flex", border: "0px solid white"}}>
+                   <h2>Password Reset</h2>
+                </div>
+                <div style={{fontSize: 34, color: 'orange', paddingLeft: 12, display: "flex", justifyContent: 'center', alignItems: "center", border: "0px solid white"}}>
+                    <i className="fas fa-key" />
+                </div>    
               </div>
+
               <div style={{
                      marginBottom: 30
                    }}
@@ -129,7 +145,7 @@ const PasswordReset = () => {
                   containerPadding={0}
                   onChange={handleNewPassword}
                />
-               <Space howmuch={18} />
+               <Space howmuch={8} />
                <TextBox 
                   id="confirm-password"
                   label="Confirm Password *"
@@ -157,22 +173,23 @@ const PasswordReset = () => {
                   style={{
                       display: "flex",
                       justifyContent: "space-around",
-                      fontSize: 12,
+                      fontSize: 14,
                       color: "blue",
                       border: "0px solid gray",
+
                   }}>
-               <Box style={{border:0}}>
-                   Login
-               </Box>
-               <Box style={{border:0}}>
-                   Register
-               </Box>
+               <div style={{border:0}}>
+                   <Link to="/login">Login</Link>
+               </div>
+               <div style={{border: "0px solid gray"}}>
+                  <Link to="/register"> Register</Link>
+               </div>
             </Box>
           
        </Box> {/* End main-container*/}
            <Box className="footer"
               style={{
-                  height: 120,
+                  height: 80,
                   display: 'flex',
                   flexDirection: 'column',
                   border: "0px solid gray",

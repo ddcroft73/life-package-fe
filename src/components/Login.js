@@ -19,7 +19,9 @@ import './Login.css';
 // Most of these are in the .css file
 const styles = {
   "oAuth": {
-    fontSize: 26
+    fontSize: 26,
+    border: '0px solid gray',
+    padding: 5
   },
 };
 
@@ -309,30 +311,33 @@ const  Login = () => {
                       minWidth: 375, 
                     }} 
                 >     
-                    <Box style={{ border:"0px soid white",
-                                height:'auto', 
-                                width:'100%',
-                                maxWidth: 650, 
-                                minWidth: 375, 
-                                padding: 0, 
-                                display: 'flex', 
-                                justifyContent: 'center',
-                                marginBottom: 15}}>
-                        <Box style={{
+                    <Box style={{
                           textAlign: "center",
-                          backgroundColor: "transparent",//"var(--body-background-dark)",//'#484444',
-                          border:"0px solid #817Daa", 
-                          height:125, 
-                          width:"100%", 
-                          fontSize: 25,
-                          marginBottom: 0}}>
-                            <div style={{fontSize: 54, color: "#817Dda"}}>
-                            <i className="fas fa-sign-in-alt" /></div> &nbsp;Life Package <span style={{fontSize:18}}>&#8482;</span>            
-                          
-                        </Box>
-                    </Box>
+                          backgroundColor: "transparent ",//'#484444',
+                          border:"0px solid #817Daa",
+                          height:'auto',
+                          width:"auto",
+                          fontSize: 22,
+                    }}
+                    ><div style={{
+                      fontSize: 54,
+                      color: "#817Dda"
+                      }}
+                      >
+                      </div>
+                      <i style={{ color: "#819DCc", fontSize: 32}}
+                        className="fas fa-shapes" />
+                        &nbsp;
+                        <span style={{
+                              position: "relative",
+                              top: 5,
+                              fontSize:46,
+                              fontWeight: "lighter"
+                              }}
+                        >|</span> <span style={{fontSize: 30}}>LifePackage</span>  &#8482;                             
+                      </Box>
 
-                    <Space howmuch={8} />
+                    <Space howmuch={38} />
 
                   <Box style={{backgroundColor: "transparent", borderRadius: 8, border: "1px solid gray"}}>
                      
@@ -371,7 +376,7 @@ const  Login = () => {
                     <div style={{display: "flex", justifyContent: "center"}}>
                       <Button style={{marginTop: '1px', width: '100%', fontSize:"20px",  
                       border:"1px solid gray", lineHeight: 0, height: 35}}
-                          onClick={handleLoginClick}>Log in 
+                          onClick={handleLoginClick}>Sign in 
                       </Button> 
                     </div>
                     <Box style={{
@@ -399,8 +404,10 @@ const  Login = () => {
 
                     <Space howmuch={50}/>
                   {/* <Or title={"OAuth?"}/> */}
-                    <Box style={{border: "0px solid black", backgroundColor: "", width: "100%", display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: "column", marginTop: 0, marginBottom: 8}}>
-                        <Box style={{display: 'flex', border: "0px solid black", padding: 0, backgroundColor: ""}}>
+                    <Box style={{border: "0px solid gray", 
+                    width: "100%", display: "flex", justifyContent: 'center', 
+                    alignItems: 'center', height: 100, marginBottom: 8}}>
+                        <Box style={{display: 'flex', border: "0px solid black", padding: 0,}}>
                           <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-facebook-f" /></div>
                           <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-google" /></div>              
                         </Box>
