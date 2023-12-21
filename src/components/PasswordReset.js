@@ -59,7 +59,7 @@ const PasswordReset = () => {
                display:'flex',
                flexDirection: 'column',
                justifyContent: 'center',
-               marginTop: 20,
+               marginTop: 60,
                height: "auto",
                maxWidth: 650,
                minWidth:375,
@@ -92,7 +92,7 @@ const PasswordReset = () => {
                       >
                       </div>
                       <i style={{ color: "#819DCc", fontSize: 32}}
-                        className="fas fa-shapes" />
+                        className="fas fa-mail-bulk" />
                         &nbsp;
                         <span style={{
                               position: "relative",
@@ -125,7 +125,7 @@ const PasswordReset = () => {
                    <h2>Password Reset</h2>
                 </div>
                 <div style={{fontSize: 34, color: 'orange', paddingLeft: 12, display: "flex", justifyContent: 'center', alignItems: "center", border: "0px solid white"}}>
-                    <i className="fas fa-key" />
+                    <i className="fas fa-keys" />
                 </div>    
               </div>
 

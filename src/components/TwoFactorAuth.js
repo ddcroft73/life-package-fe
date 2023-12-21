@@ -6,6 +6,7 @@ import Paper from "./elements/Paper.js"
 import axios from 'axios';
 import { BASE_URL, SERVER_HOST } from "../api/settings.js";
 import { decodeJwt } from "../api/utils.js";
+import Space from "./Space.js";
 
 
 const TwoFactorAuth = ({ onSubmit }) => {
@@ -207,22 +208,53 @@ const TwoFactorAuth = ({ onSubmit }) => {
 
   return (
        <div className={fadeOut ? 'fade-out' : ''}>
+
           <Box style={styles.container}>
-            <Box style={styles.formBox}>
-              <div style={styles.lockIcon}>🔒</div>
-              <h1 style={styles.title}>Life Package</h1>
-              <Box style={styles.subtitle}>Enter the 6-digit code You received via email or sms.</Box>
+
+            <Box className="logo" style={{
+                  textAlign: "center",
+                  backgroundColor: "transparent ",//'#484444',
+                  border:"0px solid #817Daa",
+                  height:'auto',
+                  width:"auto",
+                  fontSize: 22,
+            }}
+            ><div style={{
+              fontSize: 54,
+              color: "#817Dda"
+              }}
+              >
+              </div>
+              <i style={{ color: "#819DCc", fontSize: 32}}
+                className="fas fa-mail-bulk" />
+                &nbsp;
+                <span style={{
+                      position: "relative",
+                      top: 5,
+                      fontSize:46,
+                      fontWeight: "lighter"
+                      }}
+                >|</span> <span style={{fontSize: 30}}>LifePackage</span>  &#8482;                             
+              </Box>
+<Space howmuch={32} />
+              <div style={{border: "0px solid white", color: "white"}}>
+                <h2>Two Factor Authentication</h2>
+              </div>
+              <Box style={styles.subtitle}>
+                Enter the 6-digit code You received via email or sms.
+             </Box>
 
               <div className={fadeOut2 ? 'fade-out' : ''}>
                 <Box style={{border: "0px solid black", height: 22}}>
                   {message && (
-                  <Box style={{position: "relative", top: -8, border: "0px solid black", fontSize: 14, zIndex: 10, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
+                  <Box style={{position: "relative", top: -12, border: "0px solid black", fontSize: 14, zIndex: 10, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
                       {message}
                   </Box>
                   )}
                 </Box >  
               </div> 
-
+              
+            <Box style={styles.formBox}> 
               <form onSubmit={verify2faCode}>
                     <Box style={styles.inputsContainer}>
                       {code.map((digitOrLetter, index) => (
@@ -247,6 +279,10 @@ const TwoFactorAuth = ({ onSubmit }) => {
                   <Button type="submit" style={styles.button}>Submit</Button>
               </form>
             </Box>
+            <Space howmuch={140} />
+            <div style={{textAlign: 'center', width: '100%', fontSize: 12}}>
+              Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
+            </div>
           </Box>
       </div>    
   );
@@ -258,15 +294,19 @@ const TwoFactorAuth = ({ onSubmit }) => {
 const styles = {
   container: {
     display: 'flex', 
+    flexDirection: "column",
     border: "0px solid gray",
-    borderRadius: '15px', 
-    marginTop: 20,
+    borderRadius: '8px', 
+    marginTop: 60,
     justifyContent: 'center', 
-    width: 375,
+    maxWidth: 420,
+    minWidth: 375,
+    width: "100%",
     alignItems: 'center', 
     height: 'auto', 
     backgroundColor: "transparent",//'rgb(49, 46, 44)',
-    fontFamily:  "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;"
+    fontFamily:  "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;",
+    color: "gray",
   },
   hyphen: {
     fontSize: '28px',
@@ -275,9 +315,9 @@ const styles = {
     padding: '2px 5px', // Adjust spacing to align with your design
   },
   formBox: {
-    backgroundColor: 'rgb(49, 46, 44)', 
+    backgroundColor: "transparent",//'rgb(49, 46, 44)', 
     border: "1px solid gray",
-    borderRadius: '15px', 
+    borderRadius: '8px', 
     textAlign: 'center',
    /* padding: '40px',
     textAlign: 'center',
@@ -285,10 +325,6 @@ const styles = {
     maxWidth: '370px',
     width: '100%',
     height: 'auto'
-  },
-  lockIcon: {
-    fontSize: '32px',
-    color: '#ffba00', // Color of the lock icon, adjust as needed
   },
   title: {
     color: 'white',
@@ -300,7 +336,8 @@ const styles = {
     marginTop: 0,
     marginBottom: '0px',
     border: '0px solid white', 
-    textAlign: "left",
+    textAlign: "center",
+    width: "60%",
   },
   inputsContainer: {
     display: 'flex', 
@@ -311,10 +348,10 @@ const styles = {
     border: '0px solid white', 
   },
   input: {
-    width: '40px', 
-    height: '50px', 
+    width: '30px', 
+    height: '40px', 
     margin: '0 5px', 
-    fontSize: '32px', 
+    fontSize: '28px', 
     textAlign: 'center',
     borderRadius: '6px', 
     border: '1px solid gray', // Adjust as needed
@@ -322,15 +359,16 @@ const styles = {
     color: 'white'
   },
   button: {
-    padding: '15px', 
     backgroundColor: '#484444', // Placeholder color, replace with the color you want
     color: 'white', 
     border: '1px solid white', 
     //borderRadius: '8px', 
     cursor: 'pointer',
+    height: "40px",
     fontSize: '20px',
     width: '95%', // Full-width button
-    marginBottom: 10
+    marginBottom: 10,
+    lineHeight: 0
   }
 };
 

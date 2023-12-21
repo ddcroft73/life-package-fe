@@ -295,7 +295,8 @@ const  Login = () => {
                   minWidth: 375, 
                   border: "0px solid #817Daa", 
                   display: 'flex', 
-                  padding: 10
+                  padding: 10,
+                  marginTop: 50
               }}
         >
 
@@ -326,7 +327,7 @@ const  Login = () => {
                       >
                       </div>
                       <i style={{ color: "#819DCc", fontSize: 32}}
-                        className="fas fa-shapes" />
+                        className="fas fa-mail-bulk" />
                         &nbsp;
                         <span style={{
                               position: "relative",
@@ -337,7 +338,7 @@ const  Login = () => {
                         >|</span> <span style={{fontSize: 30}}>LifePackage</span>  &#8482;                             
                       </Box>
 
-                    <Space howmuch={38} />
+                    <Space howmuch={68} />
 
                   <Box style={{backgroundColor: "transparent", borderRadius: 8, border: "1px solid gray"}}>
                      

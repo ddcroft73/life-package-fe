@@ -25,7 +25,7 @@ const PasswordRecover = () => {
     useEffect(() => {
         document.title = "Reset Password: LifePackage 2023";
     }, []);
-    
+
     // Predefined actions
     //const confirmAction = () =>  navigate('/verify-email', { state: { email: email } }); 
     const cancelAction = () => setIsModalVisible(false);
@@ -123,7 +123,8 @@ const PasswordRecover = () => {
                   maxWidth: 450,
                   width: '100%',
                   margin: 'auto',
-                  color: "gray"
+                  color: "gray",
+                  marginTop: 50
                  }}
            >
                 
@@ -135,19 +136,33 @@ const PasswordRecover = () => {
                 />
 
                 <div className="password-reset-logo">
-                    <Box style={{
-                            textAlign: "center",
-                            backgroundColor: "var(--body-background-dark)",//'#484444',
-                            border:"0px solid gray", 
-                            height:125, 
-                            width:"100%", 
-                            fontSize: 25,
-                            color: "gray",
-                            marginBottom: 0}}>
-                                <div style={{fontSize: 54, color: "#817Dda"}}>
-                                <i className="fa fa-key" /></div> &nbsp;Life Package <span style={{fontSize:18}}>&#8482;</span>                                       
-                    </Box>
-                <Space howmuch={20} />    
+                <Box style={{
+                          textAlign: "center",
+                          backgroundColor: "transparent ",//'#484444',
+                          border:"0px solid #817Daa",
+                          height:'auto',
+                          width:"auto",
+                          fontSize: 22,
+                    }}
+                    ><div style={{
+                      fontSize: 54,
+                      color: "#817Dda"
+                      }}
+                      >
+                      </div>
+                      <i style={{ color: "#819DCc", fontSize: 32}}
+                        className="fas fa-mail-bulk" />
+                        &nbsp;
+                        <span style={{
+                              position: "relative",
+                              top: 5,
+                              fontSize:46,
+                              fontWeight: "lighter"
+                              }}
+                        >|</span> <span style={{fontSize: 30}}>LifePackage</span>  &#8482;                             
+                </Box>
+
+                <Space howmuch={40} />    
                 </div>
                     <Box  style={{ backgroundColor:  'transparent', border: "1px solid gray" }}>
                         
