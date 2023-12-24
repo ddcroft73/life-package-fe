@@ -12,18 +12,13 @@ import Space from '../components/Space.js';
 import Modal from './Modal.js';
 import Or from './Or.js';
 import { isEmailAddress } from '../api/utils.js';
+import Logo from './Logo.js';
+import Footer from './elements/Footer.js';
+import Links from './Links.js';
 import './Login.css';
 
 
 
-// Most of these are in the .css file
-const styles = {
-  "oAuth": {
-    fontSize: 26,
-    border: '0px solid gray',
-    padding: 5
-  },
-};
 
 const  Login = () => {  
 
@@ -277,11 +272,36 @@ const  Login = () => {
         localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
       }
     };
-  // justifyContent: 'center', alignItems: 'center', 
+    
+      
+  const linkData = {
+    textOne: "Forgot Password?",
+    pathOne: "/recover-password",
+    textTwo: "Register a New Account.",
+    pathTwo: "/register"
+  };
+  
+  // Most of these are in the .css file
+  const styles = {
+    "oAuth": {
+      fontSize: 26,
+      border: '0px solid gray',
+      padding: 5
+    },
+    top_strip: {       
+      width: "100%",
+      border: "1px solid gray",
+      height: 20,
+      borderTopLeftRadius: 8,
+      borderTopRightRadius: 8,
+      backgroundColor: '#817Daa'
+    }
+  };
 
 
   return (  
         <div className={fadeOut ? 'fade-out' : ''}>
+        <Logo marginTop={50} />  
            <Modal
               show={isModalVisible}
               content={modalConfig.content}
@@ -299,6 +319,7 @@ const  Login = () => {
                   marginTop: 50
               }}
         >
+              
 
                 <Box className="copyRight-box"
                     style={{
@@ -310,124 +331,83 @@ const  Login = () => {
                       height: 'auto', 
                       maxWidth: 650, 
                       minWidth: 375, 
+                      paddingTop: 40
                     }} 
                 >     
-                    <Box style={{
-                          textAlign: "center",
-                          backgroundColor: "transparent ",//'#484444',
-                          border:"0px solid #817Daa",
-                          height:'auto',
-                          width:"auto",
-                          fontSize: 22,
-                    }}
-                    ><div style={{
-                      fontSize: 54,
-                      color: "#817Dda"
-                      }}
-                      >
+
+                  <Box style={{backgroundColor: "rgb(12,12,12)", borderRadius: 8, border: "1px solid rgb(31,31,31)", borderTop: 0}}>
+
+                  
+
+                      <div style={{border: "0px solid black",  backgroundColor: ""}}>
+                        <TextBox  id="email" label="Email*" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
+                        <Space howmuch={8} />
+                        <TextBox  id="password" label="Password*" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
                       </div>
-                      <i style={{ color: "#819DCc", fontSize: 32}}
-                        className="fas fa-mail-bulk" />
-                        &nbsp;
-                        <span style={{
-                              position: "relative",
-                              top: 5,
-                              fontSize:46,
-                              fontWeight: "lighter"
-                              }}
-                        >|</span> <span style={{fontSize: 30}}>LifePackage</span>  &#8482;                             
+                      
+                      <div className={fadeOut2 ? 'fade-out' : ''}>
+                          <div style={{border: "0px solid black", height: 25,  position: "relative", top: 10, borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
+                            {error && (
+                              <Box style={{border: "0px solid black", fontSize: 20, padding: 0, color: "rgb(164, 56, 56)", textAlign: "center"}} className="error-message">
+                                {error}
+                              </Box>
+                            )}
+                          </div>
+                      </div>
+
+                      <Box className="toggle-box" 
+                        style={{
+                            border:"0px solid black", 
+                            fontSize: '14px',
+                            lineHeight: 1, 
+                            marginTop: 20,
+                            padding:0,
+                            paddingBottom:7,
+                            color: 'gray',
+                            paddingLeft: 8,
+                          }}
+                      >
+                          <div>
+                            <ToggleSwitch value={isChecked} onChange={handleRememberMe}/>&nbsp;&nbsp;Remember me
+                          </div>
                       </Box>
-
-                    <Space howmuch={68} />
-
-                  <Box style={{backgroundColor: "transparent", borderRadius: 8, border: "1px solid gray"}}>
-                     
-                    <div style={{border: "0px solid black",  backgroundColor: ""}}>
-                      <TextBox  id="email" label="Email*" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
-                      <Space howmuch={8} />
-                      <TextBox  id="password" label="Password*" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
-                    </div>
-                    
-                    <div className={fadeOut2 ? 'fade-out' : ''}>
-                        <div style={{border: "0px solid black", height: 25,  position: "relative", top: 10, borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
-                          {error && (
-                            <Box style={{border: "0px solid black", fontSize: 20, padding: 0, color: "rgb(164, 56, 56)", textAlign: "center"}} className="error-message">
-                              {error}
-                            </Box>
-                          )}
+                      
+                        <div style={{display: "flex", justifyContent: "center"}}>
+                           <Button  onClick={handleLoginClick} 
+                               style={{
+                                 marginTop: '1px', width: '100%', fontSize:"20px",  
+                                 border:"1px solid gray", lineHeight: 0, height: 35
+                               }}
+                           >Sign in 
+                           </Button> 
                         </div>
-                    </div>
-
-                    <Box className="toggle-box" 
-                       style={{
-                          border:"0px solid black", 
-                          fontSize: '14px',
-                          lineHeight: 1, 
-                          marginTop: 20,
-                          padding:0,
-                          paddingBottom:7,
-                          color: 'gray',
-                          paddingLeft: 8,
-                        }}
-                    >
-                        <div>
-                           <ToggleSwitch value={isChecked} onChange={handleRememberMe}/>&nbsp;&nbsp;Remember me
-                        </div>
-                    </Box>
-                    <div style={{display: "flex", justifyContent: "center"}}>
-                      <Button style={{marginTop: '1px', width: '100%', fontSize:"20px",  
-                      border:"1px solid gray", lineHeight: 0, height: 35}}
-                          onClick={handleLoginClick}>Sign in 
-                      </Button> 
-                    </div>
-                    <Box style={{
-                        border: "0px solid black", 
-                        fontSize: 13, 
-                        color: "#bd841b", 
-                        padding: 0, 
-                        paddingTop:4,
-                        display: 'flex',
-                        justifyContent: 'space-between',
-
-                        paddingBottom: 5,
-                        }}>
-
-                        <Box style={{border: "0px solid black", padding:0, marginLeft:10, marginTop: 3}}>
-                          <Link to="/recover-password"> Forgot Password?</Link>
-                        </Box> 
-                        <Box style={{border: "0px solid black", padding:0, marginRight:10, marginTop: 3}}>
-                          <Link  to="/register">Register a New Account.</Link>
-                        </Box> 
-
-                    </Box> 
-                    
+                        
+                        <Links justifyContent={'space-between'} linkData={linkData}/>                           
                     </Box>              
 
                     <Space howmuch={50}/>
+
                   {/* <Or title={"OAuth?"}/> */}
-                    <Box style={{border: "0px solid gray", 
-                    width: "100%", display: "flex", justifyContent: 'center', 
-                    alignItems: 'center', height: 100, marginBottom: 8}}>
+
+                    <Box id="oAuth"
+                        style={{border: "0px solid gray", 
+                           width: "100%", display: "flex", justifyContent: 'center', 
+                           alignItems: 'center', height: 100, marginBottom: 8
+                        }}
+                    >
                         <Box style={{display: 'flex', border: "0px solid black", padding: 0,}}>
                           <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-facebook-f" /></div>
                           <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-google" /></div>              
-                        </Box>
-                                  
+                        </Box>                                  
                     </Box>
 
-                    <Space howmuch={5}/>
-
-                    <div style={{textAlign: 'center', width: '100%'}}>
-                      Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
-                    </div>
-
+                    <Footer marginTop={5}/>
                 </Box>    
-            
-
         </Box>
         
         </div> 
   );
 }
+
 
 export default Login;

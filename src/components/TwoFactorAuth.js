@@ -6,6 +6,8 @@ import Paper from "./elements/Paper.js"
 import axios from 'axios';
 import { BASE_URL, SERVER_HOST } from "../api/settings.js";
 import { decodeJwt } from "../api/utils.js";
+import Logo from "./Logo.js";
+import Footer from "./elements/Footer.js";
 import Space from "./Space.js";
 
 
@@ -210,39 +212,14 @@ const TwoFactorAuth = ({ onSubmit }) => {
        <div className={fadeOut ? 'fade-out' : ''}>
 
           <Box style={styles.container}>
-
-            <Box className="logo" style={{
-                  textAlign: "center",
-                  backgroundColor: "transparent ",//'#484444',
-                  border:"0px solid #817Daa",
-                  height:'auto',
-                  width:"auto",
-                  fontSize: 22,
-            }}
-            ><div style={{
-              fontSize: 54,
-              color: "#817Dda"
-              }}
-              >
-              </div>
-              <i style={{ color: "#819DCc", fontSize: 32}}
-                className="fas fa-mail-bulk" />
-                &nbsp;
-                <span style={{
-                      position: "relative",
-                      top: 5,
-                      fontSize:46,
-                      fontWeight: "lighter"
-                      }}
-                >|</span> <span style={{fontSize: 30}}>LifePackage</span>  &#8482;                             
-              </Box>
-<Space howmuch={32} />
-              <div style={{border: "0px solid white", color: "white"}}>
-                <h2>Two Factor Authentication</h2>
-              </div>
-              <Box style={styles.subtitle}>
-                Enter the 6-digit code You received via email or sms.
-             </Box>
+            <Logo />
+            <Space howmuch={32} />
+            <div style={{border: "0px solid white", color: "white"}}>
+              <h2>Two Factor Authentication</h2>
+            </div>
+            <Box style={styles.subtitle}>
+              Enter the 6-digit code You received via email or sms.
+           </Box>
 
               <div className={fadeOut2 ? 'fade-out' : ''}>
                 <Box style={{border: "0px solid black", height: 22}}>
@@ -279,10 +256,8 @@ const TwoFactorAuth = ({ onSubmit }) => {
                   <Button type="submit" style={styles.button}>Submit</Button>
               </form>
             </Box>
-            <Space howmuch={140} />
-            <div style={{textAlign: 'center', width: '100%', fontSize: 12}}>
-              Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
-            </div>
+            
+           <Footer marginTop={140} />
           </Box>
       </div>    
   );
@@ -315,8 +290,8 @@ const styles = {
     padding: '2px 5px', // Adjust spacing to align with your design
   },
   formBox: {
-    backgroundColor: "transparent",//'rgb(49, 46, 44)', 
-    border: "1px solid gray",
+    backgroundColor: "rgb(12,12,12)",//'rgb(49, 46, 44)', 
+    border: "1px solid rgb(33,33,33)",
     borderRadius: '8px', 
     textAlign: 'center',
    /* padding: '40px',

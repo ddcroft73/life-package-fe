@@ -4,6 +4,8 @@ import { useLocation, Link } from 'react-router-dom';
 import Button from "./elements/Button.js";
 import TextBox from "./elements/TextBox.js";
 import Space from "./Space.js";
+import Logo from "./Logo.js";
+import Footer from "./elements/Footer.js";
 import { useState } from 'react';
 
 /*
@@ -77,39 +79,14 @@ const PasswordReset = () => {
                justifyContent: 'center',
                marginBottom: 15}}
          >
-          <Box style={{
-                          textAlign: "center",
-                          backgroundColor: "transparent ",//'#484444',
-                          border:"0px solid #817Daa",
-                          height:'auto',
-                          width:"auto",
-                          fontSize: 22,
-                    }}
-                    ><div style={{
-                      fontSize: 54,
-                      color: "#817Dda"
-                      }}
-                      >
-                      </div>
-                      <i style={{ color: "#819DCc", fontSize: 32}}
-                        className="fas fa-mail-bulk" />
-                        &nbsp;
-                        <span style={{
-                              position: "relative",
-                              top: 5,
-                              fontSize:46,
-                              fontWeight: "lighter"
-                              }}
-                        >|</span> <span style={{fontSize: 30}}>LifePackage</span>  &#8482;                             
-                      </Box>
-          
+        <Logo />          
         </Box>
-         
+        
         <Box className="main-container"
             style={{
-              backgroundColor: "transparent",
+              backgroundColor: "rgb(12,12,12)",
               marginTop: 40,
-              border: "1px solid gray",
+              border: "1px solid rgb(33,33,33)",
             }}
         >
             <div style={{
@@ -200,13 +177,7 @@ const PasswordReset = () => {
                }}
              >
              </div>        
-             <div style={{
-                textAlign: "center",
-                fontSize: 12,
-                }}
-             >
-               Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
-             </div>
+             <Footer />
            </Box>
       </Box>
     );

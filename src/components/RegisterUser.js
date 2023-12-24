@@ -280,10 +280,10 @@ const RegisterUser = () => {
                     }}>
 
                         <Box style={{border: "0px solid black", padding:0, marginLeft:10, marginTop: 3}}>
-                            <Link to="/two-factor-auth"> Contact Support</Link>
+                            <Link to="/admin-login"> Contact Support</Link>
                         </Box> 
                         <Box style={{border: "0px solid black", padding:0, marginRight:10, marginTop: 3}}>
-                            <Link  to="/password-reset">Already a member?  Log in</Link>
+                            <Link  to="/login">Already a member?  Log in</Link>
                         </Box> 
 
                    </Box> 

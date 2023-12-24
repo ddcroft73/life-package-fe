@@ -2,7 +2,9 @@ import {React, useState, useEffect } from 'react';
 import './VerifyEmail.css'; // Make sure to create a corresponding CSS file with the desired styles
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Box from "./elements/Box";
-
+import Logo from './Logo';
+import Space from './Space';
+import Footer from './elements/Footer';
 import {BASE_URL} from '../api/settings';
 import axios from 'axios';
 
@@ -59,9 +61,11 @@ const VerifyEmail =  () => { //
     };
     return (
         <div className={fadeOut ? 'fade-out' : ''}>
-        <Box style={{border: "0px solid gray", maxWidth: 700, backgroundColor: "rgb(18, 17, 16)", height: 'auto', textAlign:"center"}}>
-            
-            <Box style={{border: "1px solid gray", color: "gray"}} className="verify-email-container">
+          <Space howmuch={50} />
+          <Logo />
+          <Box style={{border: "0px solid gray", maxWidth: 700,  height: 'auto', textAlign:"center", marginTop: 50}}>
+           
+            <Box style={{border: "1px solid rgb(33,33,33)", color: "gray", backgroundColor: "rgb(12, 12, 12)"}} className="verify-email-container">
 
              <div className={fadeOut2 ? 'fade-out' : ''}>
                 <Box style={{border: "0px solid black",height: 15}}>
@@ -73,9 +77,10 @@ const VerifyEmail =  () => { //
                 </Box >   
              </div>
 
-                    <h1 style={{color: "rgb(213, 208, 208)"}}><i style={{ color: 'gray'}} className="fa fa-envelope" />&nbsp;&nbsp;Please verify your email &nbsp;<i style={{ color: 'gray'}} className="fa fa-envelope-open" /></h1>
+                    <h1 style={{color: "rgb(213, 208, 208)"}}><i style={{ color: 'gray'}} className="fa fa-envelope" />&nbsp;&nbsp;Please verify your email &nbsp;
+                    </h1>
 
-                    <Box className="verification-message" style={{textAlign: 'left', paddingTop: 20, borderTop: '0px solid gray', borderRadius: 0, color: "gray"}}>
+                    <Box className="verification-message" style={{textAlign: 'left', paddingTop: 20, border: '0px solid gray', borderRadius: 0, color: "gray"}}>
                         Thank you for registering with us. We have sent a verification email to 
                         <span style={{padding:3, color: 'orange'}}>{email}</span>. 
                         Please check your email and click on the verification link
@@ -86,7 +91,8 @@ const VerifyEmail =  () => { //
                         or <span style={{cursor: "pointer",padding:3, color: 'orange'}} onClick={resendEmailVerification}>click here</span> to resend the verification email.
                     </Box>
             </Box>
-        </Box>
+          </Box>
+          <Footer marginTop={60}/>
         </div>
     );
 };

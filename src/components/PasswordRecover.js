@@ -10,6 +10,8 @@ import { isEmailAddress } from '../api/utils';
 import Space from './Space';
 import { BASE_URL } from '../api/settings';
 import axios from "axios";
+import Logo from './Logo.js';
+import Footer from './elements/Footer.js';
 import Modal from './Modal.js';
 
 
@@ -124,10 +126,10 @@ const PasswordRecover = () => {
                   width: '100%',
                   margin: 'auto',
                   color: "gray",
-                  marginTop: 50
                  }}
            >
                 
+               <Logo marginTop={30} />
                 <Modal
                     show={isModalVisible}
                     content={modalConfig.content}
@@ -136,35 +138,10 @@ const PasswordRecover = () => {
                 />
 
                 <div className="password-reset-logo">
-                <Box style={{
-                          textAlign: "center",
-                          backgroundColor: "transparent ",//'#484444',
-                          border:"0px solid #817Daa",
-                          height:'auto',
-                          width:"auto",
-                          fontSize: 22,
-                    }}
-                    ><div style={{
-                      fontSize: 54,
-                      color: "#817Dda"
-                      }}
-                      >
-                      </div>
-                      <i style={{ color: "#819DCc", fontSize: 32}}
-                        className="fas fa-mail-bulk" />
-                        &nbsp;
-                        <span style={{
-                              position: "relative",
-                              top: 5,
-                              fontSize:46,
-                              fontWeight: "lighter"
-                              }}
-                        >|</span> <span style={{fontSize: 30}}>LifePackage</span>  &#8482;                             
-                </Box>
 
                 <Space howmuch={40} />    
                 </div>
-                    <Box  style={{ backgroundColor:  'transparent', border: "1px solid gray" }}>
+                    <Box  style={{ backgroundColor:  'rgb(12,12,12)', border: "1px solid rgb(33,33,33)" }}>
                         
                         <div>
                              <div style={{
@@ -243,14 +220,7 @@ const PasswordRecover = () => {
                         }}>
 
                         </div>
-                        <div style={{
-                             textAlign: "center",
-                             fontSize: 12,
-
-                            }}
-                        >
-                            Copyright &#169; 2023 Life Package &#8482;   &nbsp;&nbsp;&nbsp;<a href='4'>Privacy Policty</a>&nbsp;&nbsp;&nbsp; <a href='5'>TOS</a>
-                        </div>
+                        <Footer />
                     </Box>
             </div>
         );

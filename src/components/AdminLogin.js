@@ -6,6 +6,8 @@ import { Link, useNavigate, } from "react-router-dom";
 import Modal from "./Modal.js";
 import React, { useState, useEffect } from 'react';
 import { BASE_URL } from "../api/settings.js";
+import Logo from "./Logo.js";
+import Footer from "./elements/Footer.js";
 import './AdminLogin.css'; // Make sure to create a corresponding CSS file
 import axios from "axios";
 
@@ -99,7 +101,7 @@ const AdminLogin = () => {
                         <div style={{width:"100%", padding:0, color: "orange"}}>
                           <div style={{
                             width: "100%", backgroundColor: "rgba(0,0,0,0.600)", borderRadius: 4, 
-                            borderLeft: `2px solid orange`, paddingLeft: 5, paddingBottom: 0}}>
+                            borderLeft: `0px solid orange`, paddingLeft: 5, paddingBottom: 0, textAlign: "center"}}>
                               <h2>Access Token Error</h2>
                           </div>                             
                         </div>
@@ -115,8 +117,9 @@ const AdminLogin = () => {
                     );
                     showMessageModal(modalContent, "orange"); 
                 }
-
-            } else if (pin.length != 0){      
+     // THis logic is screwey comeback and fix this code.
+     //"The PIN cannot be empty." in 2 cases
+            } else if (pin.length < 4){      
                 setMessage("The PIN is at least four digits.");
                 setFadeOut2(true); 
                 setTimeout(() => {
@@ -135,12 +138,21 @@ const AdminLogin = () => {
             }    
 
         } else {
+            if (pin.length === 0) {
+                setMessage("The PIN cannot be empty.");
+                setFadeOut2(true); 
+                setTimeout(() => {
+                    setMessage('')
+                    setFadeOut2(false)
+                }, 3900);
+            } else {
             setMessage("The PIN must be all numbers.");
                 setFadeOut2(true); 
                 setTimeout(() => {
                     setMessage('')
                     setFadeOut2(false)
                 }, 3900);
+            }
         }
     };
     
@@ -156,6 +168,8 @@ const AdminLogin = () => {
 
     return (
        <div className={fadeOut ? 'fade-out' : ''}>
+        <Space howmuch={50} />
+       <Logo />
           <Box style={{marginTop: 35, width: 350, border: "none"}}>
 
              <Modal
@@ -165,24 +179,12 @@ const AdminLogin = () => {
                 borderColor={modalConfig.borderColor}
              />
 
-              <Box style={{                          
-                    textAlign: "center",
-                    backgroundColor: "var(--body-background-dark)",//'#484444',
-                    border:"0px solid gray", 
-                    height:125, 
-                    width:"100%", 
-                    color: "gray",
-                    fontSize: 25,
-                    marginBottom: 0}}>
-                    <div style={{fontSize: 54, color: "#817Dda"}}>
-                    <i className="fas fa-sign-in-alt" /></div> &nbsp;Life Package &#8482;                       
-              </Box>
 
               <Space howmuch={20} />
-              <Box className="admin-login-container" style={{ background: 'rgb(22, 22, 22)',  border:"1px solid #817Daa", }}> {/* Set the background color */}
+              <Box className="admin-login-container" style={{ background: 'rgb(12, 12, 12)',  border:"1px solid rgb(33,33,33)", }}> {/* Set the background color */}
                           
                   <div style={{border: "0px solid black",  backgroundColor: ""}}>
-                      <TextBox  id="pin" label="PIN*" type="password"  width="100%" containerPadding={0} onChange={handlePIN}/>
+                      <TextBox  id="pin" label="Administration PIN *" type="password"  width="100%" containerPadding={0} onChange={handlePIN}/>
                   </div>
 
                   <Space howmuch={40-15} />
@@ -209,12 +211,12 @@ const AdminLogin = () => {
 
                   </div>
 
-                  <Box style={{fontSize: 12, border: "0px solid black", padding:0, marginRight:10, marginTop: 6}}>
-                          <Link  to="/register">Contact life Package Support</Link>
-                 </Box> 
+                  
               
               </Box>
           </Box>
+          
+          <Footer marginTop={20} />
        </div>   
   );
 };

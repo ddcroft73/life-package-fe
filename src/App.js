@@ -4,6 +4,7 @@ import AdminLogin from "./components/AdminLogin.js";
 import LandingPage from "./components/LandingPage.js";
 import TwoFactorAuth from "./components/TwoFactorAuth.js";
 import UserDashboard from "./components/UserDashboard.js";
+import UserRegistration from "./components/UserRegistration.js";
 import RegisterUser from "./components/RegisterUser.js";
 import PasswordRecover from "./components/PasswordRecover.js";
 
@@ -32,7 +33,7 @@ const App = () => {
                     <Route path="/" element={<TokenHandler />} />
                     <Route path="/landing-page" element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<RegisterUser />} />
+                    <Route path="/register" element={<UserRegistration />} />
                     <Route path="/recover-password" element={<PasswordRecover />} />
                     <Route path="/password-reset" element={<PasswordReset />} />
                     <Route path="/user-dashboard" element={<UserDashboard />} />
@@ -55,7 +56,8 @@ function TokenHandler() {
         const token = userData ? userData.access_token : null;
 
         if (!token) {
-            navigate("/landing-page");
+            navigate("/landing-page");  //Debug landing-page
+
         } else if (isExpired(token)) {
             navigate("/login");
         } else if (isAdmin(token)) {            
