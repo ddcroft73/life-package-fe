@@ -12,7 +12,7 @@ import Footer from './elements/Footer.js';
 import Links from './Links.js';
 import Modal from './Modal';
 import Logo from './Logo.js';
-
+import './RegisterUser.css'
 /**
  *  UserRegistration Component
  *    THe first component i did not generate. Almost all my componsnts for this application are built a birt different.
@@ -40,6 +40,7 @@ function UserRegistration() {
     const [namesContainerStyle, setNamesContainerStyle] = useState({});
 
     const [message, setMessage] = useState('');
+    const [fadeOut2, setFadeOut2] = useState('');
     const [modalConfig, setModalConfig] = useState({});
     const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -90,43 +91,188 @@ function UserRegistration() {
     const confirmAction = () =>  navigate('/verify-email', { state: { email: email } }); 
     const cancelAction = () => setIsModalVisible(false);
      
-    const showMessageModal = (content) => {
+    const showMessageModal = (content, borderColor) => {
         setModalConfig({
         content,
         buttons: [
             { text: 'OK', handler: cancelAction }
-        ]
+        ],
+        borderColor: borderColor
         });
         setIsModalVisible(true);
     };
 
+
     // Function to program modal for an action on OK
-    const showConfirmModal = (content) => {
+    const showConfirmModal = (content, borderColor) => {
         setModalConfig({
         content,
         buttons: [
             { text: 'OK', handler: confirmAction },
             //{ text: 'Cancel', handler: cancelAction }
-        ]
+        ],
+        borderColor: borderColor
         });
         setIsModalVisible(true);
     };
     
-    const registerUser = () => {
-        console.log(`User Information: \nEmail: ${email}, PasswordOne: ${passwordOne} PasswordTwo: ${passwordTwo} \nFull Name: ${firstName} ${lastName}` )
+    const createNewUserAccount = async () => {
+        
+        let userData = {};
+        let sendRequest = true;
+        
+        if (firstName && lastName) {
+            userData.fullName = `${firstName} ${lastName}`;
+        }
+
+
+        if (!isEmailAddress(email)) {
+            setMessage(`${email} is not a valid email address.`)  
+            setFadeOut2(true); 
+            setTimeout(() => {
+              setMessage('')
+              setFadeOut2(false)
+            }, 3900);
+
+            //sendRequest = false;
+        }        
+
+        if (passwordOne !== passwordTwo) {
+            setMessage("Passwords do not match.");
+            setTimeout(() => setMessage(""), 3000);
+            sendRequest = false;
+        }
+
+        userData.email = email;
+        userData.password = passwordOne;
+
+        if (sendRequest) {
+            let response = {};
+            response.error = 'server closed'
+          //  const response = await userRegister(userData);
+
+            const { error } = response
+            
+            
+            // If an error was caught it was packaged and sent back in response.error
+            // If not, then there will be an email for the user. response.user.email
+            if (!error) {
+                // show modal success
+                const email = response.user.email;
+                  // show modal
+                   //alert("User exists")
+                   let currContent = (
+                    <>
+                      <div style={{width:"100%", padding:0, color: "white", textAlign: "center"}}><h2>Success:</h2></div>
+                      <Box style={{
+                        width:"100%", 
+                        padding:0, 
+                        color: "gray",
+                        border: "0px solid black"}}>  
+                            An account was created for:<span style={{color:"orange"}}>{email}</span>.  
+                            
+                      </Box>
+                    </>
+                  );
+                   showConfirmModal(currContent);                 
+                   
+            }
+            else {
+               if (error === "user exists") {
+                   // show modal
+                   //alert("User exists")
+                   let currContent = (
+                    <>
+                      <div style={{width:"100%", padding:0, color: "red", textAlign: "center"}}><h2>Error:</h2></div>
+                      <Box style={{
+                        width:"100%", 
+                        padding:0, 
+                        color: "gray",
+                        border: "0px solid black"}}>       
+                            The user: <span style={{color:"orange"}}>{email}</span> already exists.
+                        
+                      </Box>
+                    </>
+                  );
+                  showMessageModal(currContent, "orange");
+
+               } else if (error === 'server closed') {
+                   // show modal
+                   let currContent = (
+                    <>
+                       <div style={{width:"100%", padding:0, color: "red"}}>
+                         <div style={{
+                                width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
+                                borderLeft: `0px solid red`, paddingLeft: 5, paddingBottom: 0}}>
+                            <h2>Error:</h2>
+                         </div>                    
+                      </div>
+                      <Box style={{
+                        width:"100%", 
+                        padding:0, 
+                        color: "gray",
+                        border: "0px solid black"}}>                                
+                            The system is not taking new users at this time. For more information, 
+                            contact <span style={{color:"orange"}}>Support</span>.
+                      </Box>
+                    </>
+                  );
+
+                  showMessageModal(currContent, "red");
+
+               } else if (error === "no response") {
+                    // show modal
+                    let currContent = (
+                        <>
+                        <div style={{width:"100%", padding:0, color: "red", textAlign: "center"}}>
+                            <h2>Error:</h2>
+                        </div>
+                        <Box style={{
+                            width:"100%", 
+                            padding:0, 
+                            color: "white",
+                            border: "0px solid black"}}>       
+                                There seems to be a problem with the connection. Check your
+                                internet, or maybe the server is down... Hell I dont't know. Something fucked up.                         
+                        </Box>
+                        </>
+                    );
+                    showMessageModal(currContent, "red");
+
+
+               }else {
+                    // show modal
+                   // Unknown error
+                   let currContent = (
+                    <>
+                      <div style={{width:"100%", padding:0, color: "red"}}><h2>Error:</h2></div>
+                      <Box style={{
+                        width:"100%", 
+                        padding:0, 
+                        color: "gray",
+                        border: "0px solid black"}}>                            
+                          <span style={{color:"white"}}>{error}</span>.
+                      </Box>
+                    </>
+                  );
+                  showMessageModal(currContent, "orange");
+               }
+            }
+        }               
     };
 
 
     return (
           <div id='background'>
 
-            <Modal
-                show={isModalVisible}
-                content={modalConfig.content}
-                buttons={modalConfig.buttons}
-            />
+<Modal
+              show={isModalVisible}
+              content={modalConfig.content}
+              buttons={modalConfig.buttons}
+              borderColor={modalConfig.borderColor}
+           />
 
-            <Logo marginTop={50} />
+            <Logo marginTop={50} marginBottom={50}/>
 
             <Box id="component-container"
                 style={styles.comp_container}
@@ -139,7 +285,6 @@ function UserRegistration() {
                     style={styles.inner_container}
                 >
                     <Box style={styles.text_content}>
-
                         <h2>Register A New Account</h2>
                         <div id="sub-content" 
                             style={styles.sub_content}
@@ -148,14 +293,25 @@ function UserRegistration() {
                             gain access through them. 
                         </div>
                     </Box>
-                    <Box id="creds-container" caption={"Required Fields"} color={'white'}
+
+                    <div className={fadeOut2 ? 'fade-out' : ''}>
+                        <Box style={{border: "0px solid black",height: 20}}>
+                        {message && (
+                        <Box style={{border: "0px solid black", lineHeight: 2, fontSize: 14, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
+                            {message}
+                        </Box>
+                            )}
+                        </Box >   
+                    </div>
+
+                    <Box id="creds-container" caption={"Required Fields"} color={'white'} labelBgColor={"rgb(12,12,12)"}
                         style={styles.creds_container}
                     >
                         <TextBox  id="email" label="Email *" type="text" width="100%" containerPadding={0} onChange={handleEmail} />
                         <TextBox  id="password1" label="Password *"  type="password" width="100%" containerPadding={0} onChange={handlePasswordOne} />
                         <TextBox  id="password2" label="Retype-Password *"  type="password" width="100%" containerPadding={0} onChange={handlePasswordTwo} />        
                     </Box>      
-                    <Box id="names-container" caption={"Optional Fields"}  color={'white'}
+                    <Box id="names-container" caption={"Optional Fields"}  color={'white'}  labelBgColor={"rgb(12,12,12)"}
                         style={{
                             ...styles.names_container,
                             ...namesContainerStyle 
@@ -165,7 +321,7 @@ function UserRegistration() {
                         <TextBox  id="last-name" label="Last Name"  type="text" width="100%" containerPadding={0} onChange={handleLastName} />                    
                     </Box>      
 
-                    <Button id="register-button" onClick={registerUser}
+                    <Button id="register-button" onClick={createNewUserAccount}
                         style={styles.button}
                     >
                         Register                    
@@ -269,7 +425,9 @@ const styles = {
     },
    
     button: {
-        fontSize: 18
+        fontSize: 18,
+        width: "100%",
+        marginTop: 20
     }
 };
 

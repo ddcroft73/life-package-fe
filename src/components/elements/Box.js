@@ -1,5 +1,5 @@
 
-const Box = ({ children, style, caption="", color=""}) => {
+const Box = ({ children, style, caption="", color="", labelBgColor=""}) => {
     
     const defaultStyle = {
         width: 'auto',
@@ -14,11 +14,12 @@ const Box = ({ children, style, caption="", color=""}) => {
     const captionStyle = {
         fontSize: 12,
         position: 'absolute', 
-        top: 0,
+        top: -1,
         left: 10, 
         transform: 'translateY(-50%)', // Adjust vertical position to sit on the border
-        background: 'transparent', 
-        padding: '0 5px',
+        background: labelBgColor, //'transparent', 
+        padding: '3px 5px',
+        borderRadius: 4,
         color: color
     };
 

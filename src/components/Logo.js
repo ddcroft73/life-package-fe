@@ -1,6 +1,6 @@
 import Box from "./elements/Box";
 
-function Logo( {marginTop=0}) {
+function Logo( {marginTop=0, marginBottom=0}) {
     
     return (
         <Box className="logo"
@@ -10,7 +10,8 @@ function Logo( {marginTop=0}) {
                 border:"0px solid #817Daa",
                 height:'auto',
                 width:"auto", color: "gray",
-                marginTop: marginTop
+                marginTop: marginTop,
+                marginBottom: marginBottom
                 }}
         >
             <div style={{

@@ -1,100 +1,13 @@
 
-* {
-    box-sizing: border-box;
-}
 
 
-.box {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',  sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 
+
+.fade-out {
+    animation: fadeOutAnimation 3.2s;
+  }
   
-    background-color: rgb(18, 17, 16);
-    color: white;
-    margin-top: 150px;
-    padding: 0;
-    max-width: 700px;
-    width: 100%;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    height: 100vh;
-}
-
-.container {
-    max-width: 700px;
-    min-width: 375px;
-    width: 100%;
-    background-color: rgb(49, 46, 44);
-    border-radius: 10px;
-    height: 610px;
-}
-
-.hr {
-    border: 1px solid rgb(117, 115, 115);   
-    width: 50%;
-    border-radius: 10px;
-}
-
-.oauth {
-    padding: 12px;
-    margin-right: 0px;
-    font-size: 16px;
-    color: #817caa;
-}
-
-.registration-form {
-    display: flex;
-    flex-direction: column;
-    background-color: transparent;
-    padding: 20px;
-    border-radius: 5px;
-    height: auto;
-    
-    max-width: 700px;
-    min-width: 375px;
-    width:700px;
-}
-
-
-button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px; /* Add space above the button */
-}
-
-
-@media screen and (max-width: 768px) {
-    .box {
-        width: 100%;
-        margin-top: 0;
-        height: auto;
-        padding: 20px;
-    }
-    .container {
-        width: 375px;
-        max-width: none;
-    }
-    .registration-form {
-        width: 375px;
-    }
-    .copy-box {
-        width: 375px;
-    }
-}
-
-.registration-form h1 {
-    color: #fff;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
+  @keyframes fadeOutAnimation {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
