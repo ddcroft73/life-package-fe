@@ -281,10 +281,12 @@ const  Login = () => {
   };
   
   const styles = {
-    "oAuth": {
+    "oauth": {
       fontSize: 26,
       border: '0px solid gray',
-      padding: 5
+      padding: 2,
+      cursor: "pointer",
+      color: "#817Daa"
     },
     top_strip: {       
       width: "100%",
@@ -351,7 +353,7 @@ const  Login = () => {
 
   return (  
       <div className={fadeOut ? 'fade-out' : ''}>
-        <Logo marginTop={50} marginBottom={50} />  
+        <Logo marginTop={50} marginBottom={10} />  
 
            <Modal
               show={isModalVisible}
@@ -372,7 +374,7 @@ const  Login = () => {
                   >
                     <div id="top-strip"
                         style={styles.top_strip}
-                    >User Login</div>   
+                    ></div>   
 
                     <Space howmuch={18} />
 
@@ -429,8 +431,8 @@ const  Login = () => {
                       }}
                   >
                       <Box style={{display: 'flex', border: "0px solid black", padding: 0,}}>
-                        <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-facebook-f" /></div>
-                        <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-google" /></div>              
+                        <div className="oauth" style={styles.oauth}><i className="fa-brands fa-facebook-f" /></div>
+                        <div className="oauth" style={styles.oauth}><i className="fa-brands fa-google" /></div>              
                       </Box>                                  
                   </Box>
 

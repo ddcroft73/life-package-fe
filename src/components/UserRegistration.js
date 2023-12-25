@@ -295,9 +295,9 @@ function UserRegistration() {
                     </Box>
 
                     <div className={fadeOut2 ? 'fade-out' : ''}>
-                        <Box style={{border: "0px solid black",height: 20}}>
+                        <Box style={{border: "0px solid white",height: 10, position: 'relative', top: -15}}>
                         {message && (
-                        <Box style={{border: "0px solid black", lineHeight: 2, fontSize: 14, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
+                        <Box style={{border: "0px solid white", lineHeight: 2, fontSize: 14, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
                             {message}
                         </Box>
                             )}
@@ -362,7 +362,9 @@ const styles = {
     "oAuth": {
         fontSize: 26,
         border: '0px solid gray',
-        padding: 5
+        padding: 2,
+        cursor: "pointer",
+        color: "#817Daa"    
     },
     comp_container: {
         display: "flex",
@@ -393,7 +395,7 @@ const styles = {
         width: "100%",
         border: "1px solid gray",
         marginBottom: 10,
-        marginTop: 30,
+        marginTop: 10,
         paddingTop: 15
     }, 
     names_container: {
@@ -413,7 +415,7 @@ const styles = {
     sub_content: {
         color: "gray",
         border: "0px solid gray",
-        marginBottom: 15,
+        marginBottom: 0,
         textAlign: "center",
         padding: 12,
     },

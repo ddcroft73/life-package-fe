@@ -112,6 +112,21 @@ const PasswordRecover = () => {
         setEmail(value);       
     };
 
+    const styles = {
+        top_strip: {       
+        width: "100%",
+        textAlign: "center",
+        border: "1px solid gray",
+        height: 20,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
+        backgroundColor: '#817Daa',
+        color: "black"
+        },
+
+
+    };
+
     return (
             <div className="password-reset-container"
                style={{
@@ -141,8 +156,12 @@ const PasswordRecover = () => {
 
                 <Space howmuch={40} />    
                 </div>
-                    <Box  style={{ backgroundColor:  'rgb(12,12,12)', border: "1px solid rgb(33,33,33)" }}>
-                        
+                    <Box  style={{ backgroundColor:  'rgb(12,12,12)', border: "1px solid rgb(33,33,33)", padding:0 }}>
+
+                        <div id="top-strip"
+                            style={styles.top_strip}
+                        ></div>   
+        <Box style={{border: 0}}>
                         <div>
                              <div style={{
                                   textAlign: "center",
@@ -169,7 +188,7 @@ const PasswordRecover = () => {
                                     </Box>
                                     )}
                                 </div>
-                            </div>
+                           </div>
 
                             <TextBox 
                                 id="email" 
@@ -183,14 +202,14 @@ const PasswordRecover = () => {
                             <Button onClick={handleSend}  
                               style={{ 
                                 border:"1px solid gray",
-                                marginTop: 30,
+                                marginTop: 30, width: "100%"
                                 }}
                             >
                                 Send Reset Link
                             </Button>
 
                         </div>
-                            
+               </Box>          
                         <Box style={{border: "0px solid gray", padding: 5, marginTop: 5}}>
                             <Box style={{border: "0px solid gray", 
                                          fontSize: 14, 
