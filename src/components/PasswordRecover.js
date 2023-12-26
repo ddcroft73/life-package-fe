@@ -11,6 +11,7 @@ import Space from './Space';
 import { BASE_URL } from '../api/settings';
 import axios from "axios";
 import Logo from './Logo.js';
+import Links from './Links.js';
 import Footer from './elements/Footer.js';
 import Modal from './Modal.js';
 
@@ -114,117 +115,132 @@ const PasswordRecover = () => {
 
     const styles = {
         top_strip: {       
-        width: "100%",
-        textAlign: "center",
-        border: "1px solid gray",
-        height: 20,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
-        backgroundColor: '#817Daa',
-        color: "black"
+            width: "100%",
+            textAlign: "center",
+            border: "1px solid gray",
+            height: 15,
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+            backgroundColor: '#817Daa',
+            color: "black"
         },
-
-
+        component_container: {
+            backgroundColor: 'transparent',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingLeft: 20,
+            paddingRight: 20,  // so the sides are intact on mobile
+            borderRadius: 8,
+            maxWidth: 450,
+            width: '100%',
+            color: "gray",
+        },
+        outer_container: {
+            padding:0,
+            border:0
+        },
+        inner_container: {
+            border: "1px solid rgb(50,50,50)",
+            padding: 0
+        },
+        heading: {
+            textAlign: "center",
+            color: "white",
+            border: "0px solid white"
+        },
+        text_content: {
+            color: "white", 
+            border: "0px solid gray", 
+            paddingTop: 0
+        },
+        error_message: {  
+            border: "0px solid black", 
+            height: 20,  
+            position: "relative", 
+            top: 0, 
+            borderTop: "none", 
+            borderRadius: 0, 
+            backgroundColor: "transparent",
+            inner: {          
+                border: "0px solid black", 
+                fontSize: 18, 
+                padding: 0, 
+                color: "orange", 
+                textAlign: "center"
+            }      
+        },
+        button: {
+            border:"1px solid gray",
+            marginTop: 30, 
+            width: "100%"
+        },
+    };
+    
+    const linkData = {
+        textOne: "Login",
+        pathOne: "/login",
+        textTwo: "Register a New Account.",
+        pathTwo: "/register"
     };
 
+    
     return (
-            <div className="password-reset-container"
-               style={{
-                  backgroundColor: 'transparent',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: 20,
-                  borderRadius: 8,
-                  maxWidth: 450,
-                  width: '100%',
-                  margin: 'auto',
-                  color: "gray",
-                 }}
-           >
-                
-               <Logo marginTop={30} />
+            <div id="component-container"
+               style={styles.component_container}
+            >
+             <Logo marginTop={50} marginBottom={50}/>
                 <Modal
                     show={isModalVisible}
                     content={modalConfig.content}
                     buttons={modalConfig.buttons}
                     borderColor={modalConfig.borderColor}
-                />
-
-                <div className="password-reset-logo">
-
-                <Space howmuch={40} />    
-                </div>
-                    <Box  style={{ backgroundColor:  'rgb(12,12,12)', border: "1px solid rgb(33,33,33)", padding:0 }}>
-
-                        <div id="top-strip"
-                            style={styles.top_strip}
-                        ></div>   
-        <Box style={{border: 0}}>
-                        <div>
-                             <div style={{
-                                  textAlign: "center",
-                                  color: "white"
-                                 }}
-                             >
+                />                      
+        
+                    <Box id="outer-container"
+                        style={styles.outer_container}
+                    >
+                         <Box id="inner-container"
+                             style={styles.inner_container}
+                         >
+                            <div id="top-strip"
+                                style={styles.top_strip}
+                            ></div> 
+                   <Box style={{border:0}}>
+                        <Box id="heading" 
+                              style={styles.heading}
+                        >
                                 <h2>Recover Password</h2>
-                             </div>
-                             <Box style={{color: "white", border: "0px solid gray", paddingTop: 0}}> 
+                             </Box>
+                             <Box id="text-content"
+                                 style={styles.text_content}> 
                                   If you have lost your password you can easily reset it. Get the ball rolling by entering your email below.
                              </Box>   
                             
-                           <div className={fadeOut ? 'fade-out' : ''}>
-                                <div style={{border: "0px solid black", height: 20,  position: "relative", top: 0, borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
+                             <div className={fadeOut ? 'fade-out' : ''}>
+                                <div id="error-message" style={styles.error_message}>
                                     {error && (
-                                    <Box style={{
-                                            border: "0px solid black", 
-                                            fontSize: 18, 
-                                            padding: 0, 
-                                            color: "orange", 
-                                            textAlign: "center"
-                                        }} className="error-message">
+                                    <Box id="inner"
+                                        style={styles.error_message.inner}>
                                         {error}
                                     </Box>
                                     )}
                                 </div>
-                           </div>
+                             </div>
 
-                            <TextBox 
-                                id="email" 
-                                label="Email*" 
-                                value={email} 
-                                type="text" 
-                                width="100%" 
-                                containerPadding={0}  
-                                onChange={handleEmail}
-                            />
-                            <Button onClick={handleSend}  
-                              style={{ 
-                                border:"1px solid gray",
-                                marginTop: 30, width: "100%"
-                                }}
+                            <TextBox id="email" label="Email*" type="text" width="100%" containerPadding={0} onChange={handleEmail} />
+                            <Button 
+                              style={styles.button}
+                              onClick={handleSend}  
                             >
-                                Send Reset Link
+                              Send Reset Link
                             </Button>
-
-                        </div>
-               </Box>          
-                        <Box style={{border: "0px solid gray", padding: 5, marginTop: 5}}>
-                            <Box style={{border: "0px solid gray", 
-                                         fontSize: 14, 
-                                         display: "flex", 
-                                         justifyContent: "space-around", 
-                                         textAlign: "center", padding: 0}}>
-                                <div>
-                                    <Link to="/login">Login</Link> 
-                                </div>
-                                <div>
-                                    <Link to="/register">Register</Link>
-                                </div>
-                            </Box>
-                        </Box>    
-                    </Box>       
+                       
+                            <Links justifyContent='space-around' linkData={linkData} />                            
+                        </Box> 
+                  </Box>
+                </Box> 
 
                     <Box className='footer'
                        style={{

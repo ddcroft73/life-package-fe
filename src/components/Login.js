@@ -292,7 +292,7 @@ const  Login = () => {
       width: "100%",
       textAlign: "center",
       border: "1px solid gray",
-      height: 20,
+      height: 15,
       borderTopLeftRadius: 8,
       borderTopRightRadius: 8,
       backgroundColor: '#817Daa',
@@ -304,6 +304,8 @@ const  Login = () => {
       maxWidth: 650, 
       minWidth: 375, 
       border: "0px solid #817Daa", 
+      paddingLeft: 10,
+      paddingRight: 10,
       display: 'flex', 
       padding: 10,
     },
@@ -316,17 +318,16 @@ const  Login = () => {
       height: 'auto', 
       maxWidth: 650, 
       minWidth: 375, 
-      paddingTop: 40
     },
     main_container: {
       backgroundColor: "rgb(12,12,12)", 
       borderRadius: 8, 
-      border: "1px solid rgb(0,31,31)", 
+      border: "1px solid rgb(53,53,53)", 
       borderTop: 0,
       padding: 0
     },
     inner_main_container: {
-        border: "none"
+      border: "0px solid rgb(53,53,53)", 
     },
     inputs_container: {
       border: "0px solid black",  
@@ -346,6 +347,15 @@ const  Login = () => {
       display: "flex", 
       justifyContent: "center"
     },
+    button: {
+      marginTop: '1px', 
+      width: '100%', 
+      fontSize:"20px",  
+      border:"1px solid gray", 
+      lineHeight: 0, 
+      height: 35
+    
+    }
     
 
   };
@@ -353,7 +363,7 @@ const  Login = () => {
 
   return (  
       <div className={fadeOut ? 'fade-out' : ''}>
-        <Logo marginTop={50} marginBottom={10} />  
+        <Logo marginTop={50} marginBottom={50} />  
 
            <Modal
               show={isModalVisible}
@@ -411,10 +421,7 @@ const  Login = () => {
                                 style={styles.button_container}
                             >
                               <Button  onClick={handleLoginClick} 
-                                  style={{
-                                    marginTop: '1px', width: '100%', fontSize:"20px",  
-                                    border:"1px solid gray", lineHeight: 0, height: 35
-                                  }}
+                                  style={styles.button}
                               >Sign in 
                               </Button> 
                             </div>

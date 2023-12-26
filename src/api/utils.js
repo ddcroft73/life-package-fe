@@ -49,10 +49,10 @@ export function verifyPasswordStrength(password) {
         failureMessages.push("Needs at least one uppercase letter.");
     }
     if (!/[a-z]/.test(password)) {
-        failureMessages.push("Needs at least one lowercase letter.");
+        failureMessages.push("\nNeeds at least one lowercase letter.");
     }
     if (!/\d/.test(password)) {
-        failureMessages.push("Needs at least one digit.");
+        failureMessages.push("Needs at least one <span style={{color:'red'}}>digit</span>.");
     }
     if (!/[!@#$%^&*]/.test(password)) {
         failureMessages.push("Needs at least one special character.");

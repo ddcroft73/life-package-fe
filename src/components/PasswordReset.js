@@ -35,6 +35,20 @@ const PasswordReset = () => {
     );
 };
 */
+const styles = {
+    top_strip: {       
+        width: "100%",
+        textAlign: "center",
+        border: "1px solid gray",
+        height: 18,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
+        backgroundColor: '#817Daa',
+        color: "black"
+    },
+};
+
+
 const PasswordReset = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -64,22 +78,28 @@ const PasswordReset = () => {
                marginTop: 60,
                height: "auto",
                maxWidth: 650,
-               minWidth:375,
+               paddingLeft: 10,
+               paddingRight: 10,
+               minWidth:290,
                border: "0px solid gray",
                width: "100%",
                color: "gray",
+               
               
              }}
         >
+            
+
          <Box className="logo-container"
              style={{
                border:"1px soid white",
                height:'auto', width:'100%',
                padding: 0, display: 'flex',
                justifyContent: 'center',
-               marginBottom: 15}}
+               marginBottom: 15,
+            }}
          >
-        <Logo />          
+                     <Logo />
         </Box>
         
         <Box className="main-container"
@@ -87,6 +107,7 @@ const PasswordReset = () => {
               backgroundColor: "rgb(12,12,12)",
               marginTop: 40,
               border: "1px solid rgb(33,33,33)",
+              padding: 0
             }}
         >
             <div style={{
@@ -94,56 +115,61 @@ const PasswordReset = () => {
                color: "white",
                border: "0px solid gray",
                backgroundColor: "transparent",
-               padding: 5
+               padding: 0
               }}
             >
-              <div style={{display: "flex", justifyContent: 'center', border: "0px solid white"}}>
-                <div style={{display: "flex", border: "0px solid white"}}>
-                   <h2>Password Reset</h2>
+             <div id="top-strip"
+                style={styles.top_strip}
+             ></div>
+  
+                <div style={{display: "flex", justifyContent: 'center', border: "0px solid white"}}>
+                    <div style={{display: "flex", border: "0px solid white"}}>
+                    <h2>Password Reset</h2>
+                    </div>
+                    <div style={{fontSize: 34, color: 'orange', paddingLeft: 12, display: "flex", justifyContent: 'center', alignItems: "center", border: "0px solid white"}}>
+                        <i className="fas fa-keys" />
+                    </div>    
                 </div>
-                <div style={{fontSize: 34, color: 'orange', paddingLeft: 12, display: "flex", justifyContent: 'center', alignItems: "center", border: "0px solid white"}}>
-                    <i className="fas fa-keys" />
-                </div>    
-              </div>
 
               <div style={{
-                     marginBottom: 30
+                     marginBottom: 30,
+                     padding: 10
                    }}
               >
                  Enter the new password, and then confirm the password below.        
               </div>
-            
-               <TextBox 
-                  id="new-password"
-                  label="New Pasword *"
-                 
-                  type="password"
-                  width="100%"
-                  containerPadding={0}
-                  onChange={handleNewPassword}
-               />
-               <Space howmuch={8} />
-               <TextBox 
-                  id="confirm-password"
-                  label="Confirm Password *"
-                  type="password"
-                  width="100%"
-                  containerPadding={0}
-                  onChange={handleConfirmPassword}
-               />
-
+              <Box style={{border:0}}>
+                <TextBox 
+                    id="new-password"
+                    label="New Pasword *"
+                    
+                    type="password"
+                    width="100%"
+                    containerPadding={0}
+                    onChange={handleNewPassword}
+                />
+                <Space howmuch={8} />
+                <TextBox 
+                    id="confirm-password"
+                    label="Confirm Password *"
+                    type="password"
+                    width="100%"
+                    containerPadding={0}
+                    onChange={handleConfirmPassword}
+                />
+            </Box> 
            <Space howmuch={25} />
-        
-            <Button
-                style={{
-                    width: "100%",
-                    backgroundColor: 'gray',
-                    fontWeight: "bold",
-                    fontSize: 18,               
-                }}
-                onClick={handleSubmit}
-            > Submit
-            </Button>
+            <Box style={{border:0}}>
+                <Button
+                    style={{
+                        width: "100%",
+                        fontWeight: "bold",
+                        fontSize: 18,               
+                    }}
+                    onClick={handleSubmit}
+                > Submit
+                </Button>
+            </Box>    
             </div>
            
              <Box className="links"
@@ -163,7 +189,8 @@ const PasswordReset = () => {
                </div>
             </Box>
           
-       </Box> {/* End main-container*/}
+       </Box>
+       
            <Box className="footer"
               style={{
                   height: 80,

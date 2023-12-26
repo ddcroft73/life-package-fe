@@ -1,6 +1,6 @@
 import React from 'react';
 import { userRegister } from '../api/api.js';
-import { isEmailAddress } from '../api/utils.js';
+import { isEmailAddress, verifyPasswordStrength } from '../api/utils.js';
 import { useState, useEffect  } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Box from "../components/elements/Box.js";
@@ -124,8 +124,7 @@ function UserRegistration() {
         if (firstName && lastName) {
             userData.fullName = `${firstName} ${lastName}`;
         }
-
-
+        
         if (!isEmailAddress(email)) {
             setMessage(`${email} is not a valid email address.`)  
             setFadeOut2(true); 
@@ -134,12 +133,44 @@ function UserRegistration() {
               setFadeOut2(false)
             }, 3900);
 
-            //sendRequest = false;
-        }        
+            sendRequest = false;
+        }   
 
         if (passwordOne !== passwordTwo) {
             setMessage("Passwords do not match.");
             setTimeout(() => setMessage(""), 3000);
+            sendRequest = false;
+        } else {          
+            console.log("checking strength")             
+            const goodPassword = verifyPasswordStrength(passwordOne); 
+            if (goodPassword.length > 0) {           
+                let currContent = (
+                <>
+                    <div style={{width:"100%", padding:0, color: "orange"}}>
+                        <div style={{
+                            width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
+                            borderLeft: `0px solid orange`, paddingLeft: 5, paddingBottom: 0}}>
+                        <h2>Bad Password</h2>
+                        </div>                    
+                    </div>
+                    <Box style={{
+                    width:"100%", 
+                    padding:0, 
+                    color: "gray",
+                    border: "0px solid black"}}>         
+                        Satisfy the following issues with your password:<br />          
+                        <ul>
+                        {goodPassword.map((item) => (
+                            <li><span style={{color:"white"}}>{item}</span></li>
+                        ))}
+                        </ul>
+
+                    </Box>
+                </>
+                );
+
+                showMessageModal(currContent, "orange");            
+            }
             sendRequest = false;
         }
 
@@ -272,18 +303,20 @@ function UserRegistration() {
               borderColor={modalConfig.borderColor}
            />
 
-            <Logo marginTop={50} marginBottom={50}/>
+            <Logo marginTop={50} marginBottom={30}/>
 
             <Box id="component-container"
                 style={styles.comp_container}
             >
-                <div id="top-strip"
-                    style={styles.top_strip}
-                >                
-                </div>   
+                  
                 <Box id="inner-container"
                     style={styles.inner_container}
                 >
+                <div id="top-strip"
+                style={styles.top_strip}
+                >                
+                </div> 
+                <Box id="grouping-container">
                     <Box style={styles.text_content}>
                         <h2>Register A New Account</h2>
                         <div id="sub-content" 
@@ -328,9 +361,8 @@ function UserRegistration() {
                     </Button>       
 
                    <Links linkData={linkData}/>       
-
+                   </Box>
                 </Box> 
-                
 
                 <Box id="oAuth"
                   style={{border: "0px solid gray", 
@@ -355,7 +387,7 @@ const linkData = {
     textOne: "Login",
     pathOne: "/login",
     textTwo: "FAQ",
-    pathTwo: "/two-factor-auth"
+    pathTwo: "/password-reset"
 };
 
 const styles = {
@@ -370,9 +402,10 @@ const styles = {
         display: "flex",
         flexDirection: "column",
         maxWidth: 575,
-        minWidth: 375,
+        minWidth: 290,
         marginTop: 10,
-        //height: "auto",
+        paddingLeft: 10,
+        paddingRight: 10,
         backgroundColor: "transparent",//"rgb(12,12,12)",
         color: "gray",
         width: "100%",
@@ -383,7 +416,7 @@ const styles = {
     top_strip: {
         width: "100%",
         border: "0px solid gray",
-        height: 20,
+        height: 15,
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
         backgroundColor: '#817Daa'
@@ -423,7 +456,8 @@ const styles = {
         width: "100%",
         height: "auto",
         backgroundColor: "rgb(12,12,12)",
-        border: "1px solid black",
+        border: "1px solid rgb(33,33,33)",
+        padding:0
     },
    
     button: {
