@@ -7,34 +7,18 @@ import Space from "./Space.js";
 import Logo from "./Logo.js";
 import Footer from "./elements/Footer.js";
 import { useState } from 'react';
+import { verifyPasswordStrength, decodeJwt } from "../api/utils.js";
+import Links from "./Links.js";
 
-/*
-const PasswordReset = () => {
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const token = queryParams.get('token');
-  
-    console.log(token)
 
-    return (
-        <Box
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "50px",
-                width: 500,
-                color: "gray"
-            }}
-        >
-            <Box>
-                <h1>Password Reset</h1>
-                Component shouldbe two input boxes... 
-            </Box>
-        </Box>
-    );
-};
-*/
+      
+const linkData = {
+    textOne: "Changed my mind.",
+    pathOne: "/login",
+    textTwo: "Register a New Account.",
+    pathTwo: "/register"
+  };
+
 const styles = {
     top_strip: {       
         width: "100%",
@@ -107,7 +91,8 @@ const PasswordReset = () => {
               backgroundColor: "rgb(12,12,12)",
               marginTop: 40,
               border: "1px solid rgb(33,33,33)",
-              padding: 0
+              padding: 0,
+              
             }}
         >
             <div style={{
@@ -130,14 +115,17 @@ const PasswordReset = () => {
                         <i className="fas fa-keys" />
                     </div>    
                 </div>
-
+<Box style={{padding:10, display:"flex", justifyContent: "center", alignItems: "center", border: "1px solid gray"}}>
               <div style={{
                      marginBottom: 30,
-                     padding: 10
+                     padding: 10,
+                     width: "90%",
+                     textAlign: "left",
                    }}
               >
-                 Enter the new password, and then confirm the password below.        
+                 Enter the new pIssword, and then retype it again to confirm.       
               </div>
+</Box>             
               <Box style={{border:0}}>
                 <TextBox 
                     id="new-password"
@@ -171,23 +159,8 @@ const PasswordReset = () => {
                 </Button>
             </Box>    
             </div>
-           
-             <Box className="links"
-                  style={{
-                      display: "flex",
-                      justifyContent: "space-around",
-                      fontSize: 14,
-                      color: "blue",
-                      border: "0px solid gray",
-
-                  }}>
-               <div style={{border:0}}>
-                   <Link to="/login">Login</Link>
-               </div>
-               <div style={{border: "0px solid gray"}}>
-                  <Link to="/register"> Register</Link>
-               </div>
-            </Box>
+            <Links justifyContent="space-around" linkData={linkData} />
+            
           
        </Box>
        
