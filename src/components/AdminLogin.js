@@ -44,17 +44,17 @@ const AdminLogin = () => {
     };
 
 
-    const handleOK = async () => {
-        const isNumeric = (str) => {
-            return /^\d+$/.test(str);
-        };
+    const sendRequest = async () => {
+
+        const isNumeric = str => /^\d+$/.test(str);
 
         if (isNumeric(pin)) {
             if (pin.length > 3) {
 
                 const userData = JSON.parse(localStorage.getItem("LifePackage"));
                 const token = userData ? userData.access_token : null;
-                console.log(token)
+                
+
                 if (token) {
                     const userInputPIN =  pin;
                     const endPoint = `${BASE_URL}/auth/login/verify-admin-pin?pin_number=${userInputPIN}`;
@@ -168,8 +168,8 @@ const AdminLogin = () => {
 
     return (
        <div className={fadeOut ? 'fade-out' : ''}>
-        <Space howmuch={50} />
-       <Logo />
+        
+       <Logo marginTop={50} />
           <Box style={{marginTop: 35, width: 350, border: "none"}}>
 
              <Modal
@@ -202,7 +202,7 @@ const AdminLogin = () => {
                   <div style={{ display: 'flex', gap: 10 }}>
                       <Button  className="login-button" style={{marginTop: '1px', width: '100%', fontSize:"20px", backgroundColor: "#817Dda", 
                       border:"1px solid gray", lineHeight: 0, height: 35}}
-                          onClick={handleOK}>Ok
+                          onClick={sendRequest}>Ok
                       </Button> 
                       <Button  className="login-button" style={{marginTop: '1px', width: '100%', fontSize:"20px", backgroundColor: "#817Dda", 
                       border:"1px solid gray", lineHeight: 0, height: 35}}

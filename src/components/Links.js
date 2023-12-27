@@ -1,7 +1,7 @@
 import Box from "./elements/Box";
 import {Link} from "react-router-dom";
 
-function Links( {justifyContent="space-around", linkData} ) {
+function Links( {justifyContent="space-around", linkData, hardWidth="100%"} ) {
 
     return (
         <Box id="links"
@@ -13,10 +13,10 @@ function Links( {justifyContent="space-around", linkData} ) {
                 paddingTop:4,
                 display: 'flex',
                 justifyContent: justifyContent,
-                paddingBottom: 5,
+                paddingBottom: 5, width: hardWidth
                 }}
         >
-            <Box style={{border: "0px solid black", padding:0, marginLeft:10, marginTop: 3}}>
+            <Box style={{border: "0px solid black", padding:0, marginLeft:10, marginTop: 3 }}>
                 <Link to={linkData.pathOne}>{linkData.textOne}</Link>
             </Box> 
             <Box style={{border: "0px solid black", padding:0, marginRight:10, marginTop: 3}}>

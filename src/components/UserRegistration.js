@@ -294,9 +294,9 @@ function UserRegistration() {
 
 
     return (
-          <div id='background'>
+        <div id='background'>
 
-<Modal
+           <Modal
               show={isModalVisible}
               content={modalConfig.content}
               buttons={modalConfig.buttons}
@@ -312,59 +312,59 @@ function UserRegistration() {
                 <Box id="inner-container"
                     style={styles.inner_container}
                 >
-                <div id="top-strip"
-                style={styles.top_strip}
-                >                
-                </div> 
-                <Box id="grouping-container">
-                    <Box style={styles.text_content}>
-                        <h2>Register A New Account</h2>
-                        <div id="sub-content" 
-                            style={styles.sub_content}
-                        >
-                            Enter the required information below to create an account. If you would prefer you can also use your Facebook or Google account to 
-                            gain access through them. 
-                        </div>
-                    </Box>
-
-                    <div className={fadeOut2 ? 'fade-out' : ''}>
-                        <Box style={{border: "0px solid white",height: 10, position: 'relative', top: -15}}>
-                        {message && (
-                        <Box style={{border: "0px solid white", lineHeight: 2, fontSize: 14, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
-                            {message}
+                    <div id="top-strip"
+                    style={styles.top_strip}
+                    >                
+                    </div> 
+                    <Box id="grouping-container">
+                        <Box style={styles.text_content}>
+                            <h2>Register A New Account</h2>
+                            <div id="sub-content" 
+                                style={styles.sub_content}
+                            >
+                                Enter the required information below to create an account. If you would prefer you can also use your Facebook or Google account to 
+                                gain access through them. 
+                            </div>
                         </Box>
-                            )}
-                        </Box >   
-                    </div>
 
-                    <Box id="creds-container" caption={"Required Fields"} color={'white'} labelBgColor={"rgb(12,12,12)"}
-                        style={styles.creds_container}
-                    >
-                        <TextBox  id="email" label="Email *" type="text" width="100%" containerPadding={0} onChange={handleEmail} />
-                        <TextBox  id="password1" label="Password *"  type="password" width="100%" containerPadding={0} onChange={handlePasswordOne} />
-                        <TextBox  id="password2" label="Retype-Password *"  type="password" width="100%" containerPadding={0} onChange={handlePasswordTwo} />        
-                    </Box>      
-                    <Box id="names-container" caption={"Optional Fields"}  color={'white'}  labelBgColor={"rgb(12,12,12)"}
-                        style={{
-                            ...styles.names_container,
-                            ...namesContainerStyle 
-                        }}
-                    >
-                        <TextBox  id="first-name" label="First Name" type="text" width="100%" containerPadding={0} onChange={handleFirstName} />
-                        <TextBox  id="last-name" label="Last Name"  type="text" width="100%" containerPadding={0} onChange={handleLastName} />                    
-                    </Box>      
+                        <div className={fadeOut2 ? 'fade-out' : ''}>
+                            <Box style={{border: "0px solid white",height: 10, position: 'relative', top: -15}}>
+                            {message && (
+                            <Box style={{border: "0px solid white", lineHeight: 2, fontSize: 14, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
+                                {message}
+                            </Box>
+                                )}
+                            </Box >   
+                        </div>
 
-                    <Button id="register-button" onClick={createNewUserAccount}
-                        style={styles.button}
-                    >
-                        Register                    
-                    </Button>       
+                        <Box id="creds-container" caption={"Required Fields"} color={'white'} labelBgColor={"rgb(12,12,12)"}
+                            style={styles.creds_container}
+                        >
+                            <TextBox  id="email" label="Email *" type="text" width="100%" containerPadding={0} onChange={handleEmail} />
+                            <TextBox  id="password1" label="Password *"  type="password" width="100%" containerPadding={0} onChange={handlePasswordOne} />
+                            <TextBox  id="password2" label="Retype-Password *"  type="password" width="100%" containerPadding={0} onChange={handlePasswordTwo} />        
+                        </Box>      
+                        <Box id="names-container" caption={"Optional Fields"}  color={'white'}  labelBgColor={"rgb(12,12,12)"}
+                            style={{
+                                ...styles.names_container,
+                                ...namesContainerStyle 
+                            }}
+                        >
+                            <TextBox  id="first-name" label="First Name" type="text" width="100%" containerPadding={0} onChange={handleFirstName} />
+                            <TextBox  id="last-name" label="Last Name"  type="text" width="100%" containerPadding={0} onChange={handleLastName} />                    
+                        </Box>      
 
-                   <Links linkData={linkData}/>       
+                        <Button id="register-button" onClick={createNewUserAccount}
+                            style={styles.button}
+                        >
+                            Register                    
+                        </Button>       
+
+                        <Links linkData={linkData}/>       
                    </Box>
                 </Box> 
 
-                <Box id="oAuth"
+                <Box id="oAuth" 
                   style={{border: "0px solid gray", 
                     width: "100%", display: "flex", justifyContent: 'center', 
                     alignItems: 'center', height: 100, marginBottom: 8, marginTop: 18
@@ -379,7 +379,7 @@ function UserRegistration() {
                 <Footer marginTop={5} marginBottom={20}/>
             </Box>
 
-          </div>
+       </div>
     );
 };
 
