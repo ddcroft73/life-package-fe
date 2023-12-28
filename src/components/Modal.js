@@ -15,18 +15,18 @@ function Modal({ show, buttons, content, borderColor="blue"}) {
         <Box style={{
               display: 'flex',  
               flexDirection: 'column', 
-              backgroundColor: "rgba(49, 46, 44, .324)",
+              backgroundColor: "rgba(49, 46, 44, .624)",
               minWidth: 350,
               maxWidth: 400,
               height: 'auto',
               border: `1px solid ${borderColor}`,
             }} className="modal">
   
-            <Box style={styles.modalContent}>
+            <Box style={{ ...styles.modalContent, border: `1px solid ${borderColor}` }}>
                 {content}
             </Box>
   
-          <div style={styles.modalActions} className="modal-actions">
+          <Box style={styles.modalActions} className="modal-actions">
             {buttons.map((button, index) => (
               <Button
                 key={index}
@@ -36,7 +36,7 @@ function Modal({ show, buttons, content, borderColor="blue"}) {
                 {button.text}
               </Button>
             ))}
-          </div>
+          </Box>
         </Box>
       </div>
     );
@@ -55,7 +55,8 @@ function Modal({ show, buttons, content, borderColor="blue"}) {
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      border: "0px solid black"
+      border: `1px solid black`,
+      marginBottom: 20,
     },
     modalActions: {
       display: "flex",

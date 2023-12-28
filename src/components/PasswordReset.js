@@ -6,10 +6,14 @@ import TextBox from "./elements/TextBox.js";
 import Space from "./Space.js";
 import Logo from "./Logo.js";
 import Footer from "./elements/Footer.js";
-import { useState } from 'react';
-import { verifyPasswordStrength, decodeJwt } from "../api/utils.js";
-import Links from "./Links.js";
+import { useState, useEffect } from 'react';
+import { getEmail } from "../api/utils.js";
+import { BASE_URL } from "../api/settings.js";
 
+
+import Links from "./Links.js";
+import Modal from "./Modal.js";
+import axios from "axios";
       
 const linkData = {
     textOne: "Changed my mind.",
@@ -79,14 +83,41 @@ const styles = {
 };
 
 
+
+
+
+
 const PasswordReset = () => {
+  
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const token = queryParams.get('token');
-  
+
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
- 
+    const [modalConfig, setModalConfig] = useState({});
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const [message, setMessage] = useState('');
+    const [fadeOut2, setFadeOut2] = useState(false);
+    let sendRequest = true; 
+    
+    
+// MODAL FUNCTIONS
+    //const successAction = () =>  navigate('/verify-email', { state: { email: email } }); 
+    const okAction = () => setIsModalVisible(false);        
+    const showMessageModal = (content, borderColor) => {
+        setModalConfig({
+        content,
+        buttons: [
+            { text: 'OK', handler: okAction }
+        ],
+        borderColor: borderColor
+        });
+        setIsModalVisible(true);
+    };
+
+// HANDLERS
     const handleNewPassword = (value) => {
         setNewPassword(value);
     };
@@ -94,15 +125,128 @@ const PasswordReset = () => {
         setConfirmPassword(value);
     };
    
-    const sendRequest = () => {
-        alert(`Response: ${newPassword}, ${confirmPassword}`);
-    };
    
-   
+// Send the API call and handle the response
+    const sendResetPasswordRequest = async () => {
+
+        if (sendRequest) {
+            const endPoint = `${BASE_URL}/auth/reset-password`;
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+            
+            const payload = {
+                password: newPassword
+            };
+
+            console.log(payload)
+
+            try {
+               // /*
+                let response = {
+                    data: {
+                        msg: `User: ${getEmail(token)} successfully updated their password.`
+                    }
+                };
+                response.status = 200;
+               // */
+
+             //   const response = await axios.post(endPoint, payload, {headers: headers});
+                const { msg } = response.data;
+                
+                console.log(response.status);
+                if (response.status === 200) {
+                    
+                   let successContent = (
+                    <>
+                      <div style={{
+                             width:"100%", 
+                             padding:0, 
+                             color: "white", 
+                             textAlign: "center"
+                           }}>
+                            <h2>Success</h2>
+                      </div>
+                      <Box style={{
+                            width:"100%", 
+                            padding:0, 
+                            color: "gray",
+                            border: "0px solid black"
+                        }}>   
+                            {msg}&nbsp; Go to the <Link to="/login" >login</Link> page to get back into your account.                                                    
+                      </Box>
+                    </>
+                  );
+                  showMessageModal(successContent, "blue");
+                }
+
+                if (response.status === 403) {
+                   // invalid token
+                   let currContent = (
+                    <>
+                       <div style={{
+                              width:"100%", 
+                              padding:0, 
+                              color: "orange", 
+                              textAlign: "center"
+                           }}
+                        >
+                            <h2>Your reset token is invalid...</h2>
+                        </div>
+                       <Box style={{
+                              width:"100%", 
+                              padding:0, 
+                              color: "gray",
+                              border: "0px solid black"
+                            }}
+                        >   
+                            The token issued at the time of your request has expired. Click
+                            <Link to="/recover-password" >here</Link> to have another sent to:  
+                            <span style={{color:"orange"}}> {getEmail(token)}</span>
+                        
+                      </Box>
+                    </>
+                  );
+                  showMessageModal(currContent, "orange");
+                }
+
+            } catch(error) {       
+                console.log(error)
+                if (error.response) {
+                    console.error('Error status:', error.response.status);
+            
+                    if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
+                        setMessage(error.response.data.detail);
+                        setFadeOut2(true); 
+                        setTimeout(() => {
+                            setMessage('')
+                            setFadeOut2(false)
+                        }, 3900);        
+                    }
+                } 
+            }
+            
+        } 
+};
+
+
+    useEffect(() => {
+        document.title = "Reset Password: Life Package 2023";
+    }, []); 
+
+
+
     return (
         <Box id="component-container"
              style={styles.component_container}
-        >
+        > 
+                <Modal
+                    show={isModalVisible}
+                    content={modalConfig.content}
+                    buttons={modalConfig.buttons}
+                    borderColor={modalConfig.borderColor}
+                />     
           <Logo marginTop={40} marginBottom={60} />
           <Box id="main-container"
               style={styles.main_container}
@@ -142,7 +286,7 @@ const PasswordReset = () => {
                       style={{border: 0}}
                     >
                         <Button
-                            onClick={sendRequest}
+                            onClick={sendResetPasswordRequest}
                             style={styles.button}
                         > Submit
                         </Button>

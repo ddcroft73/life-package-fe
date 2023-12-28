@@ -11,9 +11,34 @@ export function decodeJwt(token) {
             })
             .join("")
     );
-
     return JSON.parse(jsonPayload);
-}
+};
+
+
+export const isTokenExpired = (token) => {
+    const isExpired_ = (expTimestamp) => {
+        const currentTime = Math.floor(Date.now() / 1000); 
+        return expTimestamp <= currentTime;
+    }
+    const decodedPayload = decodeJwt(token);
+    const { exp } = decodedPayload;        
+    return isExpired_(exp); 
+};
+
+export function convertUnixTo24Hour(timestamp) {
+    const date = new Date(timestamp * 1000); // Convert to milliseconds
+    return date.toLocaleTimeString('en-US', { hour12: false });
+};
+
+export function getEmail(token) {
+    const payload = decodeJwt(token);
+    try {
+        return payload["email"];
+    }
+    catch(error) {
+        return "no email property";
+    }
+};
 
 
 export function getCurrentDateTime() {
@@ -28,7 +53,7 @@ export function getCurrentDateTime() {
     const seconds = now.getSeconds().toString().padStart(2, '0');
 
     return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
-}
+};
 
 
 export const isEmailAddress = (emailString) => {

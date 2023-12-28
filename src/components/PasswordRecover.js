@@ -63,8 +63,8 @@ const PasswordRecover = () => {
                         <>
                           <div style={{width:"100%", padding:0, color: "green"}}>
                           <div style={{
-                             width: "100%", backgroundColor: "rgba(0,0,0,0.400)", 
-                             borderLeft: `2px solid yellow`, paddingLeft: 8, paddingBottom: 0}}>
+                             width: "100%", backgroundColor: "rgba(0,0,0,0.800)", textAlign:"center", 
+                             borderLeft: `0px solid yellow`, paddingLeft: 8, paddingBottom: 0}}>
                              <h2>Email Sent!</h2>
                          </div>    
                             
