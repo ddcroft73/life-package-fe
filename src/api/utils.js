@@ -52,7 +52,7 @@ export function verifyPasswordStrength(password) {
         failureMessages.push("\nNeeds at least one lowercase letter.");
     }
     if (!/\d/.test(password)) {
-        failureMessages.push("Needs at least one <span style={{color:'red'}}>digit</span>.");
+        failureMessages.push("Needs at least one digit.");
     }
     if (!/[!@#$%^&*]/.test(password)) {
         failureMessages.push("Needs at least one special character.");

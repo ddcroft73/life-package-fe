@@ -88,14 +88,14 @@ function UserRegistration() {
     
 
     // MODAL FUNCTIONS
-    const confirmAction = () =>  navigate('/verify-email', { state: { email: email } }); 
-    const cancelAction = () => setIsModalVisible(false);
+    const successAction = () =>  navigate('/verify-email', { state: { email: email } }); 
+    const okAction = () => setIsModalVisible(false);
      
     const showMessageModal = (content, borderColor) => {
         setModalConfig({
         content,
         buttons: [
-            { text: 'OK', handler: cancelAction }
+            { text: 'OK', handler: okAction }
         ],
         borderColor: borderColor
         });
@@ -104,11 +104,11 @@ function UserRegistration() {
 
 
     // Function to program modal for an action on OK
-    const showConfirmModal = (content, borderColor) => {
+    const showSuccessModal = (content, borderColor) => {
         setModalConfig({
         content,
         buttons: [
-            { text: 'OK', handler: confirmAction },
+            { text: 'OK', handler: successAction },
             //{ text: 'Cancel', handler: cancelAction }
         ],
         borderColor: borderColor
@@ -169,21 +169,27 @@ function UserRegistration() {
                 </>
                 );
 
-                showMessageModal(currContent, "orange");            
+                showMessageModal(currContent, "orange");      
+                sendRequest = false;      
             }
-            sendRequest = false;
         }
 
         userData.email = email;
         userData.password = passwordOne;
 
         if (sendRequest) {
-            let response = {};
-            response.error = 'server closed'
-          //  const response = await userRegister(userData);
-
+            /*
+            DEBUG code
+            let response = {
+                user: {
+                    email: ""
+                }
+            };
+           // response.error = 'server closed'
+           response.user.email = "user@email.com"
+           */
+            const response = await userRegister(userData);
             const { error } = response
-            
             
             // If an error was caught it was packaged and sent back in response.error
             // If not, then there will be an email for the user. response.user.email
@@ -205,7 +211,7 @@ function UserRegistration() {
                       </Box>
                     </>
                   );
-                   showConfirmModal(currContent);                 
+                   showSuccessModal(currContent);                 
                    
             }
             else {
@@ -264,7 +270,7 @@ function UserRegistration() {
                             color: "white",
                             border: "0px solid black"}}>       
                                 There seems to be a problem with the connection. Check your
-                                internet, or maybe the server is down... Hell I dont't know. Something fucked up.                         
+                                internet connection.                        
                         </Box>
                         </>
                     );
@@ -387,7 +393,7 @@ const linkData = {
     textOne: "Login",
     pathOne: "/login",
     textTwo: "FAQ",
-    pathTwo: "/password-reset"
+    pathTwo: "/FAQ"
 };
 
 const styles = {

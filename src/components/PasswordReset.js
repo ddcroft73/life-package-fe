@@ -14,8 +14,8 @@ import Links from "./Links.js";
 const linkData = {
     textOne: "Changed my mind.",
     pathOne: "/login",
-    textTwo: "Register a New Account.",
-    pathTwo: "/register"
+    textTwo: "Contact Support",
+    pathTwo: "/support"
   };
 
 const styles = {

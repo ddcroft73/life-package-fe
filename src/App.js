@@ -7,8 +7,9 @@ import UserDashboard from "./components/UserDashboard.js";
 import UserRegistration from "./components/UserRegistration.js";
 import RegisterUser from "./components/RegisterUser.js";
 import PasswordRecover from "./components/PasswordRecover.js";
-
+import CustomerSupport from "./components/CustomerSupport.js";
 import PasswordReset from "./components/PasswordReset.js";
+import FAQ from "./components/FAQ.js";
 
 import AdminDashboard from "./components/AdminDashboard.js";
 import VerifyEmail from "./components/VerifyEmail.js";
@@ -41,6 +42,8 @@ const App = () => {
                     <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
                     <Route path="/verify-email" element={<VerifyEmail />} />
                     <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                    <Route path="/support" element={<CustomerSupport />} />
+                    <Route path="/FAQ" element={<FAQ />} />
                 </Routes>
             </Router>
         </ThemeManager>

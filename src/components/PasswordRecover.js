@@ -181,8 +181,8 @@ const PasswordRecover = () => {
     const linkData = {
         textOne: "Login",
         pathOne: "/login",
-        textTwo: "Register a New Account.",
-        pathTwo: "/register"
+        textTwo: "Customer Support",
+        pathTwo: "/support"
     };
 
     
