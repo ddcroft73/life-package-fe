@@ -170,7 +170,7 @@ const AdminLogin = () => {
        <div className={fadeOut ? 'fade-out' : ''}>
         
        <Logo marginTop={50} />
-          <Box style={{marginTop: 35, width: 350, border: "none"}}>
+          <Box style={{marginTop: 35, width: 350, border: "none", paddingLeft: 30, paddingRight: 30}}>
 
              <Modal
                 show={isModalVisible}
