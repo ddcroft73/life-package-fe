@@ -41,7 +41,7 @@ const LoginNew = () => {
     
     const [modalConfig, setModalConfig] = useState({});
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [componentContainerStyle, setComponentContainerStyle] = useState({});
+    const [buttonWidth, setbuttonWidth] = useState({});
 
     let sendRequest = false;
 
@@ -53,13 +53,15 @@ const LoginNew = () => {
 
       // As is this does nothing. Shpuld not neeed it but just in case.
         function handleResize() {
-            if (window.innerWidth < 400) {
-                setComponentContainerStyle({
+            if (window.innerWidth < 450) {
+              setbuttonWidth({
                    //
+                    width: "100%"
                 });
             } else {
-                setComponentContainerStyle({
+              setbuttonWidth({
                     //
+                      width: "375px"
                 });
             }
         }    
@@ -369,7 +371,7 @@ const LoginNew = () => {
           button_container: {
             display: "flex", 
             justifyContent: "center",
-            width:"100%"
+            width:"375px"
           },
           button: {
             marginTop: '1px', 
@@ -435,7 +437,7 @@ const LoginNew = () => {
                                 </Box>
                                 
                                 <div id="button-container"
-                                    style={styles.button_container}
+                                    style={{...styles.button_container, ...buttonWidth}}
                                 >
                                 <Button  onClick={handleLoginClick} 
                                     style={styles.button}
