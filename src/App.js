@@ -34,6 +34,8 @@ const App = () => {
                     <Route path="/" element={<TokenHandler />} />
                     <Route path="/landing-page" element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />
+
+
                     <Route path="/register" element={<UserRegistration />} />
                     <Route path="/recover-password" element={<PasswordRecover />} />
                     <Route path="/password-reset" element={<PasswordReset />} />

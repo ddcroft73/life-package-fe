@@ -30,7 +30,7 @@ function Logo( {marginTop=0, marginBottom=0}) {
                     fontWeight: "lighter"
                 }}
             >|</span> 
-            <span style={{fontSize: 30}}>LifePackage</span> <span style={{position: "relative", fontSize: 18, top: -8}}>&#8482;</span>                          
+            <span style={{fontSize: 30}}> LifePackage</span> <span style={{position: "relative", fontSize: 18, top: -8}}>&#8482;</span>                          
         </Box>
     );
 };

@@ -1,6 +1,7 @@
 import Box from "./elements/Box.js";
 import Logo from "./Logo.js";
 import Links from "./Links.js";
+
 const FAQ = () => {
     return (
         

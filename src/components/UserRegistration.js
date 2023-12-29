@@ -12,6 +12,7 @@ import Footer from './elements/Footer.js';
 import Links from './Links.js';
 import Modal from './Modal';
 import Logo from './Logo.js';
+import Oauth from './Oauth.js';
 import './RegisterUser.css'
 /**
  *  UserRegistration Component
@@ -37,6 +38,7 @@ function UserRegistration() {
     const [passwordTwo, setPasswordTwo] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+
     const [namesContainerStyle, setNamesContainerStyle] = useState({});
 
     const [message, setMessage] = useState('');
@@ -178,17 +180,17 @@ function UserRegistration() {
         userData.password = passwordOne;
 
         if (sendRequest) {
-            /*
-            DEBUG code
+            
+           // DEBUG code
             let response = {
                 user: {
                     email: ""
                 }
             };
-           // response.error = 'server closed'
-           response.user.email = "user@email.com"
-           */
-            const response = await userRegister(userData);
+            response.error = 'user exists'
+           //response.user.email = email
+           
+            //const response = await userRegister(userData);
             const { error } = response
             
             // If an error was caught it was packaged and sent back in response.error
@@ -206,12 +208,12 @@ function UserRegistration() {
                         padding:0, 
                         color: "gray",
                         border: "0px solid black"}}>  
-                            An account was created for:<span style={{color:"orange"}}>{email}</span>.  
+                            An account was created for: <span style={{color:"orange"}}>{email}</span>.  
                             
                       </Box>
                     </>
                   );
-                   showSuccessModal(currContent);                 
+                   showSuccessModal(currContent, "blue");                 
                    
             }
             else {
@@ -220,7 +222,13 @@ function UserRegistration() {
                    //alert("User exists")
                    let currContent = (
                     <>
-                      <div style={{width:"100%", padding:0, color: "red", textAlign: "center"}}><h2>Error:</h2></div>
+                      <div style={{width:"100%", padding:0, color: "red"}}>
+                        <div style={{
+                            width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
+                            borderLeft: `0px solid red`, paddingLeft: 5, paddingBottom: 0}}>
+                                <h2>Error</h2>
+                        </div>
+                      </div>
                       <Box style={{
                         width:"100%", 
                         padding:0, 
@@ -241,7 +249,7 @@ function UserRegistration() {
                          <div style={{
                                 width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
                                 borderLeft: `0px solid red`, paddingLeft: 5, paddingBottom: 0}}>
-                            <h2>Error:</h2>
+                            <h2>Error</h2>
                          </div>                    
                       </div>
                       <Box style={{
@@ -261,9 +269,13 @@ function UserRegistration() {
                     // show modal
                     let currContent = (
                         <>
-                        <div style={{width:"100%", padding:0, color: "red", textAlign: "center"}}>
-                            <h2>Error:</h2>
-                        </div>
+                        <div style={{width:"100%", padding:0, color: "red"}}>
+                         <div style={{
+                                width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
+                                borderLeft: `0px solid red`, paddingLeft: 5, paddingBottom: 0}}>
+                            <h2>Error</h2>
+                         </div>                    
+                      </div>
                         <Box style={{
                             width:"100%", 
                             padding:0, 
@@ -282,7 +294,13 @@ function UserRegistration() {
                    // Unknown error
                    let currContent = (
                     <>
-                      <div style={{width:"100%", padding:0, color: "red"}}><h2>Error:</h2></div>
+                      <div style={{width:"100%", padding:0, color: "red"}}>
+                         <div style={{
+                                width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
+                                borderLeft: `0px solid red`, paddingLeft: 5, paddingBottom: 0}}>
+                            <h2>Error</h2>
+                         </div>                    
+                      </div>
                       <Box style={{
                         width:"100%", 
                         padding:0, 
@@ -328,7 +346,7 @@ function UserRegistration() {
                             <div id="sub-content" 
                                 style={styles.sub_content}
                             >
-                                Enter the required information below to create an account. If you would prefer you can also use your Facebook or Google account to 
+                                Enter the required information below to create an account. If you prefer, you may also use your Facebook or Google account and 
                                 gain access through them. 
                             </div>
                         </Box>
@@ -370,19 +388,9 @@ function UserRegistration() {
                    </Box>
                 </Box> 
 
-                <Box id="oAuth" 
-                  style={{border: "0px solid gray", 
-                    width: "100%", display: "flex", justifyContent: 'center', 
-                    alignItems: 'center', height: 100, marginBottom: 8, marginTop: 18
-                  }}
-                >
-                    <Box style={{display: 'flex', border: "0px solid black", padding: 0,}}>
-                        <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-facebook-f" /></div>
-                        <div className="oauth" style={styles.oAuth}><i className="fa-brands fa-google" /></div>              
-                    </Box>
-                                
-                </Box>
+                <Oauth/>
                 <Footer marginTop={5} marginBottom={20}/>
+
             </Box>
 
        </div>
@@ -418,6 +426,13 @@ const styles = {
         height: "auto", 
         padding: 0,
         border: "0px solid black"
+    },
+    inner_container: {
+        width: "100%",
+        height: "auto",
+        backgroundColor: "rgb(12,12,12)",
+        border: "1px solid rgb(33,33,33)",
+        padding:0
     },
     top_strip: {
         width: "100%",
@@ -457,13 +472,6 @@ const styles = {
         marginBottom: 0,
         textAlign: "center",
         padding: 12,
-    },
-    inner_container: {
-        width: "100%",
-        height: "auto",
-        backgroundColor: "rgb(12,12,12)",
-        border: "1px solid rgb(33,33,33)",
-        padding:0
     },
    
     button: {
