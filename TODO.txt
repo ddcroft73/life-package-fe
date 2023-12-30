@@ -1,13 +1,12 @@
 
-Finish Pasword Reset Component. 
-  The component that is used to actually enter the new password and confimation passwod 
+Finish Pasword Reset Component. request Logic only
 
-  username and password validation for the regestration
-
-  work on the passwordVerify code.
-
-  Re build the user registration
-
+Implement Oauth
+Fix the width issue with Modal on mobile
+Coming soon page
+Landing page
+Admin Dashboard or workstation
+USer workstation
 
   I need to come up with a more clever deterrent to brute force attacks.  
      after 3 attempts impose a delay of 5 minutes

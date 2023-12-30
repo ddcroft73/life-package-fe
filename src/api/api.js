@@ -1,6 +1,6 @@
 import { getCurrentDateTime } from './utils';
 import axios from 'axios';
-import  {BASE_URL, SERVER_HOST}  from "./settings";
+import  { BASE_URL }  from "./settings";
 
 
 //const baseUrl = `http://${SERVER_HOST}/api/v1/`; //'http://localhost:8015/api/v1/';
@@ -15,7 +15,8 @@ export const userLogin = async (username, password) => {
      * 
      * @param {* } username 
      * @param {*} password 
-     * @returns 
+     * @returns nothing
+     * 
      */
    
     const url = `${BASE_URL}/auth/login/access-token`;
@@ -26,14 +27,13 @@ export const userLogin = async (username, password) => {
     formData.append('password', password);
 
     try {
+
         const response = await axios.post(url, formData);
-        const { access_token, token_type, user_role, code, token} = response.data;   
-        
-        // i NEED TO WORK ON THIS FLOW. 
-        // The big part is the flow when its' an admin, and they have 2FA enabled.
-        // Will be altering the return data from the server.
+        const { access_token, token_type, user_role, code, token} = response.data;           
 
         if (code) {                                           // User has 2FA enabled        
+            console.log('User has 2FA enabled. Must verify code to get access');
+
             let data = {
                 code: code,
                 token: token,
@@ -68,9 +68,9 @@ export const userLogin = async (username, password) => {
            if (error.response.status >= 400) {               
                if (error.response.data.detail === 'wrong credentials') {
                 // This could also mean the user does not exist...
-                  
+                // Handling in the component  
                }
-               // jus tsend any detail back so I know exactly what happened.
+               // just send any detail back so I know exactly what happened.
               return error.response.data.detail
            }
        }    

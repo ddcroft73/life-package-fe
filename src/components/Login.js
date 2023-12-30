@@ -309,7 +309,7 @@ const LoginNew = () => {
       const linkData = {
         textOne: "Forgot Password?",
         pathOne: "/recover-password",
-        textTwo: "Sign up!",
+        textTwo: "Don't have an account? Sign up!",
         pathTwo: "/register"
       };
 

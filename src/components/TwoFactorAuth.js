@@ -160,8 +160,7 @@ const TwoFactorAuth = ({ onSubmit }) => {
 
                     }                    
                  } 
-              }   
-              
+              }                 
         // Error due to server response
         } catch(error) {
             // 
@@ -214,7 +213,7 @@ const TwoFactorAuth = ({ onSubmit }) => {
           <Box style={styles.container}>
             <Logo />
             <Space howmuch={32} />
-            <div style={{border: "0px solid white", color: "white"}}>
+            <div style={{border: "0px solid white", color: "white", textAlign: "center"}}>
               <h2>Two Factor Authentication</h2>
             </div>
             <Box style={styles.subtitle}>
@@ -279,6 +278,8 @@ const styles = {
     width: "100%",
     alignItems: 'center', 
     height: 'auto', 
+    paddingLeft: 30,
+    paddingRight: 30,
     backgroundColor: "transparent",//'rgb(49, 46, 44)',
     fontFamily:  "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;",
     color: "gray",
