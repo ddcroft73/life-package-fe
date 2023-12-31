@@ -2,9 +2,8 @@ import Box from "./elements/Box.js";
 import React, { useState, useEffect  } from 'react';
 import { useNavigate , useLocation}  from 'react-router-dom';
 import Button from "./elements/Button.js"
-import Paper from "./elements/Paper.js"
 import axios from 'axios';
-import { BASE_URL, SERVER_HOST } from "../api/settings.js";
+import { BASE_URL } from "../api/settings.js";
 import { decodeJwt } from "../api/utils.js";
 import Logo from "./Logo.js";
 import Footer from "./elements/Footer.js";
@@ -110,7 +109,6 @@ const TwoFactorAuth = ({ onSubmit }) => {
     let code_2FA = userData.code;
     const token = userData.token; 
     const email = decodeJwt(token).email;
-    const userRole = userData.user_role;
     
     const users_code = code.join('');
 
@@ -166,7 +164,7 @@ const TwoFactorAuth = ({ onSubmit }) => {
             // 
             if (error.response) {
               console.error('Error status:', error.response.status);
-  // Ill fix this later. 
+              
               if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
                 
                 setFadeOut2(true);
@@ -175,9 +173,7 @@ const TwoFactorAuth = ({ onSubmit }) => {
                   setMessage("")
                    setFadeOut2(false);
                }, 3900);    
-
-       //         setMessage(error.response.data.detail);
-       //         setTimeout(() => setMessage(""), 3000);               
+          
               }
           } 
         }
@@ -191,8 +187,6 @@ const TwoFactorAuth = ({ onSubmit }) => {
             setFadeOut2(false);
         }, 3900);   
 
-    //    setMessage('Missing 1 or more characters input.')
-    //    setTimeout(() => setMessage(""), 3000);
 
     } else if (!code_2FA || !token) {
           setFadeOut2(true);
@@ -201,9 +195,7 @@ const TwoFactorAuth = ({ onSubmit }) => {
             setMessage("")
             setFadeOut2(false);
         }, 3900);  
-
-    //    setMessage("Error: Click below to resend 2FA code.")
-    //    setTimeout(() => setMessage(""), 3000);
+        
     }
   };
 

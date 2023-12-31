@@ -126,19 +126,29 @@ function UserRegistration() {
         if (firstName && lastName) {
             userData.fullName = `${firstName} ${lastName}`;
         }
-        
-        if (!isEmailAddress(email)) {
-            setMessage(`${email} is not a valid email address.`)  
-            setFadeOut2(true); 
-            setTimeout(() => {
-              setMessage('')
-              setFadeOut2(false)
-            }, 3900);
 
+
+        if (!isEmailAddress(email)) {           
+
+           if (email.length === 0) {
+                setMessage(`Email cannot be empty.`)  
+                setFadeOut2(true); 
+                setTimeout(() => {
+                setMessage('')
+                setFadeOut2(false)
+                }, 3900);
+           } else {            
+                setMessage(`${email} is not a valid email address.`)  
+                setFadeOut2(true); 
+                setTimeout(() => {
+                setMessage('')
+                setFadeOut2(false)
+                }, 3900);
+           }
             sendRequest = false;
-        }   
+        }  
 
-        if (passwordOne !== passwordTwo) {
+        else if (passwordOne !== passwordTwo) {
             setMessage("Passwords do not match.");
             setTimeout(() => setMessage(""), 3000);
             sendRequest = false;
@@ -162,8 +172,8 @@ function UserRegistration() {
                     border: "0px solid black"}}>         
                         Satisfy the following issues with your password:<br />          
                         <ul>
-                        {goodPassword.map((item) => (
-                            <li><span style={{color:"white"}}>{item}</span></li>
+                        {goodPassword.map((item, index) => (
+                            <li key={index}><span style={{color:"white"}}>{item}</span></li>
                         ))}
                         </ul>
 
@@ -180,17 +190,18 @@ function UserRegistration() {
         userData.password = passwordOne;
 
         if (sendRequest) {
-            
-           // DEBUG code
+            /*
+           // DEBUG code, to test all responses. Error and success.
             let response = {
                 user: {
                     email: ""
                 }
             };
-            response.error = 'user exists'
+            response.error = 'no response'
            //response.user.email = email
-           
-            //const response = await userRegister(userData);
+           */
+          
+            const response = await userRegister(userData);
             const { error } = response
             
             // If an error was caught it was packaged and sent back in response.error
@@ -202,7 +213,13 @@ function UserRegistration() {
                    //alert("User exists")
                    let currContent = (
                     <>
-                      <div style={{width:"100%", padding:0, color: "white", textAlign: "center"}}><h2>Success:</h2></div>
+                      <div style={{width:"100%", padding:0, color: "white"}}>
+                        <div style={{
+                            width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
+                            borderLeft: `0px solid red`, paddingLeft: 5, borderRadius: 5, paddingBottom: 0}}>
+                                <h2>Success!</h2>
+                        </div>
+                      </div>
                       <Box style={{
                         width:"100%", 
                         padding:0, 
@@ -225,7 +242,7 @@ function UserRegistration() {
                       <div style={{width:"100%", padding:0, color: "red"}}>
                         <div style={{
                             width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
-                            borderLeft: `0px solid red`, paddingLeft: 5, paddingBottom: 0}}>
+                            borderLeft: `0px solid red`, paddingLeft: 5, borderRadius: 5, paddingBottom: 0}}>
                                 <h2>Error</h2>
                         </div>
                       </div>
@@ -248,7 +265,7 @@ function UserRegistration() {
                        <div style={{width:"100%", padding:0, color: "red"}}>
                          <div style={{
                                 width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
-                                borderLeft: `0px solid red`, paddingLeft: 5, paddingBottom: 0}}>
+                                borderLeft: `0px solid red`, paddingLeft: 5, borderRadius:5, paddingBottom: 0}}>
                             <h2>Error</h2>
                          </div>                    
                       </div>
@@ -272,7 +289,7 @@ function UserRegistration() {
                         <div style={{width:"100%", padding:0, color: "red"}}>
                          <div style={{
                                 width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
-                                borderLeft: `0px solid red`, paddingLeft: 5, paddingBottom: 0}}>
+                                borderLeft: `0px solid red`, borderRadius:5, paddingLeft: 5, paddingBottom: 0}}>
                             <h2>Error</h2>
                          </div>                    
                       </div>
@@ -281,7 +298,7 @@ function UserRegistration() {
                             padding:0, 
                             color: "white",
                             border: "0px solid black"}}>       
-                                There seems to be a problem with the connection. Check your
+                                There seems to be a problem with your connection. <br/>Check your
                                 internet connection.                        
                         </Box>
                         </>
