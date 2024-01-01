@@ -16,6 +16,9 @@ import VerifyEmail from "./components/VerifyEmail.js";
 import React, { useEffect } from "react";
 import {decodeJwt} from "./api/utils.js";
 import ThemeManager from "./theme/ThemeManager";
+import RoutingVerifyEmail from "./components/RoutingVerifyEmail.js";
+
+
 
 import {
     Routes,
@@ -35,14 +38,16 @@ const App = () => {
                     <Route path="/landing-page" element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />
 
-
                     <Route path="/register" element={<UserRegistration />} />
                     <Route path="/recover-password" element={<PasswordRecover />} />
                     <Route path="/password-reset" element={<PasswordReset />} />
                     <Route path="/user-dashboard" element={<UserDashboard />} />
                     <Route path="/admin-login" element={<AdminLogin />} />
                     <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
+
                     <Route path="/verify-email" element={<VerifyEmail />} />
+                    <Route path="/routing-verify-email" element={<RoutingVerifyEmail/>} />
+                    
                     <Route path="/admin-dashboard" element={<AdminDashboard />} />
                     <Route path="/support" element={<CustomerSupport />} />
                     <Route path="/FAQ" element={<FAQ />} />

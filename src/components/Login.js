@@ -1,5 +1,6 @@
+
 import React , { useState, useEffect } from 'react';
-import { useNavigate, Link} from "react-router-dom";
+import { useNavigate, Link, useLocation} from "react-router-dom";
 
 import { userLogin } from '../api/api.js';
 import Box from "../components/elements/Box.js";
@@ -10,7 +11,7 @@ import ToggleSwitch from '../components/elements/ToggleSwitch.js';
 import Space from '../components/Space.js';
 import Modal from './Modal.js';
 import Or from './Or.js';
-import { isEmailAddress } from '../api/utils.js';
+import { isEmailAddress, decodeJwt, isTokenExpired, convertUnixTo24Hour } from '../api/utils.js';
 import Logo from './Logo.js';
 import Footer from './elements/Footer.js';
 import Oauth from './Oauth.js';
@@ -29,7 +30,9 @@ import './Login.css';
  */
 
 
-const LoginNew = () => {
+
+const Login = () => {
+    
     const defaultRememberMeData = JSON.parse(localStorage.getItem('rememberMe')) || {};
     const [isChecked, setChecked] = useState(defaultRememberMeData.value || false);
     const [email, setEmail] = useState(defaultRememberMeData.username || '');
@@ -50,8 +53,7 @@ const LoginNew = () => {
     
 
     useEffect(() => {
-
-      // As is this does nothing. Shpuld not neeed it but just in case.
+    
         function handleResize() {
             if (window.innerWidth < 450) {
               setbuttonWidth({
@@ -61,15 +63,16 @@ const LoginNew = () => {
             } else {
               setbuttonWidth({
                     //
-                      width: "375px"
+                      width: "370px"
                 });
             }
         }    
 
         document.title = "User Login: LifePackage 2023";
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', handleResize);        
         handleResize();
+                
         return () => window.removeEventListener('resize', handleResize);
 
     }, []);
@@ -459,4 +462,4 @@ const LoginNew = () => {
     );
 };
 
-export default LoginNew;
+export default Login;

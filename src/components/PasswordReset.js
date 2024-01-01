@@ -7,7 +7,7 @@ import Space from "./Space.js";
 import Logo from "./Logo.js";
 import Footer from "./elements/Footer.js";
 import { useState, useEffect } from 'react';
-import { verifyPasswordStrength } from "../api/utils.js";
+import { verifyPasswordStrength, decodeJwt } from "../api/utils.js";
 import { BASE_URL } from "../api/settings.js";
 
 
@@ -39,6 +39,7 @@ const PasswordReset = () => {
 
     useEffect(() => {
         document.title = "Reset Password: Life Package 2023";
+         
     }, []); 
 
 
