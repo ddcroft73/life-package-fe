@@ -1,19 +1,25 @@
 import Box from "./elements/Box.js";
+import Logo from "./Logo.js";
+
 
 const AdminDashboard = () => {
     return (
-        <Box
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "50px"
-            }}
-        >
-            <Box>
-                <h1>Administration Dashboard</h1>
+        <div id="background">
+            <Logo marginTop={50} />
+            <Box
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "0px"
+                }}
+            >
+                <Box>
+                    <h1>Administration WorkStation</h1>.
+
+                </Box>
             </Box>
-        </Box>
+        </div>
     );
 };
 

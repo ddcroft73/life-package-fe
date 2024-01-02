@@ -13,3 +13,5 @@ USer workstation
      after 6 attempts impose a delay of 30 minutes
      after 9, lovked out because yopur ass is up to no good. 
      
+implement protecrted routs for admin Dashboard
+build a 404 page and figure out how to use it

@@ -22,7 +22,7 @@ const TwoFactorAuth = ({ onSubmit }) => {
   const navigate = useNavigate();  
   
   useEffect(() => {
-    document.title = "Two Factor Authentication: LifePackage 2023";
+    document.title = "Two Factor Authentication: LifePackage 2024";
   }, []);
 
   // little currying action...lol 
@@ -195,7 +195,7 @@ const TwoFactorAuth = ({ onSubmit }) => {
             setMessage("")
             setFadeOut2(false);
         }, 3900);  
-        
+
     }
   };
 

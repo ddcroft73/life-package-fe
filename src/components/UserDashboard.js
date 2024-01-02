@@ -1,6 +1,13 @@
 import Box from "./elements/Box.js";
+import  { useState, useEffect } from 'react';
+
+
 
 const UserDashboard = () => {
+    useEffect(() => {
+        document.title = "User Workstation: LifePackage 2024";
+      }, []);
+
     return (
         <Box
             style={{

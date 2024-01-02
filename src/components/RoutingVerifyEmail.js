@@ -85,7 +85,7 @@ function RoutingVerifyEmail ()  {
                 const {msg} = response.data;
 
               
-
+                console.log(response.status);
                 if (msg) {
                     // load login or
                     // load a modal proclaiming success... the latter
@@ -130,7 +130,7 @@ function RoutingVerifyEmail ()  {
                                 width:"100%", 
                                 padding:0, 
                                 color: "white",
-                                border: "0px solid black"}}>       
+                                border: "0px solid black", textAlign: "center"}}>       
                                     {error.response.data.detail}                   
                               </Box>
                             </>

@@ -80,7 +80,7 @@ function UserRegistration() {
             }
         }    
 
-        document.title = "User Registration: LifePackage 2023";
+        document.title = "User Registration: LifePackage 2024";
 
         window.addEventListener('resize', handleResize);
         handleResize();
@@ -200,7 +200,7 @@ function UserRegistration() {
             response.error = 'no response'
            //response.user.email = email
            */
-          
+
             const response = await userRegister(userData);
             const { error } = response
             
@@ -216,7 +216,7 @@ function UserRegistration() {
                       <div style={{width:"100%", padding:0, color: "white"}}>
                         <div style={{
                             width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
-                            borderLeft: `0px solid red`, paddingLeft: 5, borderRadius: 5, paddingBottom: 0}}>
+                            borderLeft: `0px solid red`, paddingLeft: 5, borderRadius: 15, paddingBottom: 0}}>
                                 <h2>Success!</h2>
                         </div>
                       </div>
@@ -225,7 +225,7 @@ function UserRegistration() {
                         padding:0, 
                         color: "gray",
                         border: "0px solid black"}}>  
-                            An account was created for: <span style={{color:"orange"}}>{email}</span>.  
+                            An account was created for: &nbsp;<span style={{color:"orange"}}>{email}</span>.  
                             
                       </Box>
                     </>

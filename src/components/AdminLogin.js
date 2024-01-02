@@ -24,7 +24,7 @@ const AdminLogin = () => {
     const navigate = useNavigate();    
     
     useEffect(() => {
-        document.title = "Administrator Login: LifePackage 2023";
+        document.title = "Administrator Login: LifePackage 2024";
     }, []);
 
 

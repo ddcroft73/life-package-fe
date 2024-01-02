@@ -1,8 +1,10 @@
 import Box from "./elements/Box";
-
+import { useNavigate, Link, useLocation} from "react-router-dom";
 
 
 const Oauth = ({ marginTop=0, marginBottom=8}) => {
+
+    const navigate = useNavigate();
 
     const styles = {
         oauth: {
@@ -29,6 +31,10 @@ const Oauth = ({ marginTop=0, marginBottom=8}) => {
             gap: 5
         },
     };
+    const handleClick = () => {
+        navigate("/admin-dashboard")
+    };
+
 
     return(
         <Box id="outer-container"
@@ -40,7 +46,7 @@ const Oauth = ({ marginTop=0, marginBottom=8}) => {
                 <div id="oauth-container" 
                     style={styles.oauth}
                 >
-                    <i className="fa-brands fa-facebook-f" />
+                    <i className="fa-brands fa-facebook-f" onClick={handleClick}/>
                 </div>
                 <div id="oauth-container" 
                     style={styles.oauth}

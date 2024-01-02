@@ -14,8 +14,10 @@ import Or from './Or.js';
 import { isEmailAddress, decodeJwt, isTokenExpired, convertUnixTo24Hour } from '../api/utils.js';
 import Logo from './Logo.js';
 import Footer from './elements/Footer.js';
+import { BASE_URL } from '../api/settings.js';
 import Oauth from './Oauth.js';
 import Links from './Links.js';
+import axios from 'axios';
 import './Login.css';
 
 /**
@@ -41,6 +43,7 @@ const Login = () => {
     
     const [fadeOut, setFadeOut] = useState(false);
     const [fadeOut2, setFadeOut2] = useState(false);
+    const [cnt, setCnt] = useState(0);
     
     const [modalConfig, setModalConfig] = useState({});
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -50,10 +53,44 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const resendEmailVerification = async () => {
+      const url = `${BASE_URL}/auth/resend-verification`;
+      const resendLink = `${url}?email=${email}`;
+      //http://192.168.12.189:8015/api/v1/auth/resend-verification?email=someemail@email.com
     
+      try {
+          const response = await axios.put(resendLink);            
+    
+          if (response.status === 200) {
+              setCnt(cnt+1);
+    
+              if (cnt < 4) {
+                  setError(`Dispatched email to: ${email}...`);   
+              } else {
+                  setError("Three's the limit... you are being redirected to login.")
+                  setFadeOut(true);
+                  setTimeout(() => navigate("/login"), 3000);
+              }                
+          }
+      }
+      catch (error) {
+          if (error.response) {
+              console.error('Error status:', error.response.status);
+              // Ill fix this later. 
+              if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
+                  setFadeOut2(true);
+                  setError(error.response.data.detail)
+                  setTimeout(() => {
+                    setError("")
+                      setFadeOut2(false);
+                  }, 3900);  
+              }
+          } 
+      }
+    };
 
     useEffect(() => {
-    
+        
         function handleResize() {
             if (window.innerWidth < 450) {
               setbuttonWidth({
@@ -68,7 +105,7 @@ const Login = () => {
             }
         }    
 
-        document.title = "User Login: LifePackage 2023";
+        document.title = "User Login: LifePackage 2024";
 
         window.addEventListener('resize', handleResize);        
         handleResize();
@@ -171,7 +208,7 @@ const Login = () => {
                   <>
                     <div style={{width:"100%", padding:0, color: "orange"}}>
                       <div style={{
-                                  width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: "center", 
+                                  width: "100%", backgroundColor: "rgba(0,0,0,0.600)", borderRadius:15, textAlign: "center", 
                                   borderLeft: `0px solid orange`, borderRadius:5, paddingLeft: 8, paddingBottom: 0}}>          
                         <h2>User Not Verified</h2>
                       </div>       
@@ -181,10 +218,10 @@ const Login = () => {
                       padding:0, 
                       color: "white",
                       border: "0px solid black"}}>       
-                          The user: <span style={{color:"orange"}}>{email}</span><br/>
+                          The user: <span style={{color:"orange"}}> {email}</span>&nbsp;
                           has not been verified on this system. <br/><br/>
                           Check your email and verify to login. 
-                          If you waited too long and need another chance, click <Link to="/">here</Link>.                   
+                          If you waited too long and need another chance, click <span style={{color: "blue"}} onClick={resendEmailVerification}>here</span>.                   
                     </Box>
                   </>
                 );
@@ -198,7 +235,7 @@ const Login = () => {
                 <>             
                   <div style={{width:"100%", padding:0, color: "orange"}}>
                      <div style={{
-                                width: "100%", backgroundColor: "rgba(0,0,0,0.600)", borderRadius:8,textAlign: 'center',
+                                width: "100%", backgroundColor: "rgba(0,0,0,0.600)", borderRadius:15,textAlign: 'center',
                                 borderLeft: `0px solid orange`, paddingLeft: 8, paddingBottom: 0}}>
                            <h2>Invalid Entry</h2>
                      </div>                 
@@ -226,9 +263,9 @@ const Login = () => {
                     <>
                       <div style={{width:"100%", padding:0, color: "red"}}>
                         <div style={{
-                                width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
+                                width: "100%", backgroundColor: "rgba(0,0,0,0.600)", borderRadius:15, textAlign: 'center',
                                 borderLeft: `0px solid red`, paddingLeft: 5, paddingBottom: 0}}>
-                           <h2>Error:</h2>
+                           <h2>Error</h2>
                         </div>                    
                       </div>
                       <Box style={{

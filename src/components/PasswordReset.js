@@ -38,7 +38,7 @@ const PasswordReset = () => {
     
 
     useEffect(() => {
-        document.title = "Reset Password: Life Package 2023";
+        document.title = "Reset Password: Life Package 2024";
          
     }, []); 
 

@@ -20,7 +20,7 @@ const VerifyEmail =  () => { //
     const navigate = useNavigate();
     
     useEffect(() => {
-        document.title = "Verify Email Address: Life Package 2023";
+        document.title = "Verify Email Address: Life Package 2024";
     }, []);
 
 

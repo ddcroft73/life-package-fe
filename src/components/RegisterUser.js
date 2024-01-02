@@ -35,7 +35,7 @@ const RegisterUser = () => {
     const cancelAction = () => setIsModalVisible(false);
     
     useEffect(() => {
-        document.title = "User Registration: LifePackage 2023";
+        document.title = "User Registration: LifePackage 2024";
     }, []);
 
 

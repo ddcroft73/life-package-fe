@@ -26,7 +26,7 @@ const PasswordRecover = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        document.title = "Reset Password: LifePackage 2023";
+        document.title = "Reset Password: LifePackage 2024";
     }, []);
 
     // Predefined actions
