@@ -138,10 +138,10 @@ const Login = () => {
             else if (response === "locked out"){
               let currContent = (
                 <>
-                  <div style={{width:"100%", padding:0, color: "red"}}>
+                  <div style={{width:"100%", padding:0, color: "orange", marginBottom: 15}}>
                     <div style={{
-                                width: "100%", backgroundColor: "rgba(0,0,0,0.600)", 
-                                borderLeft: `2px solid orange`, paddingLeft: 8, paddingBottom: 0}}>          
+                                width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: "center", 
+                                borderLeft: `0px solid orange`, paddingLeft: 8, paddingBottom: 0}}>          
                       <h2>User Account Locked Out</h2>
                     </div>       
                   </div>
@@ -151,7 +151,7 @@ const Login = () => {
                     color: "white",
                     border: "0px solid black"}}>       
                       The user: <span style={{color:"orange"}}>{email}</span><br/>
-                      has had their account locked out for some reason. <br/><br/>
+                      has had their account locked out for some reason. Try one of the resources below to figure out what happened.<br/><br/>
                       <Box style={{width: "100%", display: "flex", justifyContent: "space-around", borderTop: "0px solid red", border: "0px solid red" }}>
                         <div><Link to="/support" style={{color:"white"}}>Contact Support</Link></div>
                         <div><Link to="/support" style={{color:"white"}}>FAQ</Link></div>
@@ -159,7 +159,7 @@ const Login = () => {
                   </Box>
                 </>
               );
-              showMessageModal(currContent, "red");
+              showMessageModal(currContent, "orange"); 
     
             } 
     
@@ -168,26 +168,27 @@ const Login = () => {
                 // show modal
                 // Modal is built ust like you would build a component and return it. 
                 let currContent = (
-                <>
-                  <div style={{width:"100%", padding:0, color: "orange"}}>
-                    <div style={{
-                                width: "100%", backgroundColor: "rgba(0,0,0,0.600)", 
-                                borderLeft: `2px solid orange`, paddingLeft: 8, paddingBottom: 0}}>          
-                      <h2>User Not Verified</h2>
-                    </div>       
-                  </div>
-                  <Box style={{
-                    width:"100%", 
-                    padding:0, 
-                    color: "white",
-                    border: "0px solid black"}}>       
-                        The user: <span style={{color:"orange"}}>{email}</span><br/>
-                        has not been verified on this system. <br/><br/>
-                        Check your email and verify to login.                         
-                  </Box>
-                </>
-              );
-              showMessageModal(currContent, "orange");
+                  <>
+                    <div style={{width:"100%", padding:0, color: "orange"}}>
+                      <div style={{
+                                  width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: "center", 
+                                  borderLeft: `0px solid orange`, borderRadius:5, paddingLeft: 8, paddingBottom: 0}}>          
+                        <h2>User Not Verified</h2>
+                      </div>       
+                    </div>
+                    <Box style={{
+                      width:"100%", 
+                      padding:0, 
+                      color: "white",
+                      border: "0px solid black"}}>       
+                          The user: <span style={{color:"orange"}}>{email}</span><br/>
+                          has not been verified on this system. <br/><br/>
+                          Check your email and verify to login. 
+                          If you waited too long and need another chance, click <Link to="/">here</Link>.                   
+                    </Box>
+                  </>
+                );
+                showMessageModal(currContent, "orange");     
             }                      
     
     

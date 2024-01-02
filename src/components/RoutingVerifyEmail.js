@@ -10,6 +10,7 @@ import Logo from './Logo.js';
 import Footer from './elements/Footer.js';
 import Oauth from './Oauth.js';
 import Links from './Links.js';
+import Modal from './Modal.js';
 import axios from 'axios';
 
 /**
@@ -26,24 +27,88 @@ function RoutingVerifyEmail ()  {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const token = queryParams.get('token');
-    
+
+    // Modal State
     const [modalConfig, setModalConfig] = useState({});
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);    
+    const [fadeOut, setFadeOut] = useState(false);
+    const [fadeOut2, setFadeOut2] = useState(false);
+
 
     const navigate = useNavigate();
+    
+        // Predefined actions
+        const confirmAction = () =>  navigate('/login'); 
+        const cancelAction = () => setIsModalVisible(false);
+        
+        // Function to show modal with OK button, just for message
+        const showMessageModal = (content, borderColor) => {
+            setModalConfig({
+            content,
+            buttons: [
+                { text: 'OK', handler: cancelAction }
+            ],
+            borderColor: borderColor
+            });
+            setIsModalVisible(true);
+        };
+    
+        // Function to program modal for an action on OK
+        const showConfirmModal = (content, borderColor) => {
+            setModalConfig({
+            content,
+            buttons: [
+                { text: 'OK', handler: confirmAction },
+                //{ text: 'Cancel', handler: cancelAction }
+            ],
+            borderColor: borderColor
+            });
+            setIsModalVisible(true);
+        };
+    
+    // Request to validate the token, Once validated the 
+    // DB will be updated so the user can now login
 
+    /**
+     * 
+     * BUG LOCATED
+     *  For some reason fetchData inside useEffect is being called a lot. I need to figure out what is causing this component to keep 
+     * loading... 
+     * 
+     */
     useEffect(  ()  => {        
         async function fetchData() {
-            // You can await here
+            
             try {
                 const verifyEmailEndPoint = `${BASE_URL}/auth/verify-email?token=${token}`;
                 const response = await axios.get(verifyEmailEndPoint);               
                 const {msg} = response.data;
-                
+
+              
+
                 if (msg) {
-                    // load login
-                    // load a modal prclaiming success
-                    //navigate("/login"); 
+                    // load login or
+                    // load a modal proclaiming success... the latter
+                    let currContent = (
+                        <>
+                          <div style={{width:"100%", padding:0, color: "white", marginBottom: 15}}>
+                            <div style={{
+                                        width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: "center", 
+                                        borderLeft: `0px solid orange`, paddingLeft: 8, paddingBottom: 0}}>          
+                              <h2>Success!</h2>
+                            </div>       
+                          </div>
+                          <Box style={{
+                            width:"100%", 
+                            padding:0, 
+                            color: "white",
+                            border: "0px solid black"}}>       
+                             Thank you for verifying your email address. Click Ok to be taken to the login page,
+                              
+                          </Box>
+                        </>
+                      );
+                      showConfirmModal(currContent, "blue"); 
                 }
               }
               catch(error) {
@@ -52,18 +117,34 @@ function RoutingVerifyEmail ()  {
                     console.error('Error status:', error.response.status);
             
                     if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
-                               
+                        let currContent = (
+                            <>
+                              <div style={{width:"100%", padding:0, color: "orange"}}>
+                                <div style={{
+                                            width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: "center", 
+                                            borderLeft: `0px solid orange`, borderRadius:5, paddingLeft: 8, paddingBottom: 0}}>          
+                                  <h2>Error verifying email</h2>
+                                </div>       
+                              </div>
+                              <Box style={{
+                                width:"100%", 
+                                padding:0, 
+                                color: "white",
+                                border: "0px solid black"}}>       
+                                    {error.response.data.detail}                   
+                              </Box>
+                            </>
+                          );
+                        showMessageModal(currContent, "orange");    
                     }
                 }                               
 
-           }
+              }
         };
            
-        if (token && !isTokenExpired(token)) {
-            fetchData();              
-        } else {
-            console.log("token has expired or is invalid")
-        }          
+        if (token ) {
+            fetchData();     
+        }
 
     }, []);
 
@@ -79,6 +160,12 @@ function RoutingVerifyEmail ()  {
                    justifyContent: "center",
                 }}
             >
+                <Modal
+                  show={isModalVisible}
+                  content={modalConfig.content}
+                  buttons={modalConfig.buttons}
+                  borderColor={modalConfig.borderColor}
+                />
 
             </Box>
         </>
