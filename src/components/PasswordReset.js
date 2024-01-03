@@ -116,7 +116,7 @@ const PasswordReset = () => {
                     <>
                         <div style={{width:"100%", padding:0, color: "orange"}}>
                             <div style={{
-                                width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
+                                width: "100%" , borderRadius:15, backgroundColor: "rgba(0,0,0,0.600)", textAlign: 'center',
                                 borderLeft: `0px solid orange`, paddingLeft: 5, paddingBottom: 0}}>
                             <h2>Bad Password</h2>
                             </div>                    

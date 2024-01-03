@@ -94,7 +94,7 @@ function RoutingVerifyEmail ()  {
                           <div style={{width:"100%", padding:0, color: "white", marginBottom: 15}}>
                             <div style={{
                                         width: "100%", backgroundColor: "rgba(0,0,0,0.600)", textAlign: "center", 
-                                        borderLeft: `0px solid orange`, paddingLeft: 8, paddingBottom: 0}}>          
+                                        borderLeft: `2px solid orange`, borderRadius: 15, paddingLeft: 8, paddingBottom: 0}}>          
                               <h2>Success!</h2>
                             </div>       
                           </div>
