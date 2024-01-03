@@ -11,14 +11,14 @@ import CustomerSupport from "./components/CustomerSupport.js";
 import PasswordReset from "./components/PasswordReset.js";
 import FAQ from "./components/FAQ.js";
 
+import ProtectedRoute from "./components/ProtectedRoute.js";
+
 import AdminDashboard from "./components/AdminDashboard.js";
 import VerifyEmail from "./components/VerifyEmail.js";
 import React, { useEffect } from "react";
-import {decodeJwt} from "./api/utils.js";
+import { decodeJwt } from "./api/utils.js";
 import ThemeManager from "./theme/ThemeManager";
 import RoutingVerifyEmail from "./components/RoutingVerifyEmail.js";
-
-
 
 import {
     Routes,
@@ -48,14 +48,22 @@ const App = () => {
                     <Route path="/verify-email" element={<VerifyEmail />} />
                     <Route path="/routing-verify-email" element={<RoutingVerifyEmail/>} />
                     
-                    <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                    
                     <Route path="/support" element={<CustomerSupport />} />
                     <Route path="/FAQ" element={<FAQ />} />
+
+                    <Route path="/admin-dashboard" element={
+                        <ProtectedRoute>
+                        <AdminDashboard />
+                        </ProtectedRoute>
+                    } />
                 </Routes>
             </Router>
         </ThemeManager>
     );
 };
+
+//<Route path="/admin-dashboard" element={<AdminDashboard />} />
 
 
 function TokenHandler() {

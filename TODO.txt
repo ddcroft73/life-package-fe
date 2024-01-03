@@ -1,8 +1,6 @@
 
-Finish Pasword Reset Component. request Logic only
 
-Implement Oauth
-Fix the width issue with Modal on mobile
+
 Coming soon page
 Landing page
 Admin Dashboard or workstation
@@ -13,5 +11,7 @@ USer workstation
      after 6 attempts impose a delay of 30 minutes
      after 9, lovked out because yopur ass is up to no good. 
      
-implement protecrted routs for admin Dashboard
+implement proteceted routes for admin Dashboard
+  Have started, need to finish
+  Add logic to route the user back to the area they were forced to login to.
 build a 404 page and figure out how to use it
