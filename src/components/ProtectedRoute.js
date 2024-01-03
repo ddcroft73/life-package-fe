@@ -2,26 +2,34 @@
 
 // ProtectedRoute.js
 import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { isTokenExpired } from '../api/utils';
 
 const isAuthenticated = () => {
-  // Replace with your authentication logic
 
   // Basically, This is checking to seeif the token in storage has su privledges...
-  // What id the user on this puter does not but the one in storage does???
+  // What if the current user on this puter does not but the one in storage "Remember me"  does???
   // a Problem for later since their will pronbally only be one admin ever., and thats me.
 
-  // This is going to be confusing AF in a few weeks so here goers: 
-  //  isTokenExpired returns true if the token is expired, not true if its good.
-  //  but isAuthenticated returns true if the user is good. So Some swapping had to take place
-  //  to make it all jive.
-  try{
-    let token = isTokenExpired(JSON.parse(localStorage.getItem('LifePackage')).access_token);  
-    return !token
+  // This is going to be confusing AF in a few weeks so here goes: 
+  //  isTokenExpired returns true if the token is expired, not true if its not..
+  //  but isAuthenticated returns true if the user and token are valid and has the 
+  //  correct priveldges. So Some swapping had to take place to make it all jive.
 
-  } catch(error) {
-    
+  try{
+      // if the user is admin, check to see if the token is still valid. If not admin
+      // return false. if admin return true or false depending on the state of the token.
+      
+      const userRole = JSON.parse(localStorage.getItem('LifePackage')).user_role;
+      if (userRole === 'admin') {
+          const token = isTokenExpired(JSON.parse(localStorage.getItem('LifePackage')).access_token);  
+          return !token
+      }      
+      else{
+        return false;
+      }
+
+  } catch {    
      return false;
   }  
 

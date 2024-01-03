@@ -34,6 +34,7 @@ const App = () => {
         <ThemeManager>
             <Router>
                 <Routes>
+                    
                     <Route path="/" element={<TokenHandler />} />
                     <Route path="/landing-page" element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />
@@ -54,9 +55,10 @@ const App = () => {
 
                     <Route path="/admin-dashboard" element={
                         <ProtectedRoute>
-                        <AdminDashboard />
+                          <AdminDashboard />
                         </ProtectedRoute>
                     } />
+
                 </Routes>
             </Router>
         </ThemeManager>
