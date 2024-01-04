@@ -6,7 +6,7 @@ import Footer from "./elements/Footer.js";
 import React , {useEffect, useState} from 'react';
 
 const linkData = {
-    textOne: "Customer Support",
+    textOne: "Support",
     pathOne: "/support",
     textTwo: "Inquiry",
     pathTwo: "/user-feedback"
