@@ -57,8 +57,9 @@ const PasswordRecover = () => {
                 const response = await axios.post(endPoint);
                 const {msg} = response.data;
 
+
                 if (msg) {                    
-                    let sentence = msg.split(" ");
+                    const sentence = msg.split(" ");
                     let currContent = (
                         <>
                           <div style={{width:"100%", padding:0, color: "green"}}>
@@ -86,14 +87,18 @@ const PasswordRecover = () => {
             } catch(error) {
                 if (error.response) {
                     console.error('Error status:', error.response.status);                    
-                   if (error.response.status >= 400) {               
-                    setError(error.response.data.detail);    
-                    setFadeOut(true); 
-                    setTimeout(() => {
-                        setError('');
-                        setFadeOut(false); 
-                    }, 3900);  // The extra 900 ms allows the Error to pop back up a second.
-                      
+                   if (error.response.status >= 400 && error.response.status != 404) {               
+                        setError(error.response.data.detail);    
+                        setFadeOut(true); 
+                        setTimeout(() => {
+                            setError('');
+                            setFadeOut(false); 
+                        }, 3900);  // The extra 900 ms allows the Error to pop back up a second.                      
+                   }
+                   else if(error.response.status === 404) {
+                       // Add another modal to say "If ythere is an account for {email} an email has beeen dispatched. " 
+                       //
+                       alert("Finsih this part: User doesnt exist but dont say that.")
                    }
                }    
             }

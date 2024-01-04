@@ -7,40 +7,50 @@ import { isTokenExpired } from '../api/utils';
 
 const isAuthenticated = () => {
 
-  // Basically, This is checking to seeif the token in storage has su privledges...
-  // What if the current user on this puter does not but the one in storage "Remember me"  does???
-  // a Problem for later since their will pronbally only be one admin ever., and thats me.
+  
+  /**
+   *    isAuthenticated. 
+   *       A user is authenticated if there is a token in localstorage that 
+   *        A. Is has su priviliges
+   *        B. Is not expired. 
+   * 
+   *       Since we can't be sure if the current user is the owner of a token residing in localStorage
+   *       then we'll just have to assume/hope the token in localStorage is for the user using the system. 
+   *       Remember Me may also reflect a diferent user than the one currnently "logged in".
+   * 
+   *    ALl we are looking for that is protected is the possesion of the access_token with su
+   *    privileges
+   *    
+   *    What if the user in LST is just a reggae user?? 
+   *    This should answer all these.
+   */
 
-  // This is going to be confusing AF in a few weeks so here goes: 
-  //  isTokenExpired returns true if the token is expired, not true if its not..
-  //  but isAuthenticated returns true if the user and token are valid and has the 
-  //  correct priveldges. So Some swapping had to take place to make it all jive.
-
-  try{
-      // if the user is admin, check to see if the token is still valid. If not admin
-      // return false. if admin return true or false depending on the state of the token.
-      
-      const userRole = JSON.parse(localStorage.getItem('LifePackage')).user_role;
-      if (userRole === 'admin') {
-          const token = isTokenExpired(JSON.parse(localStorage.getItem('LifePackage')).access_token);  
-          return !token
-      }      
-      else{
-        return false;
-      }
-
-  } catch {    
-     return false;
-  }  
-
+    
+    const currentUser = JSON.parse(localStorage.getItem('LifePackage')) || null;    
+    if ( currentUser ) {
+        if (currentUser.user_role === 'admin'){
+            const tokenStatus = isTokenExpired(currentUser.access_token);
+            return !tokenStatus;
+        }
+        else if (currentUser.user_role === 'user') {
+            return 'user';
+        }
+    }   
+    return false;
 };
 
 const ProtectedRoute = ({ children }) => {
-  if (!isAuthenticated()) {
-    // Redirect them to the /login page, but save the current location they were trying to go to
-    // 
+
+  const authenticated = isAuthenticated();
+
+  if (!authenticated) {
+    // Redirect them to the /login page, but save the current location they were trying to go to 
     return <Navigate to="/login" replace />;
   }
+  else if (authenticated === 'user') {
+    return <Navigate to="/nope" replace />; // make a simple componet saying you cant be here 
+  }
+
   return children;
 };
 

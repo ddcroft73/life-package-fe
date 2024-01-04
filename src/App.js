@@ -10,6 +10,7 @@ import PasswordRecover from "./components/PasswordRecover.js";
 import CustomerSupport from "./components/CustomerSupport.js";
 import PasswordReset from "./components/PasswordReset.js";
 import FAQ from "./components/FAQ.js";
+import NotAuthorized from "./components/NotAuthorized.js";
 
 import ProtectedRoute from "./components/ProtectedRoute.js";
 
@@ -38,10 +39,11 @@ const App = () => {
                     <Route path="/" element={<TokenHandler />} />
                     <Route path="/landing-page" element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />
-
                     <Route path="/register" element={<UserRegistration />} />
+
                     <Route path="/recover-password" element={<PasswordRecover />} />
                     <Route path="/password-reset" element={<PasswordReset />} />
+                    
                     <Route path="/user-dashboard" element={<UserDashboard />} />
                     <Route path="/admin-login" element={<AdminLogin />} />
                     <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
@@ -51,6 +53,7 @@ const App = () => {
                     
                     
                     <Route path="/support" element={<CustomerSupport />} />
+                    <Route path="/nope" element={<NotAuthorized />} />
                     <Route path="/FAQ" element={<FAQ />} />
 
                     <Route path="/admin-dashboard" element={

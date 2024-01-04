@@ -1,10 +1,10 @@
 
-const Box = ({ children, style, caption="", color="", labelBgColor=""}) => {
+const Box = ({ children, style, caption="", color="", labelBgColor="", borderColor='black'}) => {
     
     const defaultStyle = {
         width: 'auto',
         height: 'auto',
-        border: '1px solid black',
+        border: `1px solid ${borderColor}`,
         borderRadius: '8px',
         padding: 10,
         position: 'relative',
