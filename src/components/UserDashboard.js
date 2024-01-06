@@ -8,6 +8,8 @@ const UserDashboard = () => {
         document.title = "User Workstation: LifePackage 2024";
       }, []);
 
+      // I can go ahead and work on making this componsnt personalized for each user much in the way as it will
+      // be
     return (
         <Box
             style={{

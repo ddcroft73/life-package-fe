@@ -3,7 +3,7 @@
     position: relative;
     display: inline-block;
     width: 30px;
-    height: 15px;
+    height: 12px; /*15*/
   }
   
   .toggle-switch input {
@@ -27,29 +27,32 @@
   .slider:before {
     position: absolute;
     content: "";
-    height: 12px;
-    width: 12px;
-    left: 2px;
-    bottom: 2px;
+    height: 18px;
+    width: 18px;
+    left: 0px;
+    bottom: -4px;
     background-color: white;
-    transition: 0.4s;
+    transition: 0.2s;
     border-radius: 50%;
+    border: 1px solid black;
   }
   
   input:checked + .slider {
-    background-color: #817Daa;
+    background-color: #4c3cf4;
   }
   
   input:checked + .slider:before {
-    transform: translateX(14px);
+    transform: translateX(15px);
   }
   
   /* Rounded sliders */
   .slider.round {
+    border: 1px solid black;
     border-radius: 34px;
   }
   
   .slider.round:before {
+    border: 1px solid black;
     border-radius: 50%;
   }
   

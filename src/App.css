@@ -4,13 +4,13 @@
  }
 
  a:link {
-  color: rgb(13, 13, 157);
+  color: rgb(166, 235, 70);  /*13,13,157   cool green color (166, 235, 70)*/
   text-decoration: none;
 }
 
 /* visited link */
 a:visited {
-  color: rgb(0, 3, 163);
+  color: rgb(130, 131, 177);
 }
 
 /* mouse over link */

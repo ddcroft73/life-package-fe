@@ -92,7 +92,7 @@ const Login = () => {
     useEffect(() => {
         
         function handleResize() {
-            if (window.innerWidth < 450) {
+            if (window.innerWidth < 650) {
               setbuttonWidth({
                    //
                     width: "100%"
@@ -100,18 +100,16 @@ const Login = () => {
             } else {
               setbuttonWidth({
                     //
-                      width: "370px"
+                      width: "350px"
                 });
             }
         }    
 
         document.title = "User Login: LifePackage 2024";
-
         window.addEventListener('resize', handleResize);        
         handleResize();
                 
         return () => window.removeEventListener('resize', handleResize);
-
     }, []);
 
     const handleLoginClick = async () => {
@@ -360,7 +358,6 @@ const Login = () => {
             display: "flex",
             flexDirection: "column",
             maxWidth: 450,
-            minWidth: 290,
             marginTop: 10,
             paddingLeft: 10,
             paddingRight: 10,
@@ -374,30 +371,38 @@ const Login = () => {
         inner_container: {
             width: "100%",
             height: "auto",
-            backgroundColor: "rgb(12,12,12)",
+            backgroundColor:  "rgb(11,11,11)",//"rgb(33,33,33)",
             border: "1px solid rgb(33,33,33)",
             padding:0,
+            borderRadius: 8,
         },
         top_strip: {
             width: "100%",
-            border: "0px solid gray",
-            height: 15,
-            borderTopLeftRadius: 8,
-            borderTopRightRadius: 8,
-            backgroundColor: '#817Daa'
+            border: "1px solid gray",
+            height: 125,
+            borderRadius: 8,
+            fontSize: 22,
+            fontWeight: "light",
+            position: "relative",
+            zIndex: 1000,
+            top: -32,
+            textAlign: "center",
+            color: "white",
+            backgroundColor: "#4c3cf4",//'#817Daa', //"rgb(33,33,33)",//
         },
         grouping_container: {
             // This container just groups all the inner elements inside the inner container. 
             // It doesnt need any styiling, the borderis left "on" and colored black because
             // it makes a cool efffect by doubling with the  grayish color of the inner_cpnatiner
             // border. This containewr also helps with the responsiveness
+            
         },
         inputs_container: {
             display: "flex",
             gap: 8,
             flexDirection: "column",
-            border: "0px solid black",  
-            backgroundColor: "transparent"
+            border: "1px solid #817Daa",  
+            backgroundColor: "transparent",
           },
           toggle_box: {
             border:"0px solid black", 
@@ -405,19 +410,20 @@ const Login = () => {
             lineHeight: 1, 
             marginTop: 20,
             padding:0,
-            paddingBottom:7,
+            paddingBottom:17,
             color: 'gray',
             paddingLeft: 8,
           },
           button_container: {
             display: "flex", 
             justifyContent: "center",
-            width:"375px"
+            width:"350px",
+            marginBottom: 10,
           },
           button: {
             marginTop: '1px', 
             width: '100%', 
-            fontSize:"20px",  
+            fontSize:"18px",  
             border:"1px solid gray", 
             lineHeight: 0, 
             height: 35
@@ -446,18 +452,30 @@ const Login = () => {
                     <Box id="inner-container"
                         style={styles.inner_container}
                     >
-                        <div id="top-strip"
-                        style={styles.top_strip}
-                        >                
-                        </div> 
-                        <Box id="grouping-container">
+                    <Box id="grouping-container">
+
+                        <div style={{display:"flex", justifyContent: "center"}}>
+                            <div id="top-strip"
+                                style={{...styles.top_strip, gap:10, display: "flex", flexDirection:"column"  ,justifyContent: "center", alignItems: "center"}}
+                            >     
+                                <div >Sign In</div>  
+                                <Space howmuch={10}/>                             
+                                <div style={{display: "flex", gap: 45, fontSize: 16}}>
+                                   <div ><i className="fa-brands fa-google" /></div>
+                                   <div><i className="fa-brands fa-github" /></div>
+                                   <div><i className="fa-brands fa-facebook" /></div>
+                                </div>
+                            </div> 
+                        </div>
+
+                          {/**grouping-container was here */}
                              
-                                <div id="inputs-container" 
+                                <Box id="inputs-container" caption={"Login Credentials"} color={'white'} labelBgColor={"rgb(12,12,12)"}
                                     style={styles.inputs_container}
                                 >
-                                  <TextBox  id="email" label="Email*" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
-                                  <TextBox  id="password" label="Password*" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
-                                </div>
+                                  <TextBox  id="email" label="Email  *" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
+                                  <TextBox  id="password" label="Password  *" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
+                                </Box>
                                 
                                 <div className={fadeOut2 ? 'fade-out' : ''}>
                                     <div style={{border: "0px solid black", height: 25,  position: "relative", top: 10, borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
@@ -473,12 +491,14 @@ const Login = () => {
                                     style={styles.toggle_box}
                                 >
                                     <div>
-                                        <ToggleSwitch value={isChecked} onChange={handleRememberMe}/>&nbsp;&nbsp;Remember me
+                                        <ToggleSwitch value={isChecked} onChange={handleRememberMe}/>&nbsp;&nbsp;&nbsp;
+                                        <span style={{position: "relative", top: -2}}>Remember me</span>
                                     </div>
                                 </Box>
                                 
-                                <div id="button-container"
-                                    style={{...styles.button_container, ...buttonWidth}}
+                                  {/**This little hack sets the width */}
+                                <div id="button-container"  
+                                    style={{...styles.button_container, ...buttonWidth}} 
                                 >
                                 <Button  onClick={handleLoginClick} 
                                     style={styles.button}
@@ -487,12 +507,13 @@ const Login = () => {
                                 </div>
                                 
                                 <Links justifyContent={'space-between'} linkData={linkData}/>   
+                                <Space howmuch={0} />
                           
                         </Box>                         
                     </Box>
 
-                    <Oauth marginTop={50}/>
-                    <Footer marginTop={5}/>
+                   { /*<Oauth marginTop={50}/> */}
+                    <Footer marginTop={65}/>
 
                 </Box>
            </div>

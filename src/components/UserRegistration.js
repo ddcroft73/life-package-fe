@@ -457,14 +457,14 @@ const styles = {
         height: 15,
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
-        backgroundColor: '#817Daa'
+        backgroundColor: '#4c3cf4'
     },
     creds_container: {
         display: "flex",
         flexDirection: "column",
         gap: 10,
         width: "100%",
-        border: "1px solid gray",
+        border: "1px solid #817Daa",
         marginBottom: 10,
         marginTop: 10,
         paddingTop: 15
@@ -475,7 +475,7 @@ const styles = {
         gap: 10,
         paddingTop: 15,
         marginTop: 15,
-        border: "1px solid gray",
+        border: "1px solid #817Daa",
     },
     text_content: {
         textAlign: "center",

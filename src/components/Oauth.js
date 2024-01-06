@@ -2,17 +2,17 @@ import Box from "./elements/Box";
 import { useNavigate, Link, useLocation} from "react-router-dom";
 
 
-const Oauth = ({ marginTop=0, marginBottom=8}) => {
+const Oauth = ({ marginTop=0, marginBottom=8, color="#817Daa", fontSize=26}) => {
 
     const navigate = useNavigate();
 
     const styles = {
         oauth: {
-            fontSize: 26,
+            fontSize: fontSize,
             border: '0px solid gray',
             padding: 2,
             cursor: "pointer",
-            color: "#817Daa",
+            color: color,
         },
         outer_container: {
             border: "0px solid gray", 
