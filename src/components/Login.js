@@ -90,7 +90,7 @@ const Login = () => {
     };
 
     useEffect(() => {
-        
+        //Yes this is redundant and makes no sense. The structure is here if I need it.
         function handleResize() {
             if (window.innerWidth < 650) {
               setbuttonWidth({
@@ -100,7 +100,7 @@ const Login = () => {
             } else {
               setbuttonWidth({
                     //
-                      width: "350px"
+                      width: "100%"
                 });
             }
         }    
@@ -348,7 +348,7 @@ const Login = () => {
       const linkData = {
         textOne: "Forgot Password?",
         pathOne: "/recover-password",
-        textTwo: "Don't have an account? Sign up!",
+        textTwo: "No account? Sign up!",
         pathTwo: "/register"
       };
 
@@ -358,6 +358,7 @@ const Login = () => {
             display: "flex",
             flexDirection: "column",
             maxWidth: 450,
+            minWidth: 375,
             marginTop: 10,
             paddingLeft: 10,
             paddingRight: 10,
@@ -372,7 +373,7 @@ const Login = () => {
             width: "100%",
             height: "auto",
             backgroundColor:  "rgb(11,11,11)",//"rgb(33,33,33)",
-            border: "1px solid rgb(33,33,33)",
+            border: "1px solid gray",
             padding:0,
             borderRadius: 8,
         },
@@ -384,8 +385,8 @@ const Login = () => {
             fontSize: 22,
             fontWeight: "light",
             position: "relative",
-            zIndex: 1000,
-            top: -32,
+            zIndex: 100,
+            top: -38,
             textAlign: "center",
             color: "white",
             backgroundColor: "#4c3cf4",//'#817Daa', //"rgb(33,33,33)",//
@@ -417,7 +418,7 @@ const Login = () => {
           button_container: {
             display: "flex", 
             justifyContent: "center",
-            width:"350px",
+            width:"100%",
             marginBottom: 10,
           },
           button: {
@@ -470,7 +471,7 @@ const Login = () => {
 
                           {/**grouping-container was here */}
                              
-                                <Box id="inputs-container" caption={"Login Credentials"} color={'white'} labelBgColor={"rgb(12,12,12)"}
+                                <Box id="inputs-container" caption={""} color={'white'} labelBgColor={"rgb(12,12,12)"}
                                     style={styles.inputs_container}
                                 >
                                   <TextBox  id="email" label="Email  *" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
