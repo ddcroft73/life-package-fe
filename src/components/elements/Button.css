@@ -3,7 +3,7 @@
 .button {
    
     background-color: var(--button-background);
-    color: white;
+    color: blue;
     padding: 10px 20px;
     border-radius: 6px;
     border: 0px solid var(--button-border);
@@ -26,7 +26,7 @@
 
 /* Dark theme styles */
 body.dark .button {
-    background-color: #4c3cf4;/* #484444; */     /*rgb(47, 66, 44);var(--button-background-dark);   /* Darker gray background */
+    background-color: #819DCc;/* #484444; */     /*rgb(47, 66, 44);var(--button-background-dark);   /* Darker gray background */
     color: "#817Daa";              /* Lighter text */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.1s ease;

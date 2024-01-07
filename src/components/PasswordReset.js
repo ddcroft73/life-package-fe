@@ -358,7 +358,7 @@ const styles = {
         height: 18,
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
-        backgroundColor: '#817Daa',
+        backgroundColor: '#819DCc',
         color: "black"
     },
     component_container: {
@@ -411,8 +411,8 @@ const styles = {
     },
     button: {
         width: "100%",
-        fontWeight: "regular",
-        fontSize: 18,               
+        fontWeight: "light",
+        fontSize: 16,               
     },
 };
 

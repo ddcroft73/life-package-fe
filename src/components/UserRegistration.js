@@ -378,14 +378,14 @@ function UserRegistration() {
                             </Box >   
                         </div>
 
-                        <Box id="creds-container" caption={"Required Fields"} color={'white'} labelBgColor={"rgb(12,12,12)"}
+                        <Box id="creds-container" caption={"Required Fields"} color={'white'} labelBgColor={"rgb(15,15,15)"}
                             style={styles.creds_container}
                         >
                             <TextBox  id="email" label="Email *" type="text" width="100%" containerPadding={0} onChange={handleEmail} />
                             <TextBox  id="password1" label="Password *"  type="password" width="100%" containerPadding={0} onChange={handlePasswordOne} />
                             <TextBox  id="password2" label="Retype-Password *"  type="password" width="100%" containerPadding={0} onChange={handlePasswordTwo} />        
                         </Box>      
-                        <Box id="names-container" caption={"Optional Fields"}  color={'white'}  labelBgColor={"rgb(12,12,12)"}
+                        <Box id="names-container" caption={"Optional Fields"}  color={'white'}  labelBgColor={"rgb(15,15,15)"}
                             style={{
                                 ...styles.names_container,
                                 ...namesContainerStyle 
@@ -447,7 +447,7 @@ const styles = {
     inner_container: {
         width: "100%",
         height: "auto",
-        backgroundColor: "rgb(12,12,12)",
+        backgroundColor: "rgb(15,15,15)",
         border: "1px solid rgb(33,33,33)",
         padding:0
     },
@@ -457,7 +457,7 @@ const styles = {
         height: 15,
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
-        backgroundColor: '#4c3cf4'
+        backgroundColor: '#819DCc'
     },
     creds_container: {
         display: "flex",

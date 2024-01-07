@@ -372,14 +372,14 @@ const Login = () => {
         inner_container: {
             width: "100%",
             height: "auto",
-            backgroundColor:  "rgb(11,11,11)",//"rgb(33,33,33)",
-            border: "1px solid gray",
+            backgroundColor:  "rgb(15,15,15)",//"rgb(33,33,33)",
+            border: "2px solid rgb(28,28,28)",
             padding:0,
             borderRadius: 8,
         },
         top_strip: {
             width: "100%",
-            border: "1px solid gray",
+            border: "0px solid blue",
             height: 125,
             borderRadius: 8,
             fontSize: 22,
@@ -388,8 +388,8 @@ const Login = () => {
             zIndex: 100,
             top: -38,
             textAlign: "center",
-            color: "white",
-            backgroundColor: "#4c3cf4",//'#817Daa', //"rgb(33,33,33)",//
+            color: "blue",
+            backgroundColor: "#819DCc",//'#817Daa', //"rgb(33,33,33)",//
         },
         grouping_container: {
             // This container just groups all the inner elements inside the inner container. 
@@ -402,7 +402,7 @@ const Login = () => {
             display: "flex",
             gap: 8,
             flexDirection: "column",
-            border: "1px solid #817Daa",  
+            border: "1px solid rgb(28,28,28)",   //#817Daa
             backgroundColor: "transparent",
           },
           toggle_box: {
@@ -462,20 +462,23 @@ const Login = () => {
                                 <div >Sign In</div>  
                                 <Space howmuch={10}/>                             
                                 <div style={{display: "flex", gap: 45, fontSize: 16}}>
-                                   <div ><i className="fa-brands fa-google" /></div>
+                                   <div><i className="fa-brands fa-google" /></div>
                                    <div><i className="fa-brands fa-github" /></div>
-                                   <div><i className="fa-brands fa-facebook" /></div>
+                                   <div><i className="fa-brands fa-facebook-f" /></div>
                                 </div>
                             </div> 
                         </div>
 
                           {/**grouping-container was here */}
                              
-                                <Box id="inputs-container" caption={""} color={'white'} labelBgColor={"rgb(12,12,12)"}
-                                    style={styles.inputs_container}
+                                <Box id="inputs-container" caption={""} color={'white'} labelBgColor={"rgb(15,15,15)"}
+                                    style={{...styles.inputs_container, padding:0}}
                                 >
-                                  <TextBox  id="email" label="Email  *" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
-                                  <TextBox  id="password" label="Password  *" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
+                                  <Box caption={""} color={'white'} labelBgColor={"rgb(15,15,15)"}>
+                                    <TextBox  id="email" label="Email  *" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
+                                    <TextBox  id="password" label="Password  *" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
+                                
+                                  </Box>
                                 </Box>
                                 
                                 <div className={fadeOut2 ? 'fade-out' : ''}>

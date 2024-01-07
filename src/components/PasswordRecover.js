@@ -126,7 +126,7 @@ const PasswordRecover = () => {
             height: 15,
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
-            backgroundColor: '#817Daa',
+            backgroundColor: '#819DCc',
             color: "black"
         },
         component_container: {
@@ -147,6 +147,7 @@ const PasswordRecover = () => {
             border:0
         },
         inner_container: {
+            backgroundColor: "rgb(15,15,15)",
             border: "1px solid rgb(50,50,50)",
             padding: 0
         },
@@ -158,7 +159,7 @@ const PasswordRecover = () => {
         text_content: {
             color: "white", 
             border: "0px solid gray", 
-            paddingTop: 0
+            paddingTop: 0, paddingRight: 10, paddingLeft: 10
         },
         error_message: {  
             border: "0px solid black", 
@@ -212,10 +213,11 @@ const PasswordRecover = () => {
                             <div id="top-strip"
                                 style={styles.top_strip}
                             ></div> 
-                   <Box style={{border:0}}>
-                        <Box id="heading" 
-                              style={styles.heading}
-                        >
+                        <Box style={{border:"0px solid white"}}>
+                            
+                            <Box id="heading" 
+                                style={styles.heading}
+                            >
                                 <h2>Recover Password</h2>
                              </Box>
                              <Box id="text-content"
@@ -233,7 +235,7 @@ const PasswordRecover = () => {
                                     )}
                                 </div>
                              </div>
-
+                         <Box>
                             <TextBox id="email" label="Email*" type="text" width="100%" containerPadding={0} onChange={handleEmail} />
                             <Button 
                               style={styles.button}
@@ -241,8 +243,9 @@ const PasswordRecover = () => {
                             >
                               Send Reset Link
                             </Button>
-                       
-                            <Links justifyContent='space-around' linkData={linkData} />                            
+                          
+                         </Box>                      
+                            <Links justifyContent='space-around' linkData={linkData} />   
                         </Box> 
                   </Box>
                 </Box> 
