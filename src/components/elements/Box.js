@@ -12,7 +12,7 @@ const Box = ({ children, style, caption="", color="", labelBgColor="", borderCol
     
     //Implement a caption so I can group elements
     const captionStyle = {
-        fontSize: 12,
+        fontSize: 13,
         position: 'absolute', 
         top: -1,
         left: 10, 

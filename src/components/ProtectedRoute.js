@@ -11,7 +11,7 @@ const isAuthenticated = () => {
   /**
    *    isAuthenticated. 
    *       A user is authenticated if there is a token in localstorage that 
-   *        A. Is has su priviliges
+   *        A. Has su priviliges
    *        B. Is not expired. 
    * 
    *       Since we can't be sure if the current user is the owner of a token residing in localStorage
@@ -24,13 +24,11 @@ const isAuthenticated = () => {
    *    What if the user in LST is just a reggae user?? 
    *    This should answer all these.
    */
-
     
     const currentUser = JSON.parse(localStorage.getItem('LifePackage')) || null;    
     if ( currentUser ) {
-        if (currentUser.user_role === 'admin'){
-            const tokenStatus = isTokenExpired(currentUser.access_token);
-            return !tokenStatus;
+        if (currentUser.user_role === 'admin'){            
+            return !isTokenExpired(currentUser.access_token);
         }
         else if (currentUser.user_role === 'user') {
             return 'user';
@@ -48,7 +46,7 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
   else if (authenticated === 'user') {
-    return <Navigate to="/nope" replace />; // make a simple componet saying you cant be here 
+    return <Navigate to="/nope" replace />; 
   }
 
   return children;

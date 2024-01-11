@@ -83,13 +83,37 @@ const AdminLogin = () => {
                         if (error.response) {
                             console.error('Error status:', error.response.status);
                     
-                            if (error.response.status >= 400) {  // 401, 404, 403, 409, etc
+                            if (error.response.status >= 400 && error.response.status != 403) {  // 401, 404, 403, 409, etc
                                 setMessage(error.response.data.detail);
                                 setFadeOut2(true); 
                                 setTimeout(() => {
                                     setMessage('')
                                     setFadeOut2(false)
                                 }, 3900);        
+                            } 
+                            else if (error.response.status === 403) {
+                                 // Not a SU
+                                    let modalContent = (
+                                        <>
+                                        <div style={{width:"100%", padding:0, color: "orange"}}>
+                                        <div style={{
+                                            width: "100%", backgroundColor: "rgba(0,0,0,0.600)", borderRadius: 4, 
+                                            borderLeft: `0px solid orange`, paddingLeft: 5, paddingBottom: 0, textAlign: "center"}}>
+                                            <h2>No Access</h2>
+                                        </div>                             
+                                        </div>
+                                        <Box style={{
+                                            width:"100%", 
+                                            padding:0, 
+                                            color: "white",
+                                            border: "0px solid black"}}>       
+                                                {error.response.data.detail}<br/><br/>
+                                                Return to the <Link style={{lineHeight: 1}} to='/login'> login</Link> page?
+                                        </Box>
+                                        </>
+                                    );
+
+                                    showMessageModal(modalContent, "orange"); 
                             }
                         } 
                     }

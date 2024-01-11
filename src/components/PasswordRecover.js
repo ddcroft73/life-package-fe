@@ -150,6 +150,9 @@ const PasswordRecover = () => {
             backgroundColor: "rgb(15,15,15)",
             border: "1px solid rgb(50,50,50)",
             padding: 0
+        },                           // "packed" conrtainers,outer without inner with padding
+        inner_inner_container: {     // subtle but decentlky cool effect
+            border:"1px solid black"
         },
         heading: {
             textAlign: "center",
@@ -159,7 +162,9 @@ const PasswordRecover = () => {
         text_content: {
             color: "white", 
             border: "0px solid gray", 
-            paddingTop: 0, paddingRight: 10, paddingLeft: 10
+            paddingTop: 0, 
+            paddingRight: 10, 
+            paddingLeft: 10
         },
         error_message: {  
             border: "0px solid black", 
@@ -172,6 +177,8 @@ const PasswordRecover = () => {
             inner: {          
                 border: "0px solid black", 
                 fontSize: 18, 
+                position: "relative",
+                top: -10,
                 padding: 0, 
                 color: "orange", 
                 textAlign: "center"
@@ -207,17 +214,19 @@ const PasswordRecover = () => {
                     <Box id="outer-container"
                         style={styles.outer_container}
                     >
-                         <Box id="inner-container"
-                             style={styles.inner_container}
-                         >
+                        <Box id="inner-container"
+                            style={styles.inner_container}
+                        >
                             <div id="top-strip"
                                 style={styles.top_strip}
                             ></div> 
-                        <Box style={{border:"0px solid white"}}>
+                          <Box id="inner-inner-container"
+                              style={styles.inner_inner_container}
+                          >
                             
-                            <Box id="heading" 
+                             <Box id="heading" 
                                 style={styles.heading}
-                            >
+                             >
                                 <h2>Recover Password</h2>
                              </Box>
                              <Box id="text-content"
@@ -235,16 +244,18 @@ const PasswordRecover = () => {
                                     )}
                                 </div>
                              </div>
-                         <Box>
-                            <TextBox id="email" label="Email*" type="text" width="100%" containerPadding={0} onChange={handleEmail} />
-                            <Button 
-                              style={styles.button}
-                              onClick={handleSend}  
-                            >
-                              Send Reset Link
-                            </Button>
-                          
-                         </Box>                      
+                            <Box style={{padding:0 , border:"1px solid rgb(50,50,50"}}>
+                                <Box style={{paddingLeft: 10, paddingRight:10}}>
+                                    <TextBox id="email" label="Email*" type="text" width="100%" containerPadding={0} onChange={handleEmail} />
+                                    <Button 
+                                    style={styles.button}
+                                    onClick={handleSend}  
+                                    >
+                                    Send Reset Link
+                                    </Button>                          
+                                </Box>               
+                            </Box>
+
                             <Links justifyContent='space-around' linkData={linkData} />   
                         </Box> 
                   </Box>

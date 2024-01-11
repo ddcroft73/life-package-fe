@@ -13,6 +13,7 @@ import FAQ from "./components/FAQ.js";
 import NotAuthorized from "./components/NotAuthorized.js";
 
 import ProtectedRoute from "./components/ProtectedRoute.js";
+import NotFound from "./components/NotFound.js";
 
 import AdminDashboard from "./components/AdminDashboard.js";
 import VerifyEmail from "./components/VerifyEmail.js";
@@ -36,31 +37,41 @@ const App = () => {
             <Router>
                 <Routes>
                     
+                    {
+                     /** Home path is nothing more than a path to some simple routing logic 
+                      *  designed to fugure out who's at the keyboard and what token is in 
+                      *  locaStorage to get started.
+                     */
+                     }
                     <Route path="/" element={<TokenHandler />} />
+                    
                     <Route path="/landing-page" element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<UserRegistration />} />
 
                     <Route path="/recover-password" element={<PasswordRecover />} />
                     <Route path="/password-reset" element={<PasswordReset />} />
-                    
+
                     <Route path="/user-dashboard" element={<UserDashboard />} />
                     <Route path="/admin-login" element={<AdminLogin />} />
                     <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
 
                     <Route path="/verify-email" element={<VerifyEmail />} />
-                    <Route path="/routing-verify-email" element={<RoutingVerifyEmail/>} />
+                    <Route path="/routing-verify-email" element={<RoutingVerifyEmail/>} />                    
                     
-                    
+                    {/** routes that need work, protected route, and gateway to last resort.. 404 Not Found. */}
                     <Route path="/support" element={<CustomerSupport />} />
                     <Route path="/nope" element={<NotAuthorized />} />
                     <Route path="/FAQ" element={<FAQ />} />
+
 
                     <Route path="/admin-dashboard" element={
                         <ProtectedRoute>
                           <AdminDashboard />
                         </ProtectedRoute>
                     } />
+                    <Route path="*" element={<NotFound />} />
+
 
                 </Routes>
             </Router>

@@ -459,9 +459,8 @@ const Login = () => {
                             <div id="top-strip"
                                 style={{...styles.top_strip, gap:10, display: "flex", flexDirection:"column"  ,justifyContent: "center", alignItems: "center"}}
                             >     
-                                <div >Sign In</div>  
-                                <Space howmuch={10}/>                             
-                                <div style={{display: "flex", gap: 45, fontSize: 16}}>
+                                <div >Sign In</div>                       
+                                <div style={{display: "flex", gap: 45, fontSize: 16, marginTop:15 }}>
                                    <div><i className="fa-brands fa-google" /></div>
                                    <div><i className="fa-brands fa-github" /></div>
                                    <div><i className="fa-brands fa-facebook-f" /></div>
@@ -474,10 +473,10 @@ const Login = () => {
                                 <Box id="inputs-container" caption={""} color={'white'} labelBgColor={"rgb(15,15,15)"}
                                     style={{...styles.inputs_container, padding:0}}
                                 >
-                                  <Box caption={""} color={'white'} labelBgColor={"rgb(15,15,15)"}>
+                                  <Box caption={""} color={'white'} labelBgColor={"rgb(15,15,15)"}
+                                       style={{display:"flex", flexDirection: "column", gap: 15}}>
                                     <TextBox  id="email" label="Email  *" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
-                                    <TextBox  id="password" label="Password  *" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>
-                                
+                                    <TextBox  id="password" label="Password  *" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>                                
                                   </Box>
                                 </Box>
                                 
