@@ -3,7 +3,7 @@ import Login from "./components/Login.js";
 import AdminLogin from "./components/AdminLogin.js";
 import LandingPage from "./components/LandingPage.js";
 import TwoFactorAuth from "./components/TwoFactorAuth.js";
-import UserDashboard from "./components/UserDashboard.js";
+import UserDashboard from "./components/Users/UserDashboard.js";
 import UserRegistration from "./components/UserRegistration.js";
 import RegisterUser from "./components/RegisterUser.js";
 import PasswordRecover from "./components/PasswordRecover.js";
@@ -15,7 +15,7 @@ import NotAuthorized from "./components/NotAuthorized.js";
 import ProtectedRoute from "./components/ProtectedRoute.js";
 import NotFound from "./components/NotFound.js";
 
-import AdminDashboard from "./components/AdminDashboard.js";
+import AdminDashboard from "./components/Admin/AdminDashboard.js";
 import VerifyEmail from "./components/VerifyEmail.js";
 import React, { useEffect } from "react";
 import { decodeJwt } from "./api/utils.js";
@@ -44,7 +44,7 @@ const App = () => {
                      */
                      }
                     <Route path="/" element={<TokenHandler />} />
-                    
+
                     <Route path="/landing-page" element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<UserRegistration />} />
@@ -70,6 +70,8 @@ const App = () => {
                           <AdminDashboard />
                         </ProtectedRoute>
                     } />
+
+                    
                     <Route path="*" element={<NotFound />} />
 
 
@@ -78,9 +80,6 @@ const App = () => {
         </ThemeManager>
     );
 };
-
-//<Route path="/admin-dashboard" element={<AdminDashboard />} />
-
 
 function TokenHandler() {
     const navigate = useNavigate();

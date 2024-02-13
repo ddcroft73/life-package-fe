@@ -38,11 +38,11 @@ function NotFound() {
         
         // depending on user role send this user back.
         if (user.user_role === "admin") {
-            navigate("/admin-dashboard");
+           // navigate("/admin-dashboard");
         }   
         else {
            // For now just load the Usr Dashboard placehoder, but later I need to load the dash for the actual user  users dashboard
-           navigate("/user-dashboard");
+           //navigate("/user-dashboard");
         }
 
       }, []);

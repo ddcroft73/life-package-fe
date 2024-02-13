@@ -2,37 +2,39 @@
 <html lang="en">
 <head>
     
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link 
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link 
      rel="stylesheet" 
      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
    />
-    <title>Table Component</title>
-    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.14.0/umd/react.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.14.0/umd/react-dom.production.min.js"></script>
- <style>
-  * {
-    box-sizing: border-box;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
-  }
- 
-  #root {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: auto;
-    
-  }
+ <title>Table Component Admin22/title>
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+ <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.14.0/umd/react.production.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.14.0/umd/react-dom.production.min.js"></script>
+<style>
 
-  body {
-    color: white;
-    background-color: black;
-  }
+ * {
+  box-sizing: border-box;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+  
+ }
+
+ #root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+     width: 100%;
+    height: auto;
+    
+}
+
+ body {
+ color: white;
+ background-color: black;
+ }
   
 #table {
   font-family: Arial, Helvetica, sans-serif;
@@ -64,7 +66,7 @@
   text-align: left;
   color: #c9dd69;
   background-color: #353e69de;
-  border-radius: 0px;
+  border-radius: 6px;
   border-bottom: 3px solid #ddd;
   
 }
@@ -82,76 +84,7 @@
 <div id="root"></div>
 
 <script type="text/babel">
-    // data ised to populate the table
-    const tableData = {
-       headers: [
-           'ID:',
-           'User Name:',
-           'Name:',
-           'Email:',
-           'Account:',
-           'Status:',
-       ],
-       data: [
-           { 
-             id: 0, 
-             user_id: 'daMan', 
-             name: 'john simons',
-             email: 'john.simmons@mail.com',
-             account: 'basic',
-             status: 'active'
-           },
-           {
-             id: 1, 
-             user_id: 'hellCat', 
-             name: 'joan doe',
-             email: 'joan.doe@mail.com',
-             account: 'Premium',
-             status: 'Active'
-           },
-           {
-             id: 2, 
-             user_id: 'big john', 
-             name: 'Buster Cherry',
-             email: 'B2daC@mail.com',
-             account: 'Basic',
-             status: 'Active'
-           },
-           {
-             id: 3, 
-             user_id: 'meanMug91', 
-             name: 'jack Handy',
-             email: 'handy.jack@mail.com',
-             account: 'Free',
-             status: 'Active'
-           },
-           {
-             id: 4, 
-             user_id: 'hammerJammer', 
-             name: 'joe smoak',
-             email: 'joe.smoak@mail.com',
-             account: 'Premium',
-             status: 'Active'
-           },
-           {
-             id: 5, 
-             user_id: 'johnHams', 
-             name: 'Mikey Sticks',
-             email: 'jumpingJohn@mail.com',
-             account: 'Basic',
-             status: 'Active'
-           },
-           {
-             id: 6, 
-             user_id: 'daMan', 
-             name: 'john simons',
-             email: 'john.simmons@mail.com',
-             account: 'basic',
-             status: 'active'
-           }
-       ]
-   };
-
+   
 
 // Table components.
   
@@ -363,16 +296,16 @@ const Table = ( {tableData} ) => {
 
 function App( {tableData} ) {
  
-  return (
-     <div>
+  return (
+     <div>
         <Table tableData={tableData} />
      </div>
   );
 }
 
 ReactDOM.render(
-     <App tableData={tableData} />,
-     document.getElementById('root')
+    <App tableData={tableData} />,
+    document.getElementById('root')
 );
 
 

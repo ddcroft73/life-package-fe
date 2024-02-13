@@ -1,7 +1,23 @@
 import Box from "./elements/Box";
 
-function Logo( {marginTop=0, marginBottom=0}) {
+function Logo( {marginTop=0, marginBottom=0, size=1, width="auto"}) {
     
+    /**
+     *  size allows me to pick one of 2 sizes. 
+     *  
+     *   1. This is default size
+     *   0. THis is smaller the smallest.
+     */
+    const logoSize = {
+        default: {
+            
+        },
+        smaller: {
+
+        }
+    };
+
+
     return (
         <Box className="logo"
             style={{
@@ -9,7 +25,7 @@ function Logo( {marginTop=0, marginBottom=0}) {
                 backgroundColor: "transparent ",//'#484444',
                 border:"0px solid #817Daa",
                 height:'auto',
-                width:"auto", color: "gray",
+                width: width, color: "gray",
                 marginTop: marginTop,
                 marginBottom: marginBottom
                 }}
@@ -18,8 +34,9 @@ function Logo( {marginTop=0, marginBottom=0}) {
                 fontSize: 54,
                 color: "#817Dda"
                 }}
-            > {/* For another font if needed */}
+            > {/* font awesome Icon*/}
             </div>
+
             <i style={{ color: "#819DCc", fontSize: 32}}
             className="fas fa-mail-bulk" />
             &nbsp;

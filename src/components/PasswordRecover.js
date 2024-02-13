@@ -147,7 +147,7 @@ const PasswordRecover = () => {
             border:0
         },
         inner_container: {
-            backgroundColor: "rgb(15,15,15)",
+            backgroundColor: "transparent",
             border: "1px solid rgb(50,50,50)",
             padding: 0
         },                           // "packed" conrtainers,outer without inner with padding
@@ -244,7 +244,7 @@ const PasswordRecover = () => {
                                     )}
                                 </div>
                              </div>
-                            <Box style={{padding:0 , border:"1px solid rgb(50,50,50"}}>
+                            <Box style={{padding:0 , border:"1px solid rgb(50,50,50)", backgroundColor: "rgb(15,15,15)"}}>
                                 <Box style={{paddingLeft: 10, paddingRight:10}}>
                                     <TextBox id="email" label="Email*" type="text" width="100%" containerPadding={0} onChange={handleEmail} />
                                     <Button 

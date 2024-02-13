@@ -21,7 +21,7 @@ const switchData = [
            {
               id: 0,
               type: 'email',
-              title: 'This one goes to my fecking boss.. feck you!',
+              title: 'This one goes to my fecking boss.. feck you! And that wildabeast you call your wife!',
               email_to: 'joeblo@email.com',
               email_from: '',
               subject: '',

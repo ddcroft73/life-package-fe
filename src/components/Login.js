@@ -20,6 +20,7 @@ import Links from './Links.js';
 import axios from 'axios';
 import './Login.css';
 
+import { Tooltip } from 'react-tooltip'
 /**
  * 
  * login.js 
@@ -100,11 +101,11 @@ const Login = () => {
             } else {
               setbuttonWidth({
                     //
-                      width: "100%"
+                      width: "375px"
                 });
             }
         }    
-
+        
         document.title = "User Login: LifePackage 2024";
         window.addEventListener('resize', handleResize);        
         handleResize();
@@ -246,7 +247,7 @@ const Login = () => {
                         One of three scenarios is <span style={{color:"orange"}}>True</span>:<br/><br/>
                         1<span style={{color:"orange"}}>.</span> There is no <span style={{color:"orange"}}>{email}</span>.<br/>
                         2<span style={{color:"orange"}}>.</span> There is, and the password is wrong.<br/>
-                        3<span style={{color:"orange"}}>.</span> The username/email address is wrong. <br/>                    
+                        3<span style={{color:"orange"}}>.</span> The username/email address is misspelled. <br/>                    
                   </Box>
                   
                 </>
@@ -286,7 +287,7 @@ const Login = () => {
           setTimeout(() => {
             setError('')
             setFadeOut2(false)
-          }, 3900);
+          }, 3700);
         } 
       };
       
@@ -372,7 +373,7 @@ const Login = () => {
         inner_container: {
             width: "100%",
             height: "auto",
-            backgroundColor:  "rgb(15,15,15)",//"rgb(33,33,33)",
+            backgroundColor:  "transparent",//"rgb(15,15,15)",
             border: "2px solid rgb(28,28,28)",
             padding:0,
             borderRadius: 8,
@@ -385,7 +386,7 @@ const Login = () => {
             fontSize: 22,
             fontWeight: "light",
             position: "relative",
-            zIndex: 100,
+            zIndex: 0,
             top: -38,
             textAlign: "center",
             color: "blue",
@@ -402,8 +403,8 @@ const Login = () => {
             display: "flex",
             gap: 8,
             flexDirection: "column",
-            border: "1px solid rgb(28,28,28)",   //#817Daa
-            backgroundColor: "transparent",
+            border: "1px solid rgb(50,50,50)",   //#817Daa
+            backgroundColor: "rgb(15,15,15)",
           },
           toggle_box: {
             border:"0px solid black", 
@@ -475,15 +476,35 @@ const Login = () => {
                                 >
                                   <Box caption={""} color={'white'} labelBgColor={"rgb(15,15,15)"}
                                        style={{display:"flex", flexDirection: "column", gap: 15}}>
-                                    <TextBox  id="email" label="Email  *" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
-                                    <TextBox  id="password" label="Password  *" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>                                
+
+                                    <TextBox data-tooltip-id="username"  
+                                        id="email" label="Username  *" value={email} type="text" width="100%" containerPadding={0} onChange={handleUsername} />
+                                    <Tooltip id="username" >
+                                      <Box>
+                                        Enter your Email address.
+                                      </Box>
+                                    </Tooltip>
+                                   
+                                    <TextBox  data-tooltip-id="password-TT" id="password" label="Password  *" type="password" width="100%" containerPadding={0} onChange={handlePassword}/>                                
+                                    <Tooltip id="password-TT">
+                                      <Box>
+                                      <h3>Passwords must...</h3>
+                                      <ul>
+                                          <li>be at least 8 characters.</li>
+                                          <li>have at least one capital letter.</li>
+                                          <li>have at least one lower case letter.</li>
+                                          <li>have at least one digit.</li>
+                                          <li>have at least one special character.</li>
+                                      </ul>
+                                      </Box>
+                                    </Tooltip>  
                                   </Box>
                                 </Box>
                                 
                                 <div className={fadeOut2 ? 'fade-out' : ''}>
                                     <div style={{border: "0px solid black", height: 25,  position: "relative", top: 10, borderTop: "none", borderRadius: 0, backgroundColor: ""}}>
                                         {error && (
-                                        <Box style={{border: "0px solid black", fontSize: 20, padding: 0, color: "rgb(164, 56, 56)", textAlign: "center"}} className="error-message">
+                                        <Box style={{border: "0px solid black", fontSize: 20, padding: 0, color: "orange", textAlign: "center"}} className="error-message">
                                             {error}
                                         </Box>
                                         )}

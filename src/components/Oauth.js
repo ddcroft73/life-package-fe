@@ -2,6 +2,7 @@ import Box from "./elements/Box";
 import { useNavigate, Link, useLocation} from "react-router-dom";
 
 
+// Nope, not that kind of Oauth. its just the clickable 
 const Oauth = ({ marginTop=0, marginBottom=8, color="#817Daa", fontSize=26}) => {
 
     const navigate = useNavigate();

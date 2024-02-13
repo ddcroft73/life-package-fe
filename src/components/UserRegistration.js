@@ -5,7 +5,11 @@ import { useState, useEffect  } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Box from "../components/elements/Box.js";
 import Paper from "../components/elements/Paper.js";
+import ToggleSwitch from './elements/ToggleSwitch.js';
+import InputBox from './elements/InputBox.js';
 import TextBox from "../components/elements/TextBox.js";
+
+import { Tooltip } from 'react-tooltip'
 import Button from "../components/elements/Button.js";
 import Space from "../components/Space.js";
 import Footer from './elements/Footer.js';
@@ -14,6 +18,8 @@ import Modal from './Modal';
 import Logo from './Logo.js';
 import Oauth from './Oauth.js';
 import './RegisterUser.css'
+
+import { formatPhoneNumber, sanitizePhoneNumber } from '../api/utils.js';
 /**
  *  UserRegistration Component
  *    THe first component i did not generate. Almost all my componsnts for this application are built a birt different.
@@ -38,6 +44,8 @@ function UserRegistration() {
     const [passwordTwo, setPasswordTwo] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [enable2FA, setEnable2FA] = useState(false);
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     const [namesContainerStyle, setNamesContainerStyle] = useState({});
 
@@ -45,7 +53,7 @@ function UserRegistration() {
     const [fadeOut2, setFadeOut2] = useState('');
     const [modalConfig, setModalConfig] = useState({});
     const [isModalVisible, setIsModalVisible] = useState(false);
-
+     
     const navigate = useNavigate();
     let sendRequest = false;
 
@@ -64,9 +72,20 @@ function UserRegistration() {
     }; 
     const handleLastName = (value) => {
         setLastName(value);
+    };    
+
+
+    const handleEnable2FA = (value) => {
+        setEnable2FA(value);
+    };    
+
+    const handlePhoneNumber = (value) => {
+        const formattedInput = formatPhoneNumber(value);
+        setPhoneNumber(formattedInput);
     };
+    
 
-
+    // window sizing and doc title
     useEffect(() => {
         function handleResize() {
             if (window.innerWidth < 600) {
@@ -126,7 +145,25 @@ function UserRegistration() {
         if (firstName && lastName) {
             userData.fullName = `${firstName} ${lastName}`;
         }
+        
+        if (phoneNumber) {
+            // make sure its valid... well at least 12 chars long, woth hyphens
+            if (phoneNumber.length != 12) {
+                setMessage(`Enter a valid phone number.`)  
+                setFadeOut2(true); 
+                setTimeout(() => {
+                setMessage('')
+                setFadeOut2(false)
+                }, 3900);
 
+                sendRequest = false;
+            } else {
+                userData.phoneNumber = sanitizePhoneNumber(phoneNumber);
+            }
+        }
+        if (enable2FA) {  
+           userData.enable2FA = true;
+        }
 
         if (!isEmailAddress(email)) {           
 
@@ -194,15 +231,16 @@ function UserRegistration() {
            // DEBUG code, to test all responses. Error and success.
             let response = {
                 user: {
-                    email: ""
+                    email: "test_email@lifepackage.net"
                 }
             };
-            response.error = 'no response'
+          //  response.error = 'no response'
            //response.user.email = email
            */
+            console.log(userData)
 
             const response = await userRegister(userData);
-            const { error } = response
+            const { error } = response;
             
             // If an error was caught it was packaged and sent back in response.error
             // If not, then there will be an email for the user. response.user.email
@@ -378,21 +416,72 @@ function UserRegistration() {
                             </Box >   
                         </div>
 
-                        <Box id="creds-container" caption={"Required Fields"} color={'white'} labelBgColor={"rgb(15,15,15)"}
+                        <Box id="creds-container" caption={"Required Fields"} color={'white'} labelBgColor={"rgb(10,10,10)"}
                             style={styles.creds_container}
                         >
-                            <TextBox  id="email" label="Email *" type="text" width="100%" containerPadding={0} onChange={handleEmail} />
-                            <TextBox  id="password1" label="Password *"  type="password" width="100%" containerPadding={0} onChange={handlePasswordOne} />
+                            <TextBox   data-tooltip-id="username"  data-tooltip-content="Enter your email address" id="email" label="Email *" type="text" width="100%" containerPadding={0} onChange={handleEmail} />
+                            
+                            <Tooltip id="username" />
+                            <TextBox   data-tooltip-id="password-TT"  id="password1" label="Password *"  type="password" width="100%" containerPadding={0} onChange={handlePasswordOne} />
                             <TextBox  id="password2" label="Retype-Password *"  type="password" width="100%" containerPadding={0} onChange={handlePasswordTwo} />        
+                            
+                            <Tooltip id="password-TT">
+                                <Box>
+                                <h3>Passwords must...</h3>
+                                <ul>
+                                    <li>be at least 8 characters.</li>
+                                    <li>have at least one capital letter.</li>
+                                    <li>have at least one lower case letter.</li>
+                                    <li>have at least one digit.</li>
+                                    <li>have at least one special character.</li>
+                                </ul>
+                                </Box>
+                            </Tooltip>  
+                        
                         </Box>      
-                        <Box id="names-container" caption={"Optional Fields"}  color={'white'}  labelBgColor={"rgb(15,15,15)"}
+
+                        <Box id="contact-security-container" caption={"Contact/Security"}  color={'white'}  labelBgColor={"rgb(10,10,10)"}
+                            style={{
+                                ...styles.security_container,
+                                ...namesContainerStyle 
+                            }}
+                        >                                  
+                            <div>
+                                <TextBox  id="phone-number" data-tooltip-id="phone"  
+                                    label="Phone Number" type="text" width="100%" value={phoneNumber} containerPadding={0} onChange={handlePhoneNumber} />
+                                <Tooltip id="phone">                               
+                                <Box>
+                                    The phone number is 10 digits. <br/>
+                                   <br/>
+                                    <span style={{color: 'orange'}}>Ex.</span> <span style={{color: 'orange'}}>5553457890</span> or 
+                                    <span style={{color: 'orange'}}> 555</span>-<span style={{color: 'orange'}}>345</span>-<span style={{color: 'orange'}}>7890</span><br/>
+                                   
+                                </Box>
+                            </Tooltip>  
+                            </div>
+                            <div style={{marginTop:28, marginBottom:10}}>
+
+                                <ToggleSwitch value={enable2FA} onChange={handleEnable2FA}   />&nbsp;&nbsp;&nbsp;
+                                <span data-tooltip-id="two-factor-auth" style={{position: "relative", top: -2}}>Enable 2FA?</span>
+                                <Tooltip id="two-factor-auth">
+                                    <Box>
+                                        Set this to ON. It will render your<br/>
+                                        credentials absolutely useless to <br/>
+                                        anyone that happens to steal them.<br/>
+                                       
+                                    </Box>
+                                </Tooltip>
+                            </div>                            
+                        </Box>  
+                        
+                        <Box id="names-container" caption={"Optional Fields"}  color={'white'}  labelBgColor={"rgb(10,10,10)"}
                             style={{
                                 ...styles.names_container,
                                 ...namesContainerStyle 
                             }}
-                        >
+                        >                            
                             <TextBox  id="first-name" label="First Name" type="text" width="100%" containerPadding={0} onChange={handleFirstName} />
-                            <TextBox  id="last-name" label="Last Name"  type="text" width="100%" containerPadding={0} onChange={handleLastName} />                    
+                            <TextBox  id="last-name" label="Last Name"  type="text" width="100%" containerPadding={0} onChange={handleLastName} />                                                
                         </Box>      
 
                         <Button id="register-button" onClick={createNewUserAccount}
@@ -405,8 +494,8 @@ function UserRegistration() {
                    </Box>
                 </Box> 
 
-                <Oauth/>
-                <Footer marginTop={5} marginBottom={20}/>
+               {/* <Oauth/>*/}
+                <Footer marginTop={85} marginBottom={20}/>
 
             </Box>
 
@@ -432,8 +521,8 @@ const styles = {
     comp_container: {
         display: "flex",
         flexDirection: "column",
-        maxWidth: 575,
-        minWidth: 290,
+        maxWidth: 475,
+       // minWidth: 290,
         marginTop: 10,
         paddingLeft: 10,
         paddingRight: 10,
@@ -447,7 +536,7 @@ const styles = {
     inner_container: {
         width: "100%",
         height: "auto",
-        backgroundColor: "rgb(15,15,15)",
+        backgroundColor: "",  //rgb(15,15,15),
         border: "1px solid rgb(33,33,33)",
         padding:0
     },
@@ -467,7 +556,8 @@ const styles = {
         border: "1px solid #817Daa",
         marginBottom: 10,
         marginTop: 10,
-        paddingTop: 15
+        paddingTop: 15,
+        backgroundColor: "rgb(15,15,15)",
     }, 
     names_container: {
         display: "flex",
@@ -476,6 +566,18 @@ const styles = {
         paddingTop: 15,
         marginTop: 15,
         border: "1px solid #817Daa",
+        backgroundColor: "rgb(15,15,15)",
+    },
+    security_container: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 10,
+        justifyContent: "space-between",
+        flex: 2,
+        paddingTop: 15,
+        marginTop: 15,
+        border: "1px solid #817Daa",
+        backgroundColor:"rgb(15,15,15)",
     },
     text_content: {
         textAlign: "center",
@@ -494,7 +596,7 @@ const styles = {
     button: {
         fontSize: 18,
         width: "100%",
-        marginTop: 20
+        marginTop: 30
     }
 };
 

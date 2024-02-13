@@ -86,10 +86,12 @@ export const userRegister = async (userData) => {
         "user_in": {
             "email": userData.email,
             "password": userData.password,
-            "full_name": userData.fullName || null
+            "full_name": userData.fullName || null,
+            "phone_number": userData.phoneNumber,
         },
         "account_in": {
-             "creation_date": getCurrentDateTime()
+             "creation_date": getCurrentDateTime(),
+             "use_2FA": userData.enable2FA || false
         }
     };
 

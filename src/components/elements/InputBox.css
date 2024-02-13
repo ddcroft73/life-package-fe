@@ -1,0 +1,46 @@
+
+
+.input-container {
+    position: relative;
+    margin: 20px;
+  }
+  
+  .input-field {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+    padding: 8px 0;
+    background: transparent;
+    transition: border-color 0.4s;
+  }
+  
+  .input-field:focus {
+    border-bottom: 2px solid #3060f0;
+  }
+  
+  .focus-border {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #3060f0;
+    transition: width 0.4s ease, left 0.4s ease;
+  }
+  
+  .input-field:focus ~ .focus-border {
+    width: 100%;
+    left: 0;
+  }
+  
+  .focus-border i {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 2px;
+    background-color: #3060f0;
+  }
+  
